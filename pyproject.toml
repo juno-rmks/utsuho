@@ -1,0 +1,46 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
+
+[project]
+name = "Utsuho"
+authors = [
+    { name = "Nobuyuki Sekimori", email = "43375309+juno-rmks@users.noreply.github.com" },
+]
+description = ""
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = []
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0.0", "coverage>=7.2.2", "pytest-benchmark>=4.0.0"]
+dev = [
+    "autopep8>=2.0.2",
+    "isort>=5.11.5",
+    "Sphinx>=5.3.0",
+    "sphinx-rtd-theme>=1.2.0",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "utsuho.__version__" }
+
+[tool.autopep8]
+max_line_length = 159
+
+[tool.isort]
+multi_line_output = 3
+line_length = 159
+use_parentheses = true
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib", "--benchmark-skip"]
+filterwarnings = ["error"]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src"]
+
+[tool.coverage.report]
+exclude_lines = ["if __name__ == .__main__.:"]
