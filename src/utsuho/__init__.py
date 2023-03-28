@@ -24,7 +24,7 @@ __version__ = '0.0.0.dev1'
 class ConverterConfig():
     """ Configuration of whether to convert non-katakana characters.
 
-    Attributes
+    Parameters
     ----------
     puctuation: bool, default=True
         Whether to convert punctuations.
@@ -36,9 +36,13 @@ class ConverterConfig():
         Whether to convert length mark.
     """
     punctuation: bool = True
+    """ Whether to convert punctuations."""
     corner_brucket: bool = True
+    """ Whether to convert corner bruckets."""
     conjunction_mark: bool = True
+    """ Whether to convert conjunction mark."""
     length_mark: bool = True
+    """ Whether to convert length mark."""
 
 
 class FullToHalfConverter():
