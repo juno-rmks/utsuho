@@ -21,68 +21,118 @@ __version__ = '0.0.0.dev1'
 
 
 @dataclass
-class Config():
+class ConverterConfig():
+    """ Configuration of whether to convert non-katakana characters.
+
+    Attributes
+    ----------
+    puctuation: bool, default=True
+        Whether to convert punctuations.
+    corner_brucket: bool, default=True
+        Whether to convert corner bruckets.
+    conjunction_mark: bool, default=True
+        Whether to convert conjunction mark.
+    length_mark: bool, default=True
+        Whether to convert length mark.
+    """
     punctuation: bool = True
     corner_brucket: bool = True
     conjunction_mark: bool = True
     length_mark: bool = True
 
 
-def full_to_half(s: str, config: Config = Config()):
-    if not isinstance(s, str):
-        raise TypeError('s must be a string.')
+class FullToHalfConverter():
+    """ Full-width katakana to half-width katakana converter.
 
-    full_to_half_map = {
-        **full_to_half_letter_map,
-        **full_to_half_voicing_mark_map,
-    }
+    Parameters
+    ----------
+    config: ConverterConfig, default=ConverterConfig()
+        Additional configuration of whether to convert non-katakana letters.
+    """
 
-    if config.punctuation:
-        full_to_half_map.update(**full_to_half_punctuation_map)
+    def __init__(self, config: ConverterConfig = ConverterConfig()) -> None:
+        self._full_to_half_map = {
+            **full_to_half_letter_map,
+            **full_to_half_voicing_mark_map,
+        }
 
-    if config.corner_brucket:
-        full_to_half_map.update(**full_to_half_corner_bracket_map)
+        if config.punctuation:
+            self._full_to_half_map.update(**full_to_half_punctuation_map)
 
-    if config.conjunction_mark:
-        full_to_half_map.update(**full_to_half_conjunction_mark_map)
+        if config.corner_brucket:
+            self._full_to_half_map.update(**full_to_half_corner_bracket_map)
 
-    if config.length_mark:
-        full_to_half_map.update(**full_to_half_length_mark_map)
+        if config.conjunction_mark:
+            self._full_to_half_map.update(**full_to_half_conjunction_mark_map)
 
-    converted = ''
-    i = 0
-    in_katakana = False
+        if config.length_mark:
+            self._full_to_half_map.update(**full_to_half_length_mark_map)
 
-    while i < len(s):
-        cc = s[i]
-        in_katakana = cc in full_to_half_letter_map \
-            or (in_katakana and cc in full_to_half_voicing_mark_map)
+    def convert(self, s: str) -> str:
+        """ Convert full-width katakana to half-width katakana.
 
-        if cc in full_to_half_voicing_mark_map and not in_katakana:
-            converted += cc
+        Parameters
+        ----------
+        s: str
+            String containing characters to convert to half-width katakana.
+
+        Returns
+        -------
+        str
+            String after conversion.
+        """
+        if not isinstance(s, str):
+            raise TypeError('s must be a string.')
+
+        converted = ''
+        i = 0
+        in_katakana = False
+
+        while i < len(s):
+            cc = s[i]
+            in_katakana = cc in full_to_half_letter_map \
+                or (in_katakana and cc in full_to_half_voicing_mark_map)
+
+            if cc in full_to_half_voicing_mark_map and not in_katakana:
+                converted += cc
+                i += 1
+                continue
+
+            converted += self._full_to_half_map.get(cc, cc)
             i += 1
-            continue
 
-        converted += full_to_half_map.get(cc, cc)
-        i += 1
-
-    return converted
+        return converted
 
 
 class HalfToFullConverter():
-    def __init__(self) -> None:
+    """ Half-width katakana to full-width katakana converter.
+
+    Parameters
+    ----------
+    config: ConverterConfig, default=ConverterConfig()
+        Additional configuration of whether to convert non-katakana letters.
+    """
+
+    def __init__(self, config: ConverterConfig = ConverterConfig()) -> None:
         self._half_to_full_map = {
             **half_to_full_letter_map,
             **half_to_full_voicing_mark_map,
-            **half_to_full_punctuation_map,
-            **half_to_full_corner_bracket_map,
-            **half_to_full_conjunction_mark_map,
-            **half_to_full_length_mark_map,
         }
 
+        if config.punctuation:
+            self._half_to_full_map.update(**half_to_full_punctuation_map)
+
+        if config.corner_brucket:
+            self._half_to_full_map.update(**half_to_full_corner_bracket_map)
+
+        if config.conjunction_mark:
+            self._half_to_full_map.update(**half_to_full_conjunction_mark_map)
+
+        if config.length_mark:
+            self._half_to_full_map.update(**half_to_full_length_mark_map)
+
     def convert(self, s: str) -> str:
-        """
-        Convert half-width katakana to full-width katakana.
+        """ Convert half-width katakana to full-width katakana.
 
         Parameters
         ----------

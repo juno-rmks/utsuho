@@ -1,47 +1,18 @@
-# utsuho
+# Utsuho
 
-Utsuho is an interconverter between Japanese half-width katakana and full-width katakana.
+Utsuho is a Python module that provides interconversion between Japanese half-width katakana and full-width katakana.
+
+The name Utsuho comes from the long story "Utsuho Monogatari," which is said to have been written in the middle of the Heian period, and contains descriptions of katakana.
 
 **This project currently only provides Japanese documentation.**
 
-## Table of Contents
+Utsuho (うつほ) は、日本語の半角カタカナと全角カタカナの相互変換を提供する Python モジュールです。
 
-- [utsuho](#utsuho)
-  - [Table of Contents](#table-of-contents)
-  - [全角から半角へのマッピング](#全角から半角へのマッピング)
-  - [半角から全角へのマッピング](#半角から全角へのマッピング)
-    - [半角から全角へのマッピングリスト](#半角から全角へのマッピングリスト)
-      - [半角カタカナ文字 (清音)](#半角カタカナ文字-清音)
-      - [半角カタカナ文字 (小文字)](#半角カタカナ文字-小文字)
-      - [半角カタカナ文字 (濁音)](#半角カタカナ文字-濁音)
-      - [半角カタカナ文字 (半濁音)](#半角カタカナ文字-半濁音)
-      - [半角カタカナ記号](#半角カタカナ記号)
+Utsuho という名称は、カタカナに関する記述がある平安時代中期に成立したとされる長編物語 "うつほ物語" に由来します。
 
-## 全角から半角へのマッピング
+Python 標準ライブラリでも Unicode 文字列の正規化として半角カタカナを全角カタカナへ変換できますが、合成文字を分解したり、全角英数字記号を半角へ変換したり、と不必要な変換も伴います。又、全角カタカナから半角カタカナへの変換はできません。Utsuho は、日本語の文脈を考慮し、本当に必要な半角カタカナと全角カタカナの相互変換を提供します。
 
-Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チャートで定義されている全角カタカナを対応する半角カタカナへ変換します。又、句点、読点、鉤括弧、濁点、半濁点といった全角カタカナのチャートには定義されていませんが、カタカナ表記で使用する記号も変換します。
-
-- "Katakana letters" (0x30A1-0x30FA)
-- "Conjunction and length marks" (0x30FB-0x30FC)
-- ["Hiragana"](https://www.unicode.org/charts/PDF/U3040.pdf) チャート
-  - "Voicing marks" (0x3099-0x309C)
-- ["CJK Symbols and Punctuation"](https://www.unicode.org/charts/PDF/U3000.pdf) チャート
-  - "CJK corner brackets" (0x300C-0x300D のみ)
-
-半角カタカナが定義されていないワ行の "ヰ" と "ヱ"、それぞれの濁音は変換しません。同様に小文字の "ヵ" と "ヶ"、"ヮ" は変換しません。
-
-"Katakana punctuation" として定義されているダブルハイフン "゠" は、相互変換できないため、変換しません。同様に "Iteration marks" や "Katakana digraph" に定義されている文字も変換しません。
-
-濁音、半濁音は、合成済み文字か結合文字かに関わらず、半角カタカナの清音と濁点、半濁点へ変換します。単独の濁点、半濁点は、合成済み文字か結合文字かに関わらず、カタカナに続くとみなせる場合は、変換します。
-
-```text:example
-ダ   (0x30C0)         => ﾀﾞ  (0xFF80, 0xFF9E)
-ア゛ (0x30A2, 0x309B) => ｱﾞ  (0xFF71, 0xFF9E)
-ダ゛ (0x30C0, 0x309B) => ﾀﾞﾞ (0xFF80, 0xFF9E, 0xFF9E)
-だ゛ (0x3060, 0x309B) => だ゛(0x3060, 0x309B)
-```
-
-句点、読点、鉤括弧、中黒、長音記号は、ひらがなかカタカナのいずれとして扱うかを判断できないため、一括で変換するかしないかを選択できます。
+尚、将来のバージョンで、全角 ASCII 文字と半角 ASCII 文字の相互変換や全角ひらがなと全角カタカナの相互変換も実装する予定です。
 
 ## 半角から全角へのマッピング
 
@@ -64,13 +35,45 @@ Unicode 標準の ["Halfwidth and Fullwidth Forms"](https://www.unicode.org/char
 
 合成済み文字として未定義の新しい文字を作り出さないようにするため、結合文字の濁点 (0x3099)、半濁点 (0x309A) へは変換しません。
 
+全角から半角へのマッピングに合わせて、句点、読点、鉤括弧、中黒、長音記号は、一括で変換するかしないかを選択できます。
+
 変換では、不可視の制御文字も1文字として処理します。
 
-### 半角から全角へのマッピングリスト
+## 全角から半角へのマッピング
 
-半角カタカナから全角カタカナへのマッピングリストを示します。
+Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チャートで定義されている全角カタカナを対応する半角カタカナへ変換します。又、句点、読点、鉤括弧、濁点、半濁点といった全角カタカナのチャートには定義されていませんが、カタカナ表記で使用する記号も変換します。
 
-#### 半角カタカナ文字 (清音)
+- "Katakana letters" (0x30A1-0x30FA)
+- "Conjunction and length marks" (0x30FB-0x30FC)
+- ["Hiragana"](https://www.unicode.org/charts/PDF/U3040.pdf) チャート
+  - "Voicing marks" (0x3099-0x309C)
+- ["CJK Symbols and Punctuation"](https://www.unicode.org/charts/PDF/U3000.pdf) チャート
+  - "CJK corner brackets" (0x300C-0x300D のみ)
+
+半角カタカナが定義されていないワ行の "ヰ" と "ヱ"、それぞれの濁音は変換しません。同様に小文字の "ヵ" と "ヶ"、"ヮ" は変換しません。
+
+"Katakana punctuation" として定義されているダブルハイフン "゠" は、相互変換できないため、変換しません。同様に "Iteration marks" や "Katakana digraph" に定義されている文字も変換しません。
+
+濁音、半濁音は、合成済み文字か結合文字かに関わらず、半角カタカナの清音と濁点、半濁点へ変換します。単独の濁点、半濁点は、合成済み文字か結合文字かに関わらず、カタカナに続くとみなせる場合は、変換します。
+
+```text:example
+ダ   (0x30C0)         => ﾀﾞ  (0xFF80, 0xFF9E)
+ダ   (0x30BF, 0x3099) => ﾀﾞ  (0xFF80, 0xFF9E)
+ダ゛ (0x30C0, 0x309B) => ﾀﾞﾞ (0xFF80, 0xFF9E, 0xFF9E)
+ダ゙   (0x30C0, 0x3099) => ﾀﾞﾞ (0xFF80, 0xFF9E, 0xFF9E)
+ア゛ (0x30A2, 0x309B) => ｱﾞ  (0xFF71, 0xFF9E)
+だ゛ (0x3060, 0x309B) => だ゛(0x3060, 0x309B)
+```
+
+句点、読点、鉤括弧、中黒、長音記号は、ひらがなかカタカナのいずれとして扱うかを判断できないため、一括で変換するかしないかを選択できます。
+
+変換では、不可視の制御文字も1文字として処理します。
+
+### 半角と全角のマッピングリスト
+
+半角と全角のマッピングリストを示します。
+
+#### カタカナ文字 (清音)
 
 | 半角       | 全角        |
 | ---------- | ----------- |
@@ -121,7 +124,7 @@ Unicode 標準の ["Halfwidth and Fullwidth Forms"](https://www.unicode.org/char
 | ｦ (0xFF66) | ヲ (0x30F2) |
 | ﾝ (0xFF9D) | ン (0x30F3) |
 
-#### 半角カタカナ文字 (小文字)
+#### カタカナ文字 (小文字)
 
 | 半角       | 全角        |
 | ---------- | ----------- |
@@ -135,53 +138,77 @@ Unicode 標準の ["Halfwidth and Fullwidth Forms"](https://www.unicode.org/char
 | ｪ (0xFF6A) | ェ (0x30A7) |
 | ｫ (0xFF6B) | ォ (0x30A9) |
 
-#### 半角カタカナ文字 (濁音)
+#### カタカナ文字 (濁音)
 
-| 半角               | 全角        |
-| ------------------ | ----------- |
-| ｳﾞ (0xFF73, 0xFF9E) | ヴ (0x30F4) |
-| ｶﾞ (0xFF76, 0xFF9E) | ガ (0x30AC) |
-| ｷﾞ (0xFF77, 0xFF9E) | ギ (0x30AE) |
-| ｸﾞ (0xFF78, 0xFF9E) | グ (0x30B0) |
-| ｹﾞ (0xFF79, 0xFF9E) | ゲ (0x30B2) |
-| ｺﾞ (0xFF7A, 0xFF9E) | ゴ (0x30B4) |
-| ｻﾞ (0xFF7B, 0xFF9E) | ザ (0x30B6) |
-| ｼﾞ (0xFF7C, 0xFF9E) | ジ (0x30B8) |
-| ｽﾞ (0xFF7D, 0xFF9E) | ズ (0x30BA) |
-| ｾﾞ (0xFF7E, 0xFF9E) | ゼ (0x30BC) |
-| ｿﾞ (0xFF7F, 0xFF9E) | ゾ (0x30BE) |
-| ﾀﾞ (0xFF80, 0xFF9E) | ダ (0x30C0) |
-| ﾁﾞ (0xFF81, 0xFF9E) | ヂ (0x30C2) |
-| ﾂﾞ (0xFF82, 0xFF9E) | ヅ (0x30C5) |
-| ﾃﾞ (0xFF83, 0xFF9E) | デ (0x30C7) |
-| ﾄﾞ (0xFF84, 0xFF9E) | ド (0x30C9) |
-| ﾊﾞ (0xFF8A, 0xFF9E) | バ (0x30D0) |
-| ﾋﾞ (0xFF8B, 0xFF9E) | ビ (0x30D3) |
-| ﾌﾞ (0xFF8C, 0xFF9E) | ブ (0x30D6) |
-| ﾍﾞ (0xFF8D, 0xFF9E) | ベ (0x30D9) |
-| ﾎﾞ (0xFF8E, 0xFF9E) | ボ (0x30DC) |
-| ﾜﾞ (0xFF9C, 0xFF9E) | ヷ (0x30F7) |
-| ｦﾞ (0xFF66, 0xFF9E) | ヺ (0x30FA) |
+半角から全角へは、合成済み文字のみへの変換になります。全角から半角は、合成済み文字か結合文字の両方を変換します。
 
-#### 半角カタカナ文字 (半濁音)
+| 半角               | 全角                          |
+| ------------------ | ----------------------------- |
+| ｳﾞ (0xFF73, 0xFF9E) | ヴ (0x30F4 or 0x30A6, 0x3099) |
+| ｶﾞ (0xFF76, 0xFF9E) | ガ (0x30AC or 0x30AB, 0x3099) |
+| ｷﾞ (0xFF77, 0xFF9E) | ギ (0x30AE or 0x30AD, 0x3099) |
+| ｸﾞ (0xFF78, 0xFF9E) | グ (0x30B0 or 0x30AF, 0x3099) |
+| ｹﾞ (0xFF79, 0xFF9E) | ゲ (0x30B2 or 0x30B1, 0x3099) |
+| ｺﾞ (0xFF7A, 0xFF9E) | ゴ (0x30B4 or 0x30B3, 0x3099) |
+| ｻﾞ (0xFF7B, 0xFF9E) | ザ (0x30B6 or 0x30B5, 0x3099) |
+| ｼﾞ (0xFF7C, 0xFF9E) | ジ (0x30B8 or 0x30B7, 0x3099) |
+| ｽﾞ (0xFF7D, 0xFF9E) | ズ (0x30BA or 0x30B9, 0x3099) |
+| ｾﾞ (0xFF7E, 0xFF9E) | ゼ (0x30BC or 0x30BB, 0x3099) |
+| ｿﾞ (0xFF7F, 0xFF9E) | ゾ (0x30BE or 0x30BD, 0x3099) |
+| ﾀﾞ (0xFF80, 0xFF9E) | ダ (0x30C0 or 0x30BF, 0x3099) |
+| ﾁﾞ (0xFF81, 0xFF9E) | ヂ (0x30C2 or 0x30C1, 0x3099) |
+| ﾂﾞ (0xFF82, 0xFF9E) | ヅ (0x30C5 or 0x30C4, 0x3099) |
+| ﾃﾞ (0xFF83, 0xFF9E) | デ (0x30C7 or 0x30C6, 0x3099) |
+| ﾄﾞ (0xFF84, 0xFF9E) | ド (0x30C9 or 0x30C8, 0x3099) |
+| ﾊﾞ (0xFF8A, 0xFF9E) | バ (0x30D0 or 0x30CF, 0x3099) |
+| ﾋﾞ (0xFF8B, 0xFF9E) | ビ (0x30D3 or 0x30D2, 0x3099) |
+| ﾌﾞ (0xFF8C, 0xFF9E) | ブ (0x30D6 or 0x30D5, 0x3099) |
+| ﾍﾞ (0xFF8D, 0xFF9E) | ベ (0x30D9 or 0x30D8, 0x3099) |
+| ﾎﾞ (0xFF8E, 0xFF9E) | ボ (0x30DC or 0x30DB, 0x3099) |
+| ﾜﾞ (0xFF9C, 0xFF9E) | ヷ (0x30F7 or 0x30EF, 0x3099) |
+| ｦﾞ (0xFF66, 0xFF9E) | ヺ (0x30FA or 0x30F2, 0x3099) |
 
-| 半角               | 全角        |
-| ------------------ | ----------- |
-| ﾊﾟ (0xFF8A, 0xFF9F) | パ (0x30D1) |
-| ﾋﾟ (0xFF8B, 0xFF9F) | ピ (0x30D4) |
-| ﾌﾟ (0xFF8C, 0xFF9F) | プ (0x30D7) |
-| ﾍﾟ (0xFF8D, 0xFF9F) | ペ (0x30DA) |
-| ﾎﾟ (0xFF8E, 0xFF9F) | ポ (0x30DD) |
+#### カタカナ文字 (半濁音)
 
-#### 半角カタカナ記号
+半角から全角へは、合成済み文字のみへの変換になります。全角から半角は、合成済み文字か結合文字の両方を変換します。
+
+| 半角               | 全角                          |
+| ------------------ | ----------------------------- |
+| ﾊﾟ (0xFF8A, 0xFF9F) | パ (0x30D1 or 0x30CF, 0x309A) |
+| ﾋﾟ (0xFF8B, 0xFF9F) | ピ (0x30D4 or 0x30D2, 0x309A) |
+| ﾌﾟ (0xFF8C, 0xFF9F) | プ (0x30D7 or 0x30D5, 0x309A) |
+| ﾍﾟ (0xFF8D, 0xFF9F) | ペ (0x30DA or 0x30D8, 0x309A) |
+| ﾎﾟ (0xFF8E, 0xFF9F) | ポ (0x30DD or 0x30DB, 0x309A) |
+
+#### カタカナ記号 (濁点、半濁点)
+
+| 半角       | 全角        |
+| ---------- | ----------- |
+| ﾞ (0xFF9E) | ゛ (0x309B) |
+| ﾟ (0xFF9F) | ゜ (0x309C) |
+
+#### カタカナ記号 (句読点)
 
 | 半角       | 全角        |
 | ---------- | ----------- |
 | ､ (0xFF64) | 、 (0x3001) |
 | ｡ (0xFF61) | 。 (0x3002) |
+
+#### カタカナ記号 (鉤括弧)
+
+| 半角       | 全角        |
+| ---------- | ----------- |
 | ｢ (0xFF62) | 「 (0x300C) |
 | ｣ (0xFF63) | 」 (0x300D) |
+
+#### カタカナ記号 (中黒)
+
+| 半角       | 全角        |
+| ---------- | ----------- |
 | ･ (0xFF65) | ・ (0x30FB) |
+
+#### カタカナ記号 (長音記号)
+
+| 半角       | 全角        |
+| ---------- | ----------- |
 | ｰ (0xFF70) | ー (0x30FC) |
-| ﾞ (0xFF9E) | ゛ (0x309B) |
-| ﾟ (0xFF9F) | ゜ (0x309C) |

@@ -1,3 +1,6 @@
+""" Half-width and full-width characters mappings.
+"""
+
 half_to_full_letter_map = {
     '\uFF71': ('\u30A2', None, None),  # ｱ
     '\uFF72': ('\u30A4', None, None),  # ｲ

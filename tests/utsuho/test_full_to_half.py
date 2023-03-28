@@ -1,6 +1,6 @@
 import pytest
 
-from utsuho import full_to_half
+from utsuho import ConverterConfig, FullToHalfConverter
 
 
 @pytest.mark.parametrize('s,expect', [
@@ -36,10 +36,49 @@ from utsuho import full_to_half
     ('゛ダ\u3099た\u3099゛ダ゛', '゛ﾀﾞﾞた\u3099゛ﾀﾞﾞ'),
 ])
 def test_full_to_half(s, expect):
-    actual = full_to_half(s)
+    cnv = FullToHalfConverter()
+    actual = cnv.convert(s)
     assert actual == expect
+
+    config = ConverterConfig(punctuation=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s == '。' or s == '、':
+        assert actual == s
+    else:
+        assert actual == expect
+
+    config = ConverterConfig(corner_brucket=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s == '「' or s == '」':
+        assert actual == s
+    else:
+        assert actual == expect
+
+    config = ConverterConfig(conjunction_mark=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s == '・':
+        assert actual == s
+    else:
+        assert actual == expect
+
+    config = ConverterConfig(length_mark=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s == 'ー':
+        assert actual == s
+    else:
+        assert actual == expect
 
 
 def test_full_to_half_invalid_parameter():
+    cnv = FullToHalfConverter()
+
     with pytest.raises(TypeError, match='s must be a string.') as exc:
-        full_to_half(None)
+        cnv.convert(None)

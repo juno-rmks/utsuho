@@ -1,4 +1,4 @@
-from utsuho import full_to_half, HalfToFullConverter
+from utsuho import FullToHalfConverter, HalfToFullConverter
 
 
 def test_half_to_full_mix(benchmark):
@@ -40,29 +40,34 @@ def test_half_to_full_fullwidth(benchmark):
 def test_full_to_half_mix(benchmark):
     # seion=50%, dakuon=20%, handakuon=10%, halfwidth=20%
     s = ('ハ' * 50) + ('バ' * 20) + ('パ' * 10) + ('ﾊ' * 20)
-    actual = benchmark(full_to_half, s)
+    cnv = FullToHalfConverter()
+    actual = benchmark(cnv.convert, s)
     assert actual == ('ﾊ' * 50) + ('ﾊﾞ' * 20) + ('ﾊﾟ' * 10) + ('ﾊ' * 20)
 
 
 def test_full_to_half_seion(benchmark):
     s = 'ハ' * 100
-    actual = benchmark(full_to_half, s)
+    cnv = FullToHalfConverter()
+    actual = benchmark(cnv.convert, s)
     assert actual == 'ﾊ' * 100
 
 
 def test_full_to_half_dakuon(benchmark):
     s = 'バ' * 100
-    actual = benchmark(full_to_half, s)
+    cnv = FullToHalfConverter()
+    actual = benchmark(cnv.convert, s)
     assert actual == 'ﾊﾞ' * 100
 
 
 def test_full_to_half_handakuon(benchmark):
     s = 'パ' * 100
-    actual = benchmark(full_to_half, s)
+    cnv = FullToHalfConverter()
+    actual = benchmark(cnv.convert, s)
     assert actual == 'ﾊﾟ' * 100
 
 
 def test_full_to_half_halfwidth(benchmark):
     s = 'ﾊ' * 100
-    actual = benchmark(full_to_half, s)
+    cnv = FullToHalfConverter()
+    actual = benchmark(cnv.convert, s)
     assert actual == 'ﾊ' * 100
