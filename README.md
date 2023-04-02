@@ -11,7 +11,7 @@ The name Utsuho comes from the long story "Utsuho Monogatari," which is said to 
 Install and update using pip:
 
 ```sh
-pip install -U git+git://github.com/juno-rmks/utsuho.git@main
+pip install Utsuho
 ```
 
 ## Usage
@@ -44,7 +44,7 @@ The conversion result of the above example is "`ｷｮｳﾄｼ　ｻｷｮｳ�
 
 This project is licensed under the terms of the Apache license 2.0.
 
-See the ["LICENSE"](LICENSE) file for license rights and limitations.
+See the ["LICENSE"](https://github.com/juno-rmks/utsuho/blob/main/LICENSE) file for license rights and limitations.
 
 ## Links
 
