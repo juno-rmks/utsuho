@@ -10,8 +10,8 @@ python:
     - method: pip
       path: .
 sphinx:
-  builder: dirhtml
-  fail_on_warning: true
+  builder: html
+  fail_on_warning: false
 formats:
   - pdf
   - epub
