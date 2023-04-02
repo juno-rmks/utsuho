@@ -17,7 +17,7 @@ from .maps import (
     half_to_full_voicing_mark_map
 )
 
-__version__ = '0.0.0.dev1'
+__version__ = '1.0.0'
 
 
 @dataclass
