@@ -77,6 +77,15 @@ def test_full_to_half(s, expect):
         assert actual == expect
 
 
+def test_full_to_half_with_controls():
+    s = '\u30BF\u0000\u309B'
+    cnv = FullToHalfConverter()
+    actual = cnv.convert(s)
+    print([ord(c) for c in s])
+    print([ord(c) for c in actual])
+    assert actual == '\uFF80\u0000\u309B'
+
+
 def test_full_to_half_invalid_parameter():
     cnv = FullToHalfConverter()
 

@@ -73,6 +73,13 @@ def test_half_to_full(s, expect):
         assert actual == expect
 
 
+def test_half_to_full_with_controls():
+    s = '\uFF80\u0000\uFF9E'
+    cnv = HalfToFullConverter()
+    actual = cnv.convert(s)
+    assert actual == '\u30BF\u0000\u309B'
+
+
 def test_half_to_full_invalid_parameter():
     cnv = HalfToFullConverter()
 
