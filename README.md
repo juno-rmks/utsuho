@@ -48,4 +48,4 @@ See the ["LICENSE"](LICENSE) file for license rights and limitations.
 
 ## Links
 
-* Utsuho document
+* [Utsuho document](https://utsuho.readthedocs.io/ja/latest/)
