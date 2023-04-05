@@ -3,21 +3,30 @@
 from dataclasses import dataclass
 
 from .maps import (
+    full_to_half_ascii_alphabet_map,
+    full_to_half_ascii_digit_map,
+    full_to_half_ascii_symbol_map,
     full_to_half_conjunction_mark_map,
     full_to_half_corner_bracket_map,
     full_to_half_length_mark_map,
     full_to_half_letter_map,
     full_to_half_punctuation_map,
+    full_to_half_space_map,
     full_to_half_voicing_mark_map,
+    full_to_half_wave_dash,
+    half_to_full_ascii_alphabet_map,
+    half_to_full_ascii_digit_map,
+    half_to_full_ascii_symbol_map,
     half_to_full_conjunction_mark_map,
     half_to_full_corner_bracket_map,
     half_to_full_length_mark_map,
     half_to_full_letter_map,
     half_to_full_punctuation_map,
+    half_to_full_space_map,
     half_to_full_voicing_mark_map
 )
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 
 @dataclass
@@ -34,6 +43,16 @@ class ConverterConfig():
         Whether to convert conjunction mark.
     length_mark: bool, default=True
         Whether to convert length mark.
+    space: bool, default=True
+        Whether to convert spaces.
+    ascii_symbol: bool, default=True
+        Whether to convert ASCII symbols.
+    ascii_alphabet: bool, default=True
+        Whether to convert ASCII alphabets.
+    ascii_digit: bool, default=True
+        Whether to convert ASCII digits.
+    wave_dash: bool, default=True
+        Whether to convert full-width wave dash to half-width tilde.
     """
     punctuation: bool = True
     """ Whether to convert punctuations."""
@@ -43,6 +62,16 @@ class ConverterConfig():
     """ Whether to convert conjunction mark."""
     length_mark: bool = True
     """ Whether to convert length mark."""
+    space: bool = True
+    """ Whether to convert spaces. """
+    ascii_symbol: bool = True
+    """ Whether to convert ASCII symbols. """
+    ascii_alphabet: bool = True
+    """ Whether to convert ASCII alphabets. """
+    ascii_digit: bool = True
+    """ Whether to convert ASCII digits."""
+    wave_dash: bool = False
+    """ Whether to convert full-width wave dash to half-width tilde. """
 
 
 class FullToHalfConverter():
@@ -72,6 +101,21 @@ class FullToHalfConverter():
         if config.length_mark:
             self._full_to_half_map.update(**full_to_half_length_mark_map)
 
+        if config.space:
+            self._full_to_half_map.update(**full_to_half_space_map)
+
+        if config.ascii_symbol:
+            self._full_to_half_map.update(**full_to_half_ascii_symbol_map)
+
+        if config.ascii_digit:
+            self._full_to_half_map.update(**full_to_half_ascii_digit_map)
+
+        if config.ascii_alphabet:
+            self._full_to_half_map.update(**full_to_half_ascii_alphabet_map)
+
+        if config.wave_dash:
+            self._full_to_half_map.update(**full_to_half_wave_dash)
+
     def convert(self, s: str) -> str:
         """ Convert full-width katakana to half-width katakana.
 
@@ -91,19 +135,37 @@ class FullToHalfConverter():
         converted = ''
         i = 0
         in_katakana = False
+        variation_selectors = [chr(c) for c in range(0xFE00, 0xFE0F + 1)]
 
         while i < len(s):
             cc = s[i]
-            in_katakana = cc in full_to_half_letter_map \
-                or (in_katakana and cc in full_to_half_voicing_mark_map)
+            nc = s[i + 1] if i < len(s) - 1 else None
+            v = self._full_to_half_map.get(cc, None)
 
-            if cc in full_to_half_voicing_mark_map and not in_katakana:
+            if v is None:
+                in_katakana = False
                 converted += cc
                 i += 1
                 continue
 
-            converted += self._full_to_half_map.get(cc, cc)
+            in_katakana = cc in full_to_half_letter_map \
+                or (in_katakana and cc in full_to_half_voicing_mark_map)
+
+            if not in_katakana and cc in full_to_half_voicing_mark_map:
+                converted += cc
+                i += 1
+                continue
+
+            converted += v
             i += 1
+
+            if nc == '\uFE00' and cc == '\uFF10':
+                converted += '\uFE00'
+                i += 1
+            elif nc in ['\uFE00', '\uFE01'] and cc in ['\uFF01', '\uFF0C', '\uFF0E', '\uFF1A', '\uFF1B', '\uFF1F']:
+                i += 1
+            elif nc in variation_selectors:
+                i += 1
 
         return converted
 
@@ -135,6 +197,18 @@ class HalfToFullConverter():
         if config.length_mark:
             self._half_to_full_map.update(**half_to_full_length_mark_map)
 
+        if config.space:
+            self._half_to_full_map.update(**half_to_full_space_map)
+
+        if config.ascii_symbol:
+            self._half_to_full_map.update(**half_to_full_ascii_symbol_map)
+
+        if config.ascii_digit:
+            self._half_to_full_map.update(**half_to_full_ascii_digit_map)
+
+        if config.ascii_alphabet:
+            self._half_to_full_map.update(**half_to_full_ascii_alphabet_map)
+
     def convert(self, s: str) -> str:
         """ Convert half-width katakana to full-width katakana.
 
@@ -153,23 +227,38 @@ class HalfToFullConverter():
 
         converted = ''
         i = 0
+        variation_selectors = [chr(c) for c in range(0xFE00, 0xFE0F + 1)]
 
         while i < len(s):
             cc = s[i]
             nc = s[i + 1] if i < len(s) - 1 else None
-            v = self._half_to_full_map.get(cc, [cc, None, None])
+            v = self._half_to_full_map.get(cc, None)
 
-            if nc == '\uFF9E' and v[1] is not None:
-                converted += v[1]
-                i += 2
+            if v is None:
+                converted += cc
+                i += 1
                 continue
 
-            if nc == '\uFF9F' and v[2] is not None:
-                converted += v[2]
-                i += 2
+            if cc in half_to_full_letter_map:
+                if nc == '\uFF9E' and v[1] is not None:
+                    converted += v[1]
+                    i += 2
+                elif nc == '\uFF9F' and v[2] is not None:
+                    converted += v[2]
+                    i += 2
+                else:
+                    converted += v[0]
+                    i += 1
+
                 continue
 
-            converted += v[0]
+            converted += v
             i += 1
+
+            if nc == '\uFE00' and cc == '\u0030':
+                converted += '\uFE00'
+                i += 1
+            elif nc in variation_selectors:
+                i += 1
 
         return converted

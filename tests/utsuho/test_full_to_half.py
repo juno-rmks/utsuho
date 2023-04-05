@@ -34,17 +34,47 @@ from utsuho import ConverterConfig, FullToHalfConverter
     ('ガ゛', 'ｶﾞﾞ'), ('ア゛゛', 'ｱﾞﾞ'), ('ム゛', 'ﾑﾞ'),
     ('パ゜', 'ﾊﾟﾟ'), ('ア゜゜', 'ｱﾟﾟ'), ('ム゜', 'ﾑﾟ'),
     ('゛ダ\u3099た\u3099゛ダ゛', '゛ﾀﾞﾞた\u3099゛ﾀﾞﾞ'),
+    ('０', '0'), ('１', '1'), ('２', '2'), ('３', '3'), ('４', '4'),
+    ('５', '5'), ('６', '6'), ('７', '7'), ('８', '8'), ('９', '9'),
+    ('０\uFE00', '0\uFE00'), ('\uFE00１\uFE00', '\uFE001'),
+    ('Ａ', 'A'), ('Ｂ', 'B'), ('Ｃ', 'C'), ('Ｄ', 'D'), ('Ｅ', 'E'),
+    ('Ｆ', 'F'), ('Ｇ', 'G'), ('Ｈ', 'H'), ('Ｉ', 'I'), ('Ｊ', 'J'),
+    ('Ｋ', 'K'), ('Ｌ', 'L'), ('Ｍ', 'M'), ('Ｎ', 'N'), ('Ｏ', 'O'),
+    ('Ｐ', 'P'), ('Ｑ', 'Q'), ('Ｒ', 'R'), ('Ｓ', 'S'), ('Ｔ', 'T'),
+    ('Ｕ', 'U'), ('Ｖ', 'V'), ('Ｗ', 'W'), ('Ｘ', 'X'), ('Ｙ', 'Y'),
+    ('Ｚ', 'Z'),
+    ('ａ', 'a'), ('ｂ', 'b'), ('ｃ', 'c'), ('ｄ', 'd'), ('ｅ', 'e'),
+    ('ｆ', 'f'), ('ｇ', 'g'), ('ｈ', 'h'), ('ｉ', 'i'), ('ｊ', 'j'),
+    ('ｋ', 'k'), ('ｌ', 'l'), ('ｍ', 'm'), ('ｎ', 'n'), ('ｏ', 'o'),
+    ('ｐ', 'p'), ('ｑ', 'q'), ('ｒ', 'r'), ('ｓ', 's'), ('ｔ', 't'),
+    ('ｕ', 'u'), ('ｖ', 'v'), ('ｗ', 'w'), ('ｘ', 'x'), ('ｙ', 'y'),
+    ('ｚ', 'z'),
+    ('！', '!'), ('＂', '"'), ('＃', '#'), ('＄', '$'), ('％', '%'),
+    ('＆', '&'), ('＇', '\''), ('（', '('), ('）', ')'), ('＊', '*'),
+    ('＋', '+'), ('，', ','), ('－', '-'), ('．', '.'), ('／', '/'),
+    ('：', ':'), ('；', ';'), ('＜', '<'), ('＝', '='), ('＞', '>'),
+    ('？', '?'), ('＠', '@'), ('［', '['), ('＼', '\\'), ('］', ']'),
+    ('＾', '^'), ('＿', '_'), ('｀', '`'), ('｛', '{'), ('｜', '|'),
+    ('｝', '}'), ('～', '~'),
+    ('！\uFE00', '!'), ('！\uFE01', '!'), ('，\uFE00', ','), ('，\uFE01', ','),
+    ('．\uFE00', '.'), ('．\uFE01', '.'), ('：\uFE00', ':'), ('：\uFE01', ':'),
+    ('；\uFE00', ';'), ('；\uFE01', ';'), ('？\uFE00', '?'), ('？\uFE01', '?'),
+    ('〜', '~'),
+    ('　', '\u0020'),
 ])
 def test_full_to_half(s, expect):
     cnv = FullToHalfConverter()
     actual = cnv.convert(s)
-    assert actual == expect
+    if s == '〜':
+        assert actual == s
+    else:
+        assert actual == expect
 
     config = ConverterConfig(punctuation=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
-    if s == '。' or s == '、':
+    if s == '。' or s == '、' or s == '〜':
         assert actual == s
     else:
         assert actual == expect
@@ -53,7 +83,7 @@ def test_full_to_half(s, expect):
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
-    if s == '「' or s == '」':
+    if s == '「' or s == '」' or s == '〜':
         assert actual == s
     else:
         assert actual == expect
@@ -62,7 +92,7 @@ def test_full_to_half(s, expect):
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
-    if s == '・':
+    if s == '・' or s == '〜':
         assert actual == s
     else:
         assert actual == expect
@@ -71,18 +101,64 @@ def test_full_to_half(s, expect):
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
-    if s == 'ー':
+    if s == 'ー' or s == '〜':
         assert actual == s
     else:
         assert actual == expect
+
+    config = ConverterConfig(space=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s == '　' or s == '〜':
+        assert actual == s
+    else:
+        assert actual == expect
+
+    config = ConverterConfig(ascii_symbol=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s in [chr(c) for c in range(ord('！'), ord('／') + 1)] \
+            or s in [chr(c) for c in range(ord('：'), ord('＠') + 1)] \
+            or s in [chr(c) for c in range(ord('［'), ord('｀') + 1)] \
+            or s in [chr(c) for c in range(ord('｛'), ord('～') + 1)] \
+            or (len(s) >= 2 and s[0] in ['！', '，', '．', '：', '；', '？'] and s[1] in ['\uFE00', '\uFE01']) \
+            or s == '〜':
+        assert actual == s
+    else:
+        assert actual == expect
+
+    config = ConverterConfig(ascii_digit=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s in [chr(c) for c in range(ord('０'), ord('９') + 1)] or s == '０\uFE00' or s == '\uFE00１\uFE00' \
+            or s == '〜':
+        assert actual == s
+    else:
+        assert actual == expect
+
+    config = ConverterConfig(ascii_alphabet=False)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+
+    if s in [chr(c) for c in range(ord('Ａ'), ord('Ｚ') + 1)] or s in [chr(c) for c in range(ord('ａ'), ord('ｚ') + 1)] \
+            or s == '〜':
+        assert actual == s
+    else:
+        assert actual == expect
+
+    config = ConverterConfig(wave_dash=True)
+    cnv = FullToHalfConverter(config)
+    actual = cnv.convert(s)
+    assert actual == expect
 
 
 def test_full_to_half_with_controls():
     s = '\u30BF\u0000\u309B'
     cnv = FullToHalfConverter()
     actual = cnv.convert(s)
-    print([ord(c) for c in s])
-    print([ord(c) for c in actual])
     assert actual == '\uFF80\u0000\u309B'
 
 

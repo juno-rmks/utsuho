@@ -2,8 +2,6 @@
 
 Utsuho is a Python module that provides interconversion between Japanese half-width katakana and full-width katakana.
 
-Utsuho currently supports conversion of Katakana and its symbols only. Conversion of ASCII characters and space characters will be supported in the next version.
-
 The name Utsuho comes from the long story "Utsuho Monogatari," which is said to have been written in the middle of the Heian period, and contains descriptions of katakana.
 
 ## Installing
@@ -26,7 +24,7 @@ cnv = HalfToFullConverter()
 fullwidth = cnv.convert(halfwidth)
 ```
 
-The conversion result of the above example is "`キョウトシ サキョウク ギンカクジチョウ 2`".
+The conversion result of the above example is "`キョウトシ　サキョウク　ギンカクジチョウ　２`".
 
 To convert from full-width katakana to half-width katakana, code as follows.
 
@@ -38,7 +36,7 @@ cnv = FullToHalfConverter()
 halfwidth = cnv.convert(fullwidth)
 ```
 
-The conversion result of the above example is "`ｷｮｳﾄｼ　ｻｷｮｳｸ　ｷﾞﾝｶｸｼﾞﾁｮｳ　２`".
+The conversion result of the above example is "`ｷｮｳﾄｼ ｻｷｮｳｸ ｷﾞﾝｶｸｼﾞﾁｮｳ 2`".
 
 ## License
 

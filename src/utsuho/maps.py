@@ -60,135 +60,168 @@ half_to_full_letter_map = {
 }
 
 half_to_full_voicing_mark_map = {
-    '\uFF9E': ('\u309B', None, None),  # 濁点
-    '\uFF9F': ('\u309C', None, None),  # 半濁点
+    '\uFF9E': '\u309B',  # 濁点
+    '\uFF9F': '\u309C',  # 半濁点
 }
 
 half_to_full_punctuation_map = {
-    '\uFF64': ('\u3001', None, None),  # 読点
-    '\uFF61': ('\u3002', None, None),  # 句点
+    '\uFF64': '\u3001',  # 読点
+    '\uFF61': '\u3002',  # 句点
 }
 
 half_to_full_corner_bracket_map = {
-    '\uFF62': ('\u300C', None, None),  # 鉤括弧始まり
-    '\uFF63': ('\u300D', None, None),  # 鉤括弧終わり
+    '\uFF62': '\u300C',  # 鉤括弧始まり
+    '\uFF63': '\u300D',  # 鉤括弧終わり
 }
 
 half_to_full_conjunction_mark_map = {
-    '\uFF65': ('\u30FB', None, None),  # 中黒
+    '\uFF65': '\u30FB',  # 中黒
 }
 
 half_to_full_length_mark_map = {
-    '\uFF70': ('\u30FC', None, None),  # 長音
+    '\uFF70': '\u30FC',  # 長音
+}
+
+half_to_full_space_map = {
+    '\u0020': '\u3000',  # 半角スペース
+    '\u00A0': '\u3000',  # ノーブレークスペース
+}
+
+half_to_full_ascii_symbol_map = {
+    '\u0021': '\uFF01',  # !
+    '\u0022': '\uFF02',  # "
+    '\u0023': '\uFF03',  # #
+    '\u0024': '\uFF04',  # $
+    '\u0025': '\uFF05',  # %
+    '\u0026': '\uFF06',  # &
+    '\u0027': '\uFF07',  # '
+    '\u0028': '\uFF08',  # (
+    '\u0029': '\uFF09',  # )
+    '\u002A': '\uFF0A',  # *
+    '\u002B': '\uFF0B',  # +
+    '\u002C': '\uFF0C',  # ,
+    '\u002D': '\uFF0D',  # -
+    '\u002E': '\uFF0E',  # .
+    '\u002F': '\uFF0F',  # /
+    '\u003A': '\uFF1A',  # :
+    '\u003B': '\uFF1B',  # ;
+    '\u003C': '\uFF1C',  # <
+    '\u003D': '\uFF1D',  # =
+    '\u003E': '\uFF1E',  # >
+    '\u003F': '\uFF1F',  # ?
+    '\u0040': '\uFF20',  # @
+    '\u005B': '\uFF3B',  # [
+    '\u005C': '\uFF3C',  # \
+    '\u005D': '\uFF3D',  # ]
+    '\u005E': '\uFF3E',  # ^
+    '\u005F': '\uFF3F',  # _
+    '\u0060': '\uFF40',  # `
+    '\u007B': '\uFF5B',  # {
+    '\u007C': '\uFF5C',  # |
+    '\u007D': '\uFF5D',  # }
+    '\u007E': '\uFF5E',  # ~
+}
+
+half_to_full_ascii_digit_map = {
+    '\u0030': '\uFF10',  # 0
+    '\u0031': '\uFF11',  # 1
+    '\u0032': '\uFF12',  # 2
+    '\u0033': '\uFF13',  # 3
+    '\u0034': '\uFF14',  # 4
+    '\u0035': '\uFF15',  # 5
+    '\u0036': '\uFF16',  # 6
+    '\u0037': '\uFF17',  # 7
+    '\u0038': '\uFF18',  # 8
+    '\u0039': '\uFF19',  # 9
+}
+
+half_to_full_ascii_alphabet_map = {
+    '\u0041': '\uFF21',  # A
+    '\u0042': '\uFF22',  # B
+    '\u0043': '\uFF23',  # C
+    '\u0044': '\uFF24',  # D
+    '\u0045': '\uFF25',  # E
+    '\u0046': '\uFF26',  # F
+    '\u0047': '\uFF27',  # G
+    '\u0048': '\uFF28',  # H
+    '\u0049': '\uFF29',  # I
+    '\u004A': '\uFF2A',  # J
+    '\u004B': '\uFF2B',  # K
+    '\u004C': '\uFF2C',  # L
+    '\u004D': '\uFF2D',  # M
+    '\u004E': '\uFF2E',  # N
+    '\u004F': '\uFF2F',  # O
+    '\u0050': '\uFF30',  # P
+    '\u0051': '\uFF31',  # Q
+    '\u0052': '\uFF32',  # R
+    '\u0053': '\uFF33',  # S
+    '\u0054': '\uFF34',  # T
+    '\u0055': '\uFF35',  # U
+    '\u0056': '\uFF36',  # V
+    '\u0057': '\uFF37',  # W
+    '\u0058': '\uFF38',  # X
+    '\u0059': '\uFF39',  # Y
+    '\u005A': '\uFF3A',  # Z
+    '\u0061': '\uFF41',  # a
+    '\u0062': '\uFF42',  # b
+    '\u0063': '\uFF43',  # c
+    '\u0064': '\uFF44',  # d
+    '\u0065': '\uFF45',  # e
+    '\u0066': '\uFF46',  # f
+    '\u0067': '\uFF47',  # g
+    '\u0068': '\uFF48',  # h
+    '\u0069': '\uFF49',  # i
+    '\u006A': '\uFF4A',  # j
+    '\u006B': '\uFF4B',  # k
+    '\u006C': '\uFF4C',  # l
+    '\u006D': '\uFF4D',  # m
+    '\u006E': '\uFF4E',  # n
+    '\u006F': '\uFF4F',  # o
+    '\u0070': '\uFF50',  # p
+    '\u0071': '\uFF51',  # q
+    '\u0072': '\uFF52',  # r
+    '\u0073': '\uFF53',  # s
+    '\u0074': '\uFF54',  # t
+    '\u0075': '\uFF55',  # u
+    '\u0076': '\uFF56',  # v
+    '\u0077': '\uFF57',  # w
+    '\u0078': '\uFF58',  # x
+    '\u0079': '\uFF59',  # y
+    '\u007A': '\uFF5A',  # z
 }
 
 full_to_half_letter_map = {
-    '\u30A2': '\uFF71',  # ア
-    '\u30A4': '\uFF72',  # イ
-    '\u30A6': '\uFF73',  # ウ
-    '\u30A8': '\uFF74',  # エ
-    '\u30AA': '\uFF75',  # オ
-    '\u30AB': '\uFF76',  # カ
-    '\u30AD': '\uFF77',  # キ
-    '\u30AF': '\uFF78',  # ク
-    '\u30B1': '\uFF79',  # ケ
-    '\u30B3': '\uFF7A',  # コ
-    '\u30B5': '\uFF7B',  # サ
-    '\u30B7': '\uFF7C',  # シ
-    '\u30B9': '\uFF7D',  # ス
-    '\u30BB': '\uFF7E',  # セ
-    '\u30BD': '\uFF7F',  # ソ
-    '\u30BF': '\uFF80',  # タ
-    '\u30C1': '\uFF81',  # チ
-    '\u30C4': '\uFF82',  # ツ
-    '\u30C6': '\uFF83',  # テ
-    '\u30C8': '\uFF84',  # ト
-    '\u30CA': '\uFF85',  # ナ
-    '\u30CB': '\uFF86',  # ニ
-    '\u30CC': '\uFF87',  # ヌ
-    '\u30CD': '\uFF88',  # ネ
-    '\u30CE': '\uFF89',  # ノ
-    '\u30CF': '\uFF8A',  # ハ
-    '\u30D2': '\uFF8B',  # ヒ
-    '\u30D5': '\uFF8C',  # フ
-    '\u30D8': '\uFF8D',  # ヘ
-    '\u30DB': '\uFF8E',  # ホ
-    '\u30DE': '\uFF8F',  # マ
-    '\u30DF': '\uFF90',  # ミ
-    '\u30E0': '\uFF91',  # ム
-    '\u30E1': '\uFF92',  # メ
-    '\u30E2': '\uFF93',  # モ
-    '\u30E4': '\uFF94',  # ヤ
-    '\u30E6': '\uFF95',  # ユ
-    '\u30E8': '\uFF96',  # ヨ
-    '\u30E9': '\uFF97',  # ラ
-    '\u30EA': '\uFF98',  # リ
-    '\u30EB': '\uFF99',  # ル
-    '\u30EC': '\uFF9A',  # レ
-    '\u30ED': '\uFF9B',  # ロ
-    '\u30EF': '\uFF9C',  # ワ
-    '\u30F2': '\uFF66',  # ヲ
-    '\u30F3': '\uFF9D',  # ン
-    '\u30E3': '\uFF6C',  # ャ
-    '\u30E5': '\uFF6D',  # ュ
-    '\u30E7': '\uFF6E',  # ョ
-    '\u30C3': '\uFF6F',  # ッ
-    '\u30A1': '\uFF67',  # ァ
-    '\u30A3': '\uFF68',  # ィ
-    '\u30A5': '\uFF69',  # ゥ
-    '\u30A7': '\uFF6A',  # ェ
-    '\u30A9': '\uFF6B',  # ォ
-    '\u30AC': '\uFF76\uFF9E',  # ガ
-    '\u30AE': '\uFF77\uFF9E',  # ギ
-    '\u30B0': '\uFF78\uFF9E',  # グ
-    '\u30B2': '\uFF79\uFF9E',  # ゲ
-    '\u30B4': '\uFF7A\uFF9E',  # ゴ
-    '\u30B6': '\uFF7B\uFF9E',  # ザ
-    '\u30B8': '\uFF7C\uFF9E',  # ジ
-    '\u30BA': '\uFF7D\uFF9E',  # ズ
-    '\u30BC': '\uFF7E\uFF9E',  # ゼ
-    '\u30BE': '\uFF7F\uFF9E',  # ゾ
-    '\u30C0': '\uFF80\uFF9E',  # ダ
-    '\u30C2': '\uFF81\uFF9E',  # ヂ
-    '\u30C5': '\uFF82\uFF9E',  # ヅ
-    '\u30C7': '\uFF83\uFF9E',  # デ
-    '\u30C9': '\uFF84\uFF9E',  # ド
-    '\u30D0': '\uFF8A\uFF9E',  # バ
-    '\u30D3': '\uFF8B\uFF9E',  # ビ
-    '\u30D6': '\uFF8C\uFF9E',  # ブ
-    '\u30D9': '\uFF8D\uFF9E',  # ベ
-    '\u30DC': '\uFF8E\uFF9E',  # ボ
-    '\u30D1': '\uFF8A\uFF9F',  # パ
-    '\u30D4': '\uFF8B\uFF9F',  # ピ
-    '\u30D7': '\uFF8C\uFF9F',  # プ
-    '\u30DA': '\uFF8D\uFF9F',  # ペ
-    '\u30DD': '\uFF8E\uFF9F',  # ポ
-    '\u30F4': '\uFF73\uFF9E',  # ヴ
-    '\u30F7': '\uFF9C\uFF9E',  # ヷ
-    '\u30FA': '\uFF66\uFF9E',  # ヺ
+    **{v[0]: k for k, v in half_to_full_letter_map.items() if v[0] is not None},
+    **{v[1]: f'{k}\uFF9E' for k, v in half_to_full_letter_map.items() if v[1] is not None},
+    **{v[2]: f'{k}\uFF9F' for k, v in half_to_full_letter_map.items() if v[2] is not None},
 }
 
 full_to_half_voicing_mark_map = {
-    '\u3099': '\uFF9E',  # 濁点 (結合文字)
-    '\u309A': '\uFF9F',  # 半濁点 (結合文字)
-    '\u309B': '\uFF9E',  # 濁点
-    '\u309C': '\uFF9F',  # 半濁点
+    **{v: k for k, v in half_to_full_voicing_mark_map.items()},
+    **{
+        '\u3099': '\uFF9E',  # 濁点 (結合文字)
+        '\u309A': '\uFF9F',  # 半濁点 (結合文字)
+    }
 }
 
-full_to_half_punctuation_map = {
-    '\u3001': '\uFF64',  # 句点
-    '\u3002': '\uFF61',  # 読点
+full_to_half_punctuation_map = {v: k for k, v in half_to_full_punctuation_map.items()}
+
+full_to_half_corner_bracket_map = {v: k for k, v in half_to_full_corner_bracket_map.items()}
+
+full_to_half_conjunction_mark_map = {v: k for k, v in half_to_full_conjunction_mark_map.items()}
+
+full_to_half_length_mark_map = {v: k for k, v in half_to_full_length_mark_map.items()}
+
+full_to_half_space_map = {
+    '\u3000': '\u0020',  # 全角スペース
 }
 
-full_to_half_corner_bracket_map = {
-    '\u300C': '\uFF62',  # 鉤括弧始まり
-    '\u300D': '\uFF63',  # 鉤括弧終わり
-}
+full_to_half_ascii_symbol_map = {v: k for k, v in half_to_full_ascii_symbol_map.items()}
 
-full_to_half_conjunction_mark_map = {
-    '\u30FB': '\uFF65',  # 中黒
-}
+full_to_half_ascii_digit_map = {v: k for k, v in half_to_full_ascii_digit_map.items()}
 
-full_to_half_length_mark_map = {
-    '\u30FC': '\uFF70',  # 長音
+full_to_half_ascii_alphabet_map = {v: k for k, v in half_to_full_ascii_alphabet_map.items()}
+
+full_to_half_wave_dash = {
+    '\u301C': '\u007E',
 }
