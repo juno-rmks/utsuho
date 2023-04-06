@@ -5,6 +5,7 @@
 import sys
 import os.path
 sys.path.insert(0, os.path.abspath('../src/utsuho'))
+import utsuho
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -12,7 +13,7 @@ sys.path.insert(0, os.path.abspath('../src/utsuho'))
 project = 'Utsuho'
 copyright = '2023, Nobuyuki Sekimori'
 author = 'Nobuyuki Sekimori'
-release = '0.0.0.dev1'
+release = utsuho.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

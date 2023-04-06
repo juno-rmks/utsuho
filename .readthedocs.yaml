@@ -6,12 +6,10 @@ build:
     python: "3.10"
 python:
   install:
-    - requirements: docs/requirements.txt
     - method: pip
       path: .
+      extra_requirements:
+        - docs
 sphinx:
   builder: html
-  fail_on_warning: false
-formats:
-  - pdf
-  - epub
+  fail_on_warning: true

@@ -1,5 +1,13 @@
 # Utsuho Changes
 
+## Version 1.1.1
+
+Released on 2023-04-06.
+
+* Fixed issue with jQuery not working in Read the Docs.
+
+  See ["Sphinx 6 is out and has important breaking changes"](https://blog.readthedocs.com/sphinx6-upgrade/).
+
 ## Version 1.1.0
 
 Released on 2023-04-05.
