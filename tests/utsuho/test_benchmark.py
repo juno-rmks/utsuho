@@ -1,4 +1,4 @@
-from utsuho import FullToHalfConverter, HalfToFullConverter
+from utsuho.converters import FullToHalfConverter, HalfToFullConverter
 
 
 def test_half_to_full_mix(benchmark):

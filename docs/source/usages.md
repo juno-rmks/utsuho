@@ -4,7 +4,7 @@
 
 ## 半角から全角への変換方法
 
-半角から全角への変換には、[`utsuho.HalfToFullConverter`](#utsuho.HalfToFullConverter) クラスを使用します。
+半角から全角への変換には、[`utsuho.converters.HalfToFullConverter`](#utsuho.converters.HalfToFullConverter) クラスを使用します。
 
 ```python
 from utsuho import HalfToFullConverter
@@ -18,7 +18,7 @@ fullwidth = cnv.convert(halfwidth)
 
 ## 全角から半角への変換方法
 
-全角から半角への変換には、[`utsuho.FullToHalfConverter`](#utsuho.FullToHalfConverter) クラスを使用します。
+全角から半角への変換には、[`utsuho.converters.FullToHalfConverter`](#utsuho.converters.FullToHalfConverter) クラスを使用します。
 
 ```python
 from utsuho import FullToHalfConverter
@@ -32,7 +32,7 @@ halfwidth = cnv.convert(fullwidth)
 
 ## 変換動作の設定方法
 
-変換動作は、各 Converter クラスのコンストラクターの引数へカスタマイズした [`utsuho.ConverterConfig`](#utsuho.ConverterConfig) クラスのインスタンスを渡すことで変更できます。
+変換動作は、各 Converter クラスのコンストラクターの引数へカスタマイズした [`utsuho.converters.ConverterConfig`](#utsuho.converters.ConverterConfig) クラスのインスタンスを渡すことで変更できます。
 
 ```python
 from utsuho import ConverterConfig, HalfToFullConverter

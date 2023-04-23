@@ -1,5 +1,11 @@
 # Utsuho Changes
 
+## Version 1.1.2
+
+Release on 2023-04-23.
+
+* Added CLI.
+
 ## Version 1.1.1
 
 Released on 2023-04-06.

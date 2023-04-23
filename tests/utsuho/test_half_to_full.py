@@ -1,6 +1,6 @@
 import pytest
 
-from utsuho import ConverterConfig, HalfToFullConverter
+from utsuho.converters import ConverterConfig, HalfToFullConverter
 
 
 @pytest.mark.parametrize('s,expect', [

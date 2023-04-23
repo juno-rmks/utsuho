@@ -17,12 +17,13 @@ Python 標準ライブラリでも Unicode 文字列の正規化として半角�
 
    usages
    mappings
+   cli
 
 .. toctree::
    :maxdepth: 4
    :caption: API リファレンス:
 
-   modules
+   utsuho
 
 索引と表
 ========
