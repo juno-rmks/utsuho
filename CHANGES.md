@@ -1,5 +1,12 @@
 # Utsuho Changes
 
+## Version 1.2.0
+
+Release on 2023-08-25.
+
+* Added the feature to convert between hiragana and katakana.
+* Changed the class name "ConverterConfig" to "WidthConverterConfig".
+
 ## Version 1.1.2
 
 Release on 2023-04-23.

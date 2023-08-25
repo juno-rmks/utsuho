@@ -4,7 +4,8 @@ Utsuho is a Python module that provides conversion functions for Japanese charac
 We assumed the native language of many contributors to be Japanese.
 So, there is no problem you to post Issues and Discussions in Japanese.
 
-Utsuho は、日本語の文字変換機能を提供する Python モジュールです。
+> [!NOTE]
+> Utsuho は、日本語の文字変換機能を提供する Python モジュールです。
 主な寄稿者の母国語は日本語と想定しています。
 そのため、Issue や Discussion を日本語で投稿しても構いません。
 

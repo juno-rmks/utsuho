@@ -23,17 +23,19 @@ from .maps import (
     half_to_full_letter_map,
     half_to_full_punctuation_map,
     half_to_full_space_map,
-    half_to_full_voicing_mark_map
+    half_to_full_voicing_mark_map,
+    hira_to_kana_map,
+    kana_to_hira_map
 )
 
 
 @dataclass
-class ConverterConfig():
+class WidthConverterConfig():
     """ Configuration of whether to convert non-katakana characters.
 
     Parameters
     ----------
-    puctuation: bool, default=True
+    punctuation: bool, default=True
         Whether to convert punctuations.
     corner_brucket: bool, default=True
         Whether to convert corner bruckets.
@@ -77,11 +79,11 @@ class FullToHalfConverter():
 
     Parameters
     ----------
-    config: ConverterConfig, default=ConverterConfig()
+    config: WidthConverterConfig, default=WidthConverterConfig()
         Additional configuration of whether to convert non-katakana letters.
     """
 
-    def __init__(self, config: ConverterConfig = ConverterConfig()) -> None:
+    def __init__(self, config: WidthConverterConfig = WidthConverterConfig()) -> None:
         self._full_to_half_map = {
             **full_to_half_letter_map,
             **full_to_half_voicing_mark_map,
@@ -173,11 +175,11 @@ class HalfToFullConverter():
 
     Parameters
     ----------
-    config: ConverterConfig, default=ConverterConfig()
+    config: WidthConverterConfig, default=WidthConverterConfig()
         Additional configuration of whether to convert non-katakana letters.
     """
 
-    def __init__(self, config: ConverterConfig = ConverterConfig()) -> None:
+    def __init__(self, config: WidthConverterConfig = WidthConverterConfig()) -> None:
         self._half_to_full_map = {
             **half_to_full_letter_map,
             **half_to_full_voicing_mark_map,
@@ -260,3 +262,55 @@ class HalfToFullConverter():
                 i += 1
 
         return converted
+
+
+class HiraganaToKatakanaConverter():
+    """ Hiragana to katakana converter.
+    """
+
+    def __init__(self) -> None:
+        self._hira_to_kata_map = {}
+
+    def convert(self, s: str) -> str:
+        """ Convert hiragana to katakana.
+
+        Parameters
+        ----------
+        s: str
+            String containing characters to convert katakana.
+
+        Returns
+        -------
+        str
+            String after conversion.
+        """
+        if not isinstance(s, str):
+            raise TypeError('s must be a string.')
+
+        return ''.join([hira_to_kana_map.get(cc, cc) for cc in s])
+
+
+class KatakanaToHiraganaConverter():
+    """ Katakana to hiragana converter.
+    """
+
+    def __init__(self) -> None:
+        self._kata_to_hira_map = {}
+
+    def convert(self, s: str) -> str:
+        """ Convert katakana to hiragana.
+
+        Parameters
+        ----------
+        s: str
+            String containing characters to convert hiragana.
+
+        Returns
+        -------
+        str
+            String after conversion.
+        """
+        if not isinstance(s, str):
+            raise TypeError('s must be a string.')
+
+        return ''.join([kana_to_hira_map.get(cc, cc) for cc in s])

@@ -1,8 +1,8 @@
-from utsuho.converters import ConverterConfig
+from utsuho.converters import WidthConverterConfig
 
 
 def test_default_config():
-    config = ConverterConfig()
+    config = WidthConverterConfig()
     assert config.punctuation
     assert config.corner_brucket
     assert config.conjunction_mark

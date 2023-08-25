@@ -1,6 +1,6 @@
 import pytest
 
-from utsuho.converters import ConverterConfig, FullToHalfConverter
+from utsuho.converters import WidthConverterConfig, FullToHalfConverter
 
 
 @pytest.mark.parametrize('s,expect', [
@@ -70,7 +70,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(punctuation=False)
+    config = WidthConverterConfig(punctuation=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -79,7 +79,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(corner_brucket=False)
+    config = WidthConverterConfig(corner_brucket=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -88,7 +88,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(conjunction_mark=False)
+    config = WidthConverterConfig(conjunction_mark=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -97,7 +97,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(length_mark=False)
+    config = WidthConverterConfig(length_mark=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -106,7 +106,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(space=False)
+    config = WidthConverterConfig(space=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -115,7 +115,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(ascii_symbol=False)
+    config = WidthConverterConfig(ascii_symbol=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -129,7 +129,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(ascii_digit=False)
+    config = WidthConverterConfig(ascii_digit=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -139,7 +139,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(ascii_alphabet=False)
+    config = WidthConverterConfig(ascii_alphabet=False)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
 
@@ -149,7 +149,7 @@ def test_full_to_half(s, expect):
     else:
         assert actual == expect
 
-    config = ConverterConfig(wave_dash=True)
+    config = WidthConverterConfig(wave_dash=True)
     cnv = FullToHalfConverter(config)
     actual = cnv.convert(s)
     assert actual == expect

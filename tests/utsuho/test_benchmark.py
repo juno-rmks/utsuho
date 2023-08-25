@@ -1,4 +1,4 @@
-from utsuho.converters import FullToHalfConverter, HalfToFullConverter
+from utsuho.converters import FullToHalfConverter, HalfToFullConverter, HiraganaToKatakanaConverter, KatakanaToHiraganaConverter
 
 
 def test_half_to_full_mix(benchmark):
@@ -71,3 +71,17 @@ def test_full_to_half_halfwidth(benchmark):
     cnv = FullToHalfConverter()
     actual = benchmark(cnv.convert, s)
     assert actual == 'ﾊ' * 100
+
+
+def test_hiragana_to_katakana(benchmark):
+    s = 'あ' * 100
+    cnv = HiraganaToKatakanaConverter()
+    actual = benchmark(cnv.convert, s)
+    assert actual == 'ア' * 100
+
+
+def test_katakana_to_hiragana(benchmark):
+    s = 'ア' * 100
+    cnv = KatakanaToHiraganaConverter()
+    actual = benchmark(cnv.convert, s)
+    assert actual == 'あ' * 100
