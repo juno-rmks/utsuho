@@ -61,7 +61,7 @@ cnv = HalfToFullConverter(conf)
 | ascii_symbol     | True         | 記号を変換するかどうかを切り替えできます。             |
 | ascii_digit      | True         | 数字を変換するかどうかを切り替えできます。             |
 | ascii_alphabet   | True         | アルファベットを変換するかどうかを切り替えできます。   |
-| wave_dash        | True         | ウェーブダッシュを変換するかどうかを切り替えできます。 |
+| wave_dash        | False        | ウェーブダッシュを変換するかどうかを切り替えできます。 |
 
 ## ひらがなとカタカナの相互変換方法
 
