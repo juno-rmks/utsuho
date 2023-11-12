@@ -2,7 +2,7 @@
 
 ## Version 2.1.0
 
-Unreleased.
+Release on 2023-11-12.
 
 * Drop support for Python 3.7.
 * Add katakana and hiragana bi-directional converter import.
