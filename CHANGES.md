@@ -1,5 +1,12 @@
 # Utsuho Changes
 
+## Version 2.1.0
+
+Unreleased.
+
+* Drop support for Python 3.7.
+* Add katakana and hiragana bi-directional converter import.
+
 ## Version 2.0.0
 
 Release on 2023-08-25.

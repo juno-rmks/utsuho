@@ -19,7 +19,7 @@ Clone your fork locally, replacing `yourname` in the command below with your act
 % git clone git@github.com:yourname/utsuho.git
 ```
 
-Create and activate a Python virtual environment using version 3.7 or later.
+Create and activate a Python virtual environment using version 3.8 or later.
 
 ```console
 % python -m venv .venv
@@ -29,11 +29,15 @@ Create and activate a Python virtual environment using version 3.7 or later.
 Install Utsuho and its development dependencies in editable mode.
 
 ```console
+% pip install --upgrade pip
 % pip install -e .
 % pip install -e .[dev]
 % pip install -e .[test]
 % pip install -e .[docs]
 ```
+
+Note for macOS users:
+Escape square brackets with a backslash, e.g., \\[dev\\], when running these commands.
 
 ## Running the test
 

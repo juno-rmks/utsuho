@@ -7,24 +7,26 @@ name = "Utsuho"
 authors = [
     { name = "Nobuyuki Sekimori", email = "43375309+juno-rmks@users.noreply.github.com" },
 ]
-description = "Utsuho is a Python module that provides interconversion between Japanese half-width katakana and full-width katakana."
+description = "Utsuho is a Python module that facilitates bidirectional conversion between half-width katakana and full-width katakana in Japanese, as well as between hiragana and katakana."
 classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
 ]
+license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.7"
-dependencies = ["click>=8.1.3"]
+requires-python = ">=3.8"
+dependencies = ["click>=8.1.7"]
 dynamic = ["version"]
 
 [project.urls]
 "Source Code" = "https://github.com/juno-rmks/utsuho/"
+"Issue Tracker" = "https://github.com/juno-rmks/utsuho/issues/"
 "Documentation" = "https://utsuho.readthedocs.io/"
 
 [project.optional-dependencies]
-test = ["pytest>=7.0.0", "coverage>=7.2.2", "pytest-benchmark>=4.0.0"]
-dev = ["build>=0.10.0", "twine>=4.0.2", "autopep8>=2.0.2", "isort>=5.11.5"]
+test = ["pytest", "coverage", "pytest-benchmark"]
+dev = ["build", "twine", "autopep8", "isort"]
 docs = [
     "Sphinx==5.3.0",
     "sphinx-intl==2.1.0",
