@@ -9,6 +9,10 @@ Thank you for considering contributing to Utsuho!
 > 主な寄稿者の母国語は日本語と想定しています。
 > そのため、Issues や Discussions を日本語で投稿しても構いません。
 
+## Creating a pull request
+
+To activate the project, creating pull requests is highly encouraged. When creating a pull request, please set the destination branch to the `develop` branch.
+
 ## Setup in your local environment
 
 Fork Utsuho to your GitHub account.
@@ -69,6 +73,9 @@ Update the documentation source to match the current source structure.
 ```
 
 ## Building and publishing the package
+
+ > [!NOTE]
+ > This operation can only be performed by the project owner.
 
 Generate the distribution archive.
 
