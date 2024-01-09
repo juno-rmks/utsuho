@@ -26,7 +26,7 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 test = ["pytest", "coverage", "pytest-benchmark"]
-dev = ["build", "twine", "autopep8", "isort"]
+dev = ["build", "twine", "pylint", "autopep8", "isort"]
 docs = [
     "Sphinx==5.3.0",
     "sphinx-intl==2.1.0",
@@ -39,6 +39,9 @@ utsuho = "utsuho.cli:cli"
 
 [tool.setuptools.dynamic]
 version = { attr = "utsuho.__version__" }
+
+[tool.pylint.format]
+max-line-length = 159
 
 [tool.autopep8]
 max_line_length = 159

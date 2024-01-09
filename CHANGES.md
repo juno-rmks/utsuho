@@ -1,22 +1,26 @@
 # Utsuho Changes
 
+## Version 2.1.1
+
+* Modified the configuration for automatic source code formatting.
+
 ## Version 2.1.0
 
-Release on 2023-11-12.
+Released on 2023-11-12.
 
-* Drop support for Python 3.7.
-* Add katakana and hiragana bi-directional converter import.
+* Dropped support for Python 3.7.
+* Added katakana and hiragana bi-directional converter import.
 
 ## Version 2.0.0
 
-Release on 2023-08-25.
+Released on 2023-08-25.
 
 * Added the feature to convert between hiragana and katakana.
 * Changed the class name "ConverterConfig" to "WidthConverterConfig".
 
 ## Version 1.1.2
 
-Release on 2023-04-23.
+Released on 2023-04-23.
 
 * Added CLI.
 
@@ -24,7 +28,7 @@ Release on 2023-04-23.
 
 Released on 2023-04-06.
 
-* Fixed issue with jQuery not working in Read the Docs.
+* Fixed an issue with jQuery not working in Read the Docs.
 
   See ["Sphinx 6 is out and has important breaking changes"](https://blog.readthedocs.com/sphinx6-upgrade/).
 

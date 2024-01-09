@@ -1,6 +1,6 @@
 import pytest
 
-from utsuho.converters import WidthConverterConfig, FullToHalfConverter
+from utsuho.converters import FullToHalfConverter, WidthConverterConfig
 
 test_data = [
     # カタカナ (清音)

@@ -1,0 +1,24 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "never"
+        },
+    },
+    "pylint.args": [
+        "--max-line-length=159",
+    ],
+    "autopep8.args": [
+        "--max-line-length",
+        "159",
+    ],
+    "isort.args": [
+        "--multi-line",
+        "3",
+        "--line-length",
+        "159",
+        "--use-parentheses",
+        "--filter-files",
+    ],
+}
