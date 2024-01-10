@@ -7,7 +7,7 @@ name = "Utsuho"
 authors = [
     { name = "Nobuyuki Sekimori", email = "43375309+juno-rmks@users.noreply.github.com" },
 ]
-description = "Utsuho is a Python module that facilitates bidirectional conversion between half-width katakana and full-width katakana in Japanese, as well as between hiragana and katakana."
+description = "Utsuho is a Python module that facilitates bidirectional conversion between half-width katakana and full-width katakana in Japanese."
 classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",

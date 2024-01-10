@@ -1,15 +1,21 @@
 # Utsuho
 
-Utsuho is a Python module that facilitates bidirectional conversion between half-width katakana and full-width katakana in Japanese, as well as between hiragana and katakana.
-
-The name "Utsuho" originates from the narrative "Utsuho Monogatari," believed to have been composed during the mid-Heian period. This narrative contains descriptions related to katakana.
-
-Although the Python standard library allows for the normalization of Unicode strings, enabling the conversion of half-width katakana to full-width katakana, this process may involve unnecessary transformations such as decomposing composite characters and converting full-width alphanumeric symbols to half-width. Additionally, direct conversion from full-width katakana to half-width katakana is not supported.
-
-Utsuho provides bidirectional conversion for half-width katakana and full-width katakana, as well as between hiragana and katakana.
+Utsuho is a Python module that facilitates bidirectional conversion between half-width katakana and full-width katakana in Japanese. Furthermore, it offers bidirectional conversion between hiragana and katakana.
 
 > [!NOTE]
-> Starting from version 2.0.0, the functionality for bidirectional conversion between hiragana and katakana has been added.
+> From version 2.0.0 onward, you can now perform bidirectional conversion between hiragana and katakana.
+
+## Background and Goals
+
+In the Japanese character set, both half-width and full-width characters exist. In Japanese, the same data can be represented in either half-width or full-width characters. However, there is no standard for data representation in either half-width or full-width characters. When using Japanese data, you may often encounter inconsistencies between half-width and full-width characters.
+
+In the Python standard library, Unicode string normalization enables the conversion from half-width katakana to full-width katakana. However, this process may involve unnecessary transformations, such as decomposing composite characters and converting full-width alphanumeric symbols to half-width. Furthermore, there is no support for the reverse conversion from full-width katakana to half-width katakana.
+
+Utsuho supports bidirectional conversion between half-width and full-width katakana in Japanese without unnecessary transformations. Additionally, by providing a means to unify various Japanese representations, Utsuho aims to enhance the utility of Japanese data.
+
+## Origin of the name "Utsuho"
+
+The name "Utsuho" originates from "Utsuho Monogatari," believed to have been composed during the Heian period. This narrative includes descriptions related to learning katakana.
 
 ## Installing
 
