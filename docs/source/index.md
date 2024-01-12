@@ -4,7 +4,7 @@ Utsuho (うつほ) は、日本語の半角カタカナと全角カタカナの�
 
 <div style="text-align: center;">
   <picture>
-    <img src="_static/logo_500x500.png" alt="photo" width="200" height="200" />
+    <img src="_static/logo_500x500.png" alt="Utsuho's logo" width="200" height="200" />
   </picture>
 </div>
 

@@ -2,12 +2,6 @@
 
 Utsuho is a Python module that facilitates bidirectional conversion between half-width katakana and full-width katakana in Japanese. Furthermore, it offers bidirectional conversion between hiragana and katakana.
 
-<div style="text-align: center;">
-  <picture>
-    <img src="docs/source/_static/logo_500x500.png" alt="photo" width="200" height="200" />
-  </picture>
-</div>
-
 > [!NOTE]
 > From version 2.0.0 onward, you can now perform bidirectional conversion between hiragana and katakana.
 
