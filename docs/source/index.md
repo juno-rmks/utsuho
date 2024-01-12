@@ -2,6 +2,12 @@
 
 Utsuho (うつほ) は、日本語の半角カタカナと全角カタカナの双方向変換をサポートする Python モジュールです。更に、ひらがなとカタカナの双方向変換も提供しています。
 
+<div style="text-align: center;">
+  <picture>
+    <img src="_static/logo_500x500.png" alt="photo" width="200" height="200" />
+  </picture>
+</div>
+
 :::{note}
 バージョン 2.0.0 以降、ひらがなとカタカナの双方向変換が可能になりました。
 :::
