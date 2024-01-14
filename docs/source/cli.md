@@ -1,80 +1,79 @@
-# CLI
+# CLI (Command Line Interface)
 
-CLI (コマンドラインインターフェース) を説明します。
-
-Utsuho は、コーディングレスで使用できる CLI を提供します。
+Utsuho は Python ライブラリとしてだけでなく、対話的に利用することができる直感的なコマンドラインインターフェースも提供しています。
 
 ## シンタックス
 
-CLI のシンタックスは、`--help` オプションで確認できます。
+`--help` オプションを使用して、CLI の構文を表示できます。
 
 ```console
 % utsuho --help
 Usage: utsuho [OPTIONS] COMMAND [ARGS]...
 
   Utsuho is a Python module that facilitates bidirectional conversion between
-  half-width katakana and full-width katakana in Japanese, as well as between
-  hiragana and katakana.
+  half-width katakana and full-width katakana in Japanese. Furthermore, it
+  offers bidirectional conversion between hiragana and katakana.
 
 Options:
-  --version  Show version.
+  --version  Show the version.
   --help     Show this message and exit.
 
 Commands:
-  full-to-half          Convert full-width katakana to half-width katakana.
-  half-to-full          Convert half-width katakana to full-width katakana.
-  hiragana-to-katakana  Convert hiragana to katakana.
-  katakana-to-hiragana  Convert katakana to hiragana.
+  full-to-half          Convert from full-width to half-width characters.
+  half-to-full          Convert from half-width to full-width characters.
+  hiragana-to-katakana  Convert from hiragana to katakana.
+  katakana-to-hiragana  Convert from katakana to hiragana.
 ```
 
 ### `--version` オプション
 
-Utsuho のバージョンを確認できます。
+`--version` オプションを使用して、Utsuho のバージョンを表示できます。バージョンを表示した後、Utsuho は終了します。
+
+他のオプションやコマンドと一緒に指定された場合、Utsuho はバージョンを表示して終了します。
 
 ```console
 % utsuho --version
 Utsuho x.x.x
 ```
 
-コマンドと共に指定した場合、バージョンを表示して終了します。
-
 ### コマンド
 
-Utsuho が提供する各機能は、コマンドで実行できます。
+Utsuho は以下のコマンドを提供しています。
 
 - `full-to-half` コマンド
 
-  全角から半角への変換機能を実行するコマンドです。
+  このコマンドは、全角文字から半角文字への変換を実行します。
 
 - `half-to-full` コマンド
 
-  半角から全角への変換機能を実行するコマンドです。
+  このコマンドは、半角文字から全角文字への変換を実行します。
 
 - `hiragana-to-katakana` コマンド
 
-  ひらがなからカタカナへの変換機能を実行するコマンドです。
+  このコマンドは、ひらがなからカタカナへの変換を実行します。
 
 - `katakana-to-hiragana` コマンド
 
-  カタカナからひらがなへの変換機能を実行するコマンドです。
+  このコマンドは、カタカナからひらがなへの変換を実行します。
 
 ## `full-to-half` コマンド
 
-`full-to-half` コマンドのシンタックスは、`--help` オプションで確認できます。
+このコマンドは、全角文字から半角文字への変換を実行します。
+
+`--help` オプションを使用して、コマンドの構文を表示できます。
 
 ```console
 % utsuho full-to-half --help
 Usage: utsuho full-to-half [OPTIONS] TEXT
 
-  Convert full-width katakana to half-width katakana.
+  Convert from full-width to half-width characters.
 
 Options:
-  -f, --file  Use TEXT as file path.
+  -f, --file  Whether to use TEXT as a file path.
   --help      Show this message and exit.
 ```
 
-コマンドでは、`TEXT` に指定した文字列に含まれる全角文字を半角文字へ変換できます。
-変換結果は、標準出力へ出力されます。
+`TEXT` に含まれる全角文字を半角文字に変換できます。変換結果は標準出力に出力されます。
 
 ```console
 % utsuho full-to-half "キョウトシ　サキョウク　ギンカクジチョウ　２"
@@ -83,10 +82,11 @@ Options:
 
 ### `--file` オプション
 
-コマンドの引数 `TEXT` を変換対象の文字列ではなく、変換対象の文字列を含むファイルのパスとして処理します。
-変換結果は、標準出力へ出力されます。
+`TEXT` パラメーターを変換対象の文字列を含むファイルのパスと見做します。
 
-例として、全角文字列を含む `full.txt` というファイルを用意します。
+ファイル内の全角文字を半角文字に変換できます。変換結果は標準出力に出力されます。
+
+全角文字を含むファイル "full.txt" を作成します。
 
 full.txt:
 
@@ -94,7 +94,7 @@ full.txt:
 キョウトシ　サキョウク　ギンカクジチョウ　２
 ```
 
-`--file` オプションとファイルパスを指定して、コマンドを実行することで、ファイルの内容を変換できます。
+`--file` オプションとファイルのパス "full.txt" を指定して、コマンドを実行します。
 
 ```console
 % utsuho full-to-half --file full.txt
@@ -103,21 +103,22 @@ full.txt:
 
 ## `half-to-full` コマンド
 
-`half-to-full` コマンドのシンタックスは、`--help` オプションで確認できます。
+このコマンドは、半角文字から全角文字への変換を実行します。
+
+`--help` オプションを使用して、コマンドの構文を表示できます。
 
 ```console
-% utsuho half-to-full --help 
+% utsuho half-to-full --help
 Usage: utsuho half-to-full [OPTIONS] TEXT
 
-  Convert half-width katakana to full-width katakana.
+  Convert from half-width to full-width characters.
 
 Options:
-  -f, --file  Use TEXT as file path.
+  -f, --file  Whether to use TEXT as a file path.
   --help      Show this message and exit.
 ```
 
-コマンドでは、`TEXT` に指定した文字列に含まれる半角文字を全角文字へ変換できます。
-変換結果は、標準出力へ出力されます。
+`TEXT` に含まれる半角文字を全角文字に変換できます。変換結果は標準出力に出力されます。
 
 ```console
 % utsuho half-to-full "ｷｮｳﾄｼ ｻｷｮｳｸ ｷﾞﾝｶｸｼﾞﾁｮｳ 2"
@@ -126,10 +127,11 @@ Options:
 
 ### `--file` オプション
 
-コマンドの引数 `TEXT` を変換対象の文字列ではなく、変換対象の文字列を含むファイルのパスとして処理します。
-変換結果は、標準出力へ出力されます。
+`TEXT` パラメーターを変換対象の文字列を含むファイルのパスと見做します。
 
-例として、半角文字列を含む `half.txt` というファイルを用意します。
+ファイル内の半角文字を全角文字に変換できます。変換結果は標準出力に出力されます。
+
+全角文字を含むファイル "half.txt" を作成します。
 
 half.txt:
 
@@ -137,7 +139,7 @@ half.txt:
 ｷｮｳﾄｼ ｻｷｮｳｸ ｷﾞﾝｶｸｼﾞﾁｮｳ 2
 ```
 
-`--file` オプションとファイルパスを指定して、コマンドを実行することで、ファイルの内容を変換できます。
+`--file` オプションとファイルのパス "half.txt" を指定して、コマンドを実行します。
 
 ```console
 % utsuho half-to-full --file half.txt
@@ -146,21 +148,22 @@ half.txt:
 
 ## `hiragana-to-katakana` コマンド
 
-`hiragana-to-katakana` コマンドのシンタックスは、`--help` オプションで確認できます。
+このコマンドは、ひらがなからカタカナへの変換を実行します。
+
+`--help` オプションを使用して、コマンドの構文を表示できます。
 
 ```console
 % utsuho hiragana-to-katakana --help
 Usage: utsuho hiragana-to-katakana [OPTIONS] TEXT
 
-  Convert hiragana to katakana.
+  Convert from hiragana to katakana.
 
 Options:
-  -f, --file  Use TEXT as file path.
+  -f, --file  Whether to use TEXT as a file path.
   --help      Show this message and exit.
 ```
 
-コマンドでは、`TEXT` に指定した文字列に含まれるひらがなをカタカナへ変換できます。
-変換結果は、標準出力へ出力されます。
+`TEXT` に含まれるひらがなをカタカナに変換できます。変換結果は標準出力に出力されます。
 
 ```console
 % utsuho hiragana-to-katakana "きょうとし　さきょうく　ぎんかくじちょう　２"
@@ -169,10 +172,11 @@ Options:
 
 ### `--file` オプション
 
-コマンドの引数 `TEXT` を変換対象の文字列ではなく、変換対象の文字列を含むファイルのパスとして処理します。
-変換結果は、標準出力へ出力されます。
+`TEXT` パラメーターを変換対象の文字列を含むファイルのパスと見做します。
 
-例として、全角文字列を含む `hiragana.txt` というファイルを用意します。
+ファイル内のひらがなをカタカナに変換できます。変換結果は標準出力に出力されます。
+
+ひらがなを含むファイル "hiragana.txt" を作成します。
 
 hiragana.txt:
 
@@ -180,7 +184,7 @@ hiragana.txt:
 きょうとし　さきょうく　ぎんかくじちょう　２
 ```
 
-`--file` オプションとファイルパスを指定して、コマンドを実行することで、ファイルの内容を変換できます。
+`--file` オプションとファイルのパス "hiragana.txt" を指定して、コマンドを実行します。
 
 ```console
 % utsuho hiragana-to-katakana --file hiragana.txt
@@ -189,21 +193,22 @@ hiragana.txt:
 
 ## `katakana-to-hiragana` コマンド
 
-`katakana-to-hiragana` コマンドのシンタックスは、`--help` オプションで確認できます。
+このコマンドは、カタカナからひらがなへの変換を実行します。
+
+`--help` オプションを使用して、コマンドの構文を表示できます。
 
 ```console
 % utsuho katakana-to-hiragana --help
 Usage: utsuho katakana-to-hiragana [OPTIONS] TEXT
 
-  Convert katakana to hiragana.
+  Convert from katakana to hiragana.
 
 Options:
-  -f, --file  Use TEXT as file path.
+  -f, --file  Whether to use TEXT as a file path.
   --help      Show this message and exit.
 ```
 
-コマンドでは、`TEXT` に指定した文字列に含まれるカタカナをひらがなへ変換できます。
-変換結果は、標準出力へ出力されます。
+`TEXT` に含まれるカタカナをひらがなに変換できます。変換結果は標準出力に出力されます。
 
 ```console
 % utsuho katakana-to-hiragana "キョウトシ　サキョウク　ギンカクジチョウ　２"
@@ -212,10 +217,11 @@ Options:
 
 ### `--file` オプション
 
-コマンドの引数 `TEXT` を変換対象の文字列ではなく、変換対象の文字列を含むファイルのパスとして処理します。
-変換結果は、標準出力へ出力されます。
+`TEXT` パラメーターを変換対象の文字列を含むファイルのパスと見做します。
 
-例として、全角文字列を含む `katakana.txt` というファイルを用意します。
+ファイル内のカタカナをひらがなに変換できます。変換結果は標準出力に出力されます。
+
+カタカナを含むファイル "katakana.txt" を作成します。
 
 katakana.txt:
 
@@ -223,7 +229,7 @@ katakana.txt:
 キョウトシ　サキョウク　ギンカクジチョウ　２
 ```
 
-`--file` オプションとファイルパスを指定して、コマンドを実行することで、ファイルの内容を変換できます。
+`--file` オプションとファイルのパス "katakana.txt" を指定して、コマンドを実行します。
 
 ```console
 % utsuho katakana-to-hiragana --file katakana.txt

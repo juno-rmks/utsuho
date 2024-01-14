@@ -69,7 +69,7 @@ Run only the benchmark test suite with pytest.
 Update the documentation source to match the current source structure.
 
 ```console
-% sphinx-apidoc -f -T -e -M -o docs/source src
+% sphinx-apidoc -f -T -e -M -o docs/source/api src
 ```
 
 ## Building and publishing the package

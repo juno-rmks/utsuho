@@ -27,13 +27,13 @@ Utsuho の名称は "うつほ物語" に由来しており、この物語は平
 ## ユーザーガイド
 
 - <project:usage.md>
+- <project:cli.md>
 - <project:conversion_rules_for_half_and_full_width.md>
 - <project:conversion_rules_for_hiragana_and_katakana.md>
-- <project:cli.md>
 
 ## API リファレンス
 
-- <project:utsuho.rst>
+- <project:api/utsuho.rst>
 
 ## 索引と表
 
@@ -47,9 +47,9 @@ Utsuho の名称は "うつほ物語" に由来しており、この物語は平
 :hidden:
 
 usage
+cli
 conversion_rules_for_half_and_full_width
 conversion_rules_for_hiragana_and_katakana
-cli
 ```
 
 ```{toctree}
@@ -57,5 +57,5 @@ cli
 :caption: API リファレンス
 :hidden:
 
-utsuho
+api/utsuho
 ```

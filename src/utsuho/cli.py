@@ -1,5 +1,4 @@
-""" Utsuho's CLI (Command Line Interface).
-"""
+"""Module providing Utsuho's Command Line Interface (CLI)."""
 import os.path
 
 import click
@@ -9,19 +8,19 @@ from .converters import FullToHalfConverter, HalfToFullConverter, HiraganaToKata
 
 
 @click.group(invoke_without_command=True)
-@click.option('--version', is_flag=True, help='Show version.')
+@click.option('--version', is_flag=True, help='Show the version.')
 @click.pass_context
 def cli(ctx: click.Context, version: bool):
-    """ Utsuho is a Python module that facilitates bidirectional conversion
-    between half-width katakana and full-width katakana in Japanese,
-    as well as between hiragana and katakana.\f
+    """Utsuho is a Python module that facilitates bidirectional conversion
+    between half-width katakana and full-width katakana in Japanese.
+    Furthermore, it offers bidirectional conversion between hiragana and katakana.\f
 
     Parameters
     ----------
     ctx: click.Context
-        Context for click command.
+        Context for the click command.
     version: bool
-        Whether to show Utsuho version.
+        Whether to show the Utsuho version.
     """
     if version:
         click.echo(f'Utsuho {__version__}')
@@ -35,18 +34,18 @@ def cli(ctx: click.Context, version: bool):
 @cli.command()
 @click.option(
     '--file', '-f', 'file_', is_flag=True,
-    help='Whether to use TEXT as a file path or not.'
+    help='Whether to use TEXT as a file path.'
 )
 @click.argument('text')
 def full_to_half(file_: bool, text: str):
-    """ Convert full-width katakana to half-width katakana.\f
+    """Convert from full-width to half-width characters.\f
 
     Parameters
     ----------
     file_: bool
-        Whether to treat TEXT as a file path.
+        Whether to treat TEXT as a file path or not.
     text: str
-        String containing characters to convert to half-width katakana or the path of file containing them.
+        String containing characters to be converted to half-width characters or the path of a file containing them.
     """
     if file_:
         with open(os.path.abspath(text), 'r') as fp:
@@ -62,18 +61,18 @@ def full_to_half(file_: bool, text: str):
 @cli.command()
 @click.option(
     '--file', '-f', 'file_', is_flag=True,
-    help='Whether to use TEXT as a file path or not.'
+    help='Whether to use TEXT as a file path.'
 )
 @click.argument('text')
 def half_to_full(file_: bool, text: str):
-    """ Convert half-width katakana to full-width katakana.\f
+    """Convert from half-width to full-width characters.\f
 
     Parameters
     ----------
     file_: bool
-        Whether to treat TEXT as a file path.
+        Whether to treat TEXT as a file path or not.
     text: str
-        String containing characters to convert to full-width katakana or the path of file containing them.
+        String containing characters to be converted to full-width characters or the path of a file containing them.
     """
     if file_:
         with open(os.path.abspath(text), 'r') as fp:
@@ -89,18 +88,18 @@ def half_to_full(file_: bool, text: str):
 @cli.command()
 @click.option(
     '--file', '-f', 'file_', is_flag=True,
-    help='Whether to use TEXT as a file path or not.'
+    help='Whether to use TEXT as a file path.'
 )
 @click.argument('text')
 def hiragana_to_katakana(file_: bool, text: str):
-    """ Convert hiragana to katakana.\f
+    """Convert from hiragana to katakana.\f
 
     Parameters
     ----------
     file_: bool
-        Whether to treat TEXT as a file path.
+        Whether to treat TEXT as a file path or not.
     text: str
-        String containing characters to convert to katakana or the path of file containing them.
+        String containing characters to be converted to katakana or the path of a file containing them.
     """
     if file_:
         with open(os.path.abspath(text), 'r') as fp:
@@ -116,18 +115,18 @@ def hiragana_to_katakana(file_: bool, text: str):
 @cli.command()
 @click.option(
     '--file', '-f', 'file_', is_flag=True,
-    help='Whether to use TEXT as a file path or not.'
+    help='Whether to use TEXT as a file path.'
 )
 @click.argument('text')
 def katakana_to_hiragana(file_: bool, text: str):
-    """ Convert katakana to hiragana.\f
+    """Convert from katakana to hiragana.\f
 
     Parameters
     ----------
     file_: bool
-        Whether to treat TEXT as a file path.
+        Whether to treat TEXT as a file path or not.
     text: str
-        String containing characters to convert to hiragana or the path of file containing them.
+        String containing characters to be converted to hiragana or the path of a file containing them.
     """
     if file_:
         with open(os.path.abspath(text), 'r') as fp:
