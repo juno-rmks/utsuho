@@ -34,10 +34,7 @@ Install Utsuho and its development dependencies in editable mode.
 
 ```console
 % pip install --upgrade pip
-% pip install -e .
 % pip install -e .[dev]
-% pip install -e .[test]
-% pip install -e .[docs]
 ```
 
 Note for macOS users:

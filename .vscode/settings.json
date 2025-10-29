@@ -1,24 +1,14 @@
 {
+    "files.autoSave": "off",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": "never"
-        },
+            "source.organizeImports": "explicit"
+        }
     },
-    "pylint.args": [
-        "--max-line-length=159",
-    ],
-    "autopep8.args": [
-        "--max-line-length",
-        "159",
-    ],
-    "isort.args": [
-        "--multi-line",
-        "3",
-        "--line-length",
-        "159",
-        "--use-parentheses",
-        "--filter-files",
-    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "black-formatter.args": [
+        "--skip-string-normalization"
+    ]
 }
