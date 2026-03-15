@@ -44,9 +44,11 @@ disable = ["too-many-instance-attributes", "too-few-public-methods"]
 
 [tool.black]
 skip-string-normalization = true
+extend-exclude = "docs/source/conf.py"
 
 [tool.isort]
 profile = "black"
+skip = ["docs/source/conf.py"]
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib", "--benchmark-skip"]

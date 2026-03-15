@@ -43,6 +43,7 @@ jobs:
         run: pylint src/utsuho
 
       - name: Format check
+        if: matrix.python-version == '3.14'
         run: |
           black --check .
           isort --check-only .
