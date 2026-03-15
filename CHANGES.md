@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Simplified the `build-system` configuration in `pyproject.toml`.
 - Updated the packaging configuration to follow modern setuptools practices.
 - Reorganized development dependencies into `test`, `docs`, and `dev` extras.
+- Adjusted pylint configuration to allow intentional design patterns used in converter classes.
 
 ## [2.1.1] - 2025-10-30
 

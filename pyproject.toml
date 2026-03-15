@@ -39,6 +39,9 @@ utsuho = "utsuho.cli:cli"
 [tool.pylint.format]
 max-line-length = 88
 
+[tool.pylint.messages_control]
+disable = ["too-many-instance-attributes", "too-few-public-methods"]
+
 [tool.black]
 skip-string-normalization = true
 
@@ -49,9 +52,7 @@ profile = "black"
 addopts = ["--import-mode=importlib", "--benchmark-skip"]
 filterwarnings = ["error"]
 testpaths = ["tests"]
-markers = [
-    "benchmark: performance benchmarks",
-]
+markers = ["benchmark: performance benchmarks"]
 
 [tool.coverage.run]
 source = ["src"]
