@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adjusted pylint configuration to allow intentional design patterns used in converter classes.
 - Excluded `docs/source/conf.py` from Black and isort formatting checks.
 
+### Fixed
+
+- Fixed Windows test failures caused by relying on the platform default text encoding in CLI file-based tests.
+
 ## [2.1.1] - 2025-10-30
 
 ### Changed
