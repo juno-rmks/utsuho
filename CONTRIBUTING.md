@@ -1,97 +1,125 @@
-# How to contribute to Utsuho
+# Contributing to Utsuho
 
-Thank you for considering contributing to Utsuho!
+Thank you for your interest in contributing to Utsuho.
 
 > [!NOTE]
-> We assumed the native language of many contributors to be Japanese.
-> So, there is no problem you to post Issues and Discussions in Japanese.
-> 
+> Many contributors are expected to be Japanese speakers.
+> You are welcome to open Issues and Discussions in Japanese.
+>
 > 主な寄稿者の母国語は日本語と想定しています。
 > そのため、Issues や Discussions を日本語で投稿しても構いません。
 
-## Creating a pull request
+## Pull Requests
 
-To activate the project, creating pull requests is highly encouraged. When creating a pull request, please set the destination branch to the `develop` branch.
+Pull requests are welcome.
+Please open pull requests against the `main` branch.
+Small, focused pull requests are preferred.
 
-## Setup in your local environment
+For changes that affect behavior, documentation, packaging, or the release workflow, please update the relevant files in the same pull request whenever possible.
+If your change affects the CLI, please also update the README examples or help text as needed.
 
-Fork Utsuho to your GitHub account.
+## Local Setup
 
-Clone your fork locally, replacing `yourname` in the command below with your actual username.
+Fork the repository and clone your fork locally:
 
 ```console
 % git clone git@github.com:yourname/utsuho.git
+% cd utsuho
 ```
 
-Create and activate a Python virtual environment using version 3.8 or later.
+Create and activate a virtual environment with Python 3.10 or later:
 
 ```console
 % python -m venv .venv
 % . .venv/bin/activate
 ```
 
-Install Utsuho and its development dependencies in editable mode.
+Install Utsuho and its development dependencies:
 
 ```console
-% pip install --upgrade pip
-% pip install -e .[dev]
+% python -m pip install --upgrade pip
+% pip install -e ".[dev]"
 ```
 
-Note for macOS users:
-Escape square brackets with a backslash, e.g., \\[dev\\], when running these commands.
+The first command uses `python -m pip` to make sure `pip` is upgraded for the active interpreter.
+On some shells, such as `zsh`, you may need to escape or quote the square brackets in `.[dev]`.
 
-## Running the test
+## Running Checks Locally
 
-Run all test suites except the benchmark test suite with pytest.
+Run the linter:
+
+```console
+% pylint src/utsuho
+```
+
+Run the format checks:
+
+```console
+% black --check .
+% isort --check-only .
+```
+
+Run the test suite except benchmarks:
 
 ```console
 % pytest
 ```
 
-Run pytest using coverage and generate a report.
+Run the benchmark suite only:
+
+```console
+% pytest --benchmark-only
+```
+
+Generate a coverage report:
 
 ```console
 % coverage run -m pytest
 % coverage html
 ```
 
-Run only the benchmark test suite with pytest.
+## CI
 
-```console
-% pytest --benchmark-only
-```
+GitHub Actions runs CI automatically for pushes to `main`, pull requests targeting `main`, and manual workflow dispatches.
 
-## Updating the API reference
+The CI workflow tests supported Python versions on Ubuntu, macOS, and Windows, and runs lint, format, and test checks.
 
-Update the documentation source to match the current source structure.
+Please make sure your changes pass the local checks before opening a pull request.
+
+## Documentation Workflow
+
+To refresh the API reference source files:
 
 ```console
 % sphinx-apidoc -f -T -e -M -o docs/source/api src
 ```
 
-## Building and publishing the package
+Documentation is built on Read the Docs using [`.readthedocs.yaml`](.readthedocs.yaml).
 
- > [!NOTE]
- > This operation can only be performed by the project owner.
+## Building Packages Locally
 
-Generate the distribution archive.
+To build source and wheel distributions locally:
 
 ```console
 % python -m build
 ```
 
-Upload the distribution archive to Test PyPi.
+This is useful for validating packaging changes before pushing a release tag.
 
-```console
-% python -m twine upload --repository testpypi dist/*
-Enter your username: __token__
-Enter your password:
-```
+## CD and Releases
 
-Upload the distribution archive to PyPi.
+Release publishing is automated with GitHub Actions.
 
-```console
-% python -m twine upload dist/*
-Enter your username: __token__
-Enter your password:
-```
+When a Git tag is pushed:
+
+- the release workflow builds the distribution artifacts
+- the artifacts are published to TestPyPI
+- the artifacts are also published to PyPI unless the tag name contains `rc`
+
+In other words:
+
+- prerelease tags such as `1.0.0rc1` are published only to TestPyPI
+- final release tags such as `1.0.0` are published to both TestPyPI and PyPI
+
+> [!NOTE]
+> Publishing requires the repository's configured GitHub Actions environments and trusted publishing settings. Maintainers do not need to upload packages manually with `twine` during the normal release flow.
