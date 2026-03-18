@@ -8,14 +8,14 @@ def test_cli_help():
     runner = CliRunner()
     result = runner.invoke(cli, [])
     assert (
-        "Utsuho is a Python module that facilitates bidirectional conversion between"
+        "Utsuho provides deterministic normalization utilities for Japanese text,"
         in result.output
     )
     assert result.exit_code == 0
 
     result = runner.invoke(cli, ["--help"])
     assert (
-        "Utsuho is a Python module that facilitates bidirectional conversion between"
+        "Utsuho provides deterministic normalization utilities for Japanese text,"
         in result.output
     )
     assert result.exit_code == 0
