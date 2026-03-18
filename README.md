@@ -12,13 +12,14 @@ It focuses on character-level conversions such as width normalization and kana c
 - Bidirectional conversion between half-width and full-width katakana
 - Bidirectional conversion between hiragana and katakana
 - Configurable handling of spaces, punctuation, ASCII symbols, digits, and alphabets
-- Command-line interface for interactive use and shell pipelines
+- Command-line interface for interactive use and scripting
 
 ## Why Utsuho?
 
 Japanese text often mixes multiple representations of the same content, such as half-width and full-width katakana, or hiragana and katakana. Python's Unicode normalization can help in some cases, but it may also perform conversions you do not want, such as changing ASCII symbols or decomposing composite characters.
 
-Utsuho provides explicit, deterministic conversions for these Japanese text variants, making it easier to normalize Japanese text without introducing unrelated transformations.
+Utsuho provides explicit, deterministic character-level conversions for these
+Japanese text variants, making it easier to normalize Japanese text without introducing unrelated transformations.
 
 ## Installation
 
@@ -113,15 +114,14 @@ Available options:
 
 ## CLI
 
-Utsuho also provides a command-line interface that can be used in shell pipelines.
+Utsuho also provides a command-line interface for interactive use and scripting.
 
 ```console
 % utsuho --help
 Usage: utsuho [OPTIONS] COMMAND [ARGS]...
 
-  Utsuho is a Python module that facilitates bidirectional conversion between
-  half-width katakana and full-width katakana in Japanese. Furthermore, it
-  offers bidirectional conversion between hiragana and katakana.
+  Utsuho provides deterministic normalization utilities for Japanese text,
+  including width normalization and hiragana/katakana conversion.
 
 Options:
   --version  Show the version.

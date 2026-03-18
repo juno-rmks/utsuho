@@ -1,39 +1,41 @@
 # ひらがなとカタカナの変換規則
 
-ひらがなとカタカナの変換規則を説明します。
+Utsuho におけるひらがなとカタカナの変換規則を説明します。
 
 ## ひらがなからカタカナへの変換規則
 
-Unicode 標準の ["Hiragana"](https://unicode.org/charts/PDF/U3040.pdf) チャートで定義されているひらがなを対応するカタカナへ変換します。
+Unicode 標準の「[Hiragana](https://www.unicode.org/charts/PDF/U3040.pdf)」チャートで定義されているひらがなを、対応するカタカナへ変換します。
 
-- "Hiragana" チャート
-  - "Hiragana letters" (0x3041-0x3094)
-  - "Small letters" (0x3095-0x3096)
-  - "Iteration marks" (0x309D-0x309E)
+- 「Hiragana」チャート
+  - 「Hiragana letters」(0x3041-0x3094)
+  - 「Small letters」(0x3095-0x3096)
+  - 「Iteration marks」(0x309D-0x309E)
 
-ひらがなとカタカナで共用の "Voicing marks" として定義されている濁点と半濁点は変換しません。
+ひらがなとカタカナで共用される「Voicing marks」として定義されている濁点と半濁点は変換しません。
 
-対応するカタカナがない "Hiragana digraph" として定義されている合略仮名の "ゟ" (より) は変換しません。
+対応するカタカナがない「Hiragana digraph」として定義されている合略仮名の「ゟ」(より) は変換しません。
 
 ## カタカナからひらがなへの変換規則
 
-Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チャートで定義されているカタカナを対応するひらがなへ変換します。
+Unicode 標準の「[Katakana](https://www.unicode.org/charts/PDF/U30A0.pdf)」チャートで定義されているカタカナを、対応するひらがなへ変換します。
 
-- "Katakana" チャート
-  - "Katakana letters" (0x30A1-0x30F6)
-  - "Iteration marks" (0x30FD-0x30FE)
+- 「Katakana」チャート
+  - 「Katakana letters」(0x30A1-0x30F6)
+  - 「Iteration marks」(0x30FD-0x30FE)
 
-対応する非合成文字のひらがなのない "Katakana letters" として定義されている "ヷ"、"ヸ"、"ヹ" と "ヺ" は、変換しません。
+対応するひらがなの単独文字が定義されていない「Katakana letters」として定義されている「ヷ」「ヸ」「ヹ」「ヺ」は変換しません。
 
-ひらがなとカタカナで共用の "Conjunction and length marks" として定義されている中黒と長音記号は変換しません。
+ひらがなとカタカナで共用の「Conjunction and length marks」として定義されている中黒と長音記号は変換しません。
 
-対応するひらがながない "Katakana digraph" として定義されている合略仮名に類する "ヿ" (コト) は変換しません。
+対応するひらがながない「Katakana digraph」として定義されている「ヿ」(コト) は変換しません。
 
 ## ひらがなとカタカナのマップ
 
-ひらがなとカタカナのマッピングを示します。
+ひらがなとカタカナの対応関係を示します。
 
 ### 清音
+
+対応例は次の通りです。
 
 | ひらがな    | カタカナ    |
 | ----------- | ----------- |
@@ -88,6 +90,8 @@ Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チ
 
 ### 小文字
 
+対応例は次の通りです。
+
 | ひらがな    | カタカナ    |
 | ----------- | ----------- |
 | ぁ (0x3041) | ァ (0x30A1) |
@@ -104,6 +108,8 @@ Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チ
 | ゎ (0x308E) | ヮ (0x30EE) |
 
 ### 濁音
+
+対応例は次の通りです。
 
 | ひらがな    | カタカナ    |
 | ----------- | ----------- |
@@ -131,6 +137,8 @@ Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チ
 
 ### 半濁音
 
+対応例は次の通りです。
+
 | ひらがな    | カタカナ    |
 | ----------- | ----------- |
 | ぱ (0x3071) | パ (0x30D1) |
@@ -140,6 +148,8 @@ Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チ
 | ぽ (0x307D) | ポ (0x30DD) |
 
 ### 踊り字
+
+対応例は次の通りです。
 
 | ひらがな    | カタカナ    |
 | ----------- | ----------- |

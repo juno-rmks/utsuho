@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- A Continuous Integration (CI) workflow using GitHub Actions.
-- A release workflow using GitHub Actions to publish packages to TestPyPI and PyPI.
+- Continuous Integration (CI) workflow using GitHub Actions.
+- Release workflow using GitHub Actions to publish packages to TestPyPI and PyPI.
 
 ### Changed
 
@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Windows test failures caused by relying on the platform default encoding in CLI file-based tests.
+- Fixed Windows test failures caused by relying on the platform default encoding in CLI file-based tests.
 
 ## [2.1.1] - 2025-10-30
 

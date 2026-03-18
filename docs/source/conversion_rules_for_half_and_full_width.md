@@ -1,22 +1,24 @@
 # 半角と全角の変換規則
 
-半角と全角の変換規則を説明します。
+Utsuho における半角文字と全角文字の変換規則を説明します。
 
 ## 半角から全角への変換規則
 
-Unicode 標準の ["Halfwidth and Fullwidth Forms"](https://www.unicode.org/charts/PDF/UFF00.pdf) チャートで定義されている半角カタカナを対応する全角カタカナへ変換します。
+Unicode 標準の「[Halfwidth and Fullwidth Forms](https://www.unicode.org/charts/PDF/UFF00.pdf)」チャートで定義されている半角カタカナを、対応する全角カタカナへ変換します。
 
-半角カタカナとは、次の範囲の文字とします。
+ここでいう半角カタカナは、次の範囲の文字を指します。
 
-- "Halfwidth and Fullwidth Forms" チャート
-  - "Halfwidth CJK punctuation" (0xFF61-0xFF64)
-  - "Halfwidth Katakana variants" (0xFF65-0xFF9F)
+- 「Halfwidth and Fullwidth Forms」チャート
+  - 「Halfwidth CJK punctuation」(0xFF61-0xFF64)
+  - 「Halfwidth Katakana variants」(0xFF65-0xFF9F)
 
-上記範囲には、カタカナ文字以外に句点、読点、鉤括弧、中黒、長音記号、濁点、半濁点といった記号を含みます。
-Unicode には、ひらがなや漢字の半角文字はないため、これらの記号もカタカナの部分とします。
+上記の範囲には、カタカナ文字だけでなく、句点、読点、鉤括弧、中黒、長音記号、濁点、半濁点といった記号も含まれます。
+Unicode には、ひらがなや漢字の半角文字が存在しないため、これらの記号もカタカナの一部として扱います。
 
-濁点、半濁点は、直前の文字と組み合わせることで成る文字が全角カタカナの合成済み文字として定義されている場合、直前の文字と組み合わせた合成済み文字へ変換します。
-合成済み文字が定義されていない場合、全角の濁点、半濁点へ変換します。
+濁点と半濁点は、直前の文字と組み合わせた文字が全角カタカナの合成済み文字として定義されている場合、その合成済み文字へ変換します。
+合成済み文字が定義されていない場合は、全角の濁点または半濁点へ変換します。
+
+代表例は次の通りです。
 
 | 半角                       | 全角                  |
 | -------------------------- | --------------------- |
@@ -24,31 +26,33 @@ Unicode には、ひらがなや漢字の半角文字はないため、これら
 | ｱﾞ (0xFF71, 0xFF9E)         | ア゛ (0x30A2, 0x309B) |
 | ﾀﾞﾞ (0xFF80, 0xFF9E, 0xFF9E) | ダ゛ (0x30C0, 0x309B) |
 
-合成済み文字として Unicode で未定義の新しい文字を作り出さないようにするため、結合文字の濁点 (0x3099)、半濁点 (0x309A) へは変換しません。
+Unicode で未定義の合成済み文字を新たに作り出さないようにするため、結合文字の濁点 (0x3099) や半濁点 (0x309A) へは変換しません。
 
-句点、読点、鉤括弧、中黒、長音記号は、一括で変換するかしないかを選択できます。
+句点、読点、鉤括弧、中黒、長音記号は、設定により変換するかどうかを選択できます。
 
 ## 全角から半角への変換規則
 
-Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チャートで定義されている全角カタカナを対応する半角カタカナへ変換します。
-又、句点、読点、鉤括弧、濁点、半濁点といった全角カタカナのチャートには定義されていませんが、カタカナ表記で使用する記号も変換します。
+Unicode 標準の「[Katakana](https://www.unicode.org/charts/PDF/U30A0.pdf)」チャートで定義されている全角カタカナを、対応する半角カタカナへ変換します。
+また、句点、読点、鉤括弧、濁点、半濁点のように全角カタカナのチャート自体には定義されていなくても、カタカナ表記で使われる記号は変換対象に含めます。
 
-- "Katakana" チャート
-  - "Katakana letters" (0x30A1-0x30FA)
-  - "Conjunction and length marks" (0x30FB-0x30FC)
-- ["Hiragana"](https://www.unicode.org/charts/PDF/U3040.pdf) チャート
-  - "Voicing marks" (0x3099-0x309C)
-- ["CJK Symbols and Punctuation"](https://www.unicode.org/charts/PDF/U3000.pdf) チャート
-  - "CJK corner brackets" (0x300C-0x300D のみ)
+- 「Katakana」チャート
+  - 「Katakana letters」(0x30A1-0x30FA)
+  - 「Conjunction and length marks」(0x30FB-0x30FC)
+- 「[Hiragana](https://www.unicode.org/charts/PDF/U3040.pdf)」チャート
+  - 「Voicing marks」(0x3099-0x309C)
+- 「[CJK Symbols and Punctuation](https://www.unicode.org/charts/PDF/U3000.pdf)」チャート
+  - 「CJK corner brackets」(0x300C-0x300D のみ)
 
-半角カタカナが定義されていないワ行の "ヰ" と "ヱ"、それぞれの濁音は変換しません。
-同様に小文字の "ヵ" と "ヶ"、"ヮ" は変換しません。
+半角カタカナが定義されていないワ行の「ヰ」と「ヱ」、およびそれぞれの濁音は変換しません。
+同様に、小文字の「ヵ」と「ヶ」、「ヮ」も変換しません。
 
-"Katakana punctuation" として定義されているダブルハイフン "゠" は、相互変換できないため、変換しません。
-同様に "Iteration marks" や "Katakana digraph" に定義されている文字も変換しません。
+「Katakana punctuation」として定義されている「゠」 (ダブルハイフン) は、相互変換の対応先がないため変換しません。
+同様に、「Iteration marks」や「Katakana digraph」に定義されている文字も変換しません。
 
-濁音、半濁音は、合成済み文字か結合文字かに関わらず、半角カタカナの清音と濁点、半濁点へ変換します。
-単独の濁点、半濁点は、合成済み文字か結合文字かに関わらず、カタカナに続くとみなせる場合は、変換します。
+濁音と半濁音は、合成済み文字か結合文字かにかかわらず、半角カタカナの清音と濁点または半濁点へ変換します。
+単独の濁点と半濁点も、合成済み文字か結合文字かにかかわらず、カタカナに続くとみなせる場合は変換します。
+
+代表例は次の通りです。
 
 | 全角                  | 半角                       |
 | --------------------- | -------------------------- |
@@ -60,111 +64,114 @@ Unicode 標準の ["Katakana"](https://www.unicode.org/charts/PDF/U30A0.pdf) チ
 | だ゛ (0x3060, 0x309B) | だ゛(0x3060, 0x309B)       |
 
 :::{note}
-HTML で表示が崩れるため、半角に例示している (0x30C0, 0x3099) は、結合文字ではなく全角カタカナの濁音で表示しています。 
+HTML では、全角の例として示している (0x30BF, 0x3099) などの結合文字が、合成済みの濁音と見分けにくく表示される場合があります。
 :::
 
-句点、読点、鉤括弧、中黒、長音記号は、ひらがなかカタカナのいずれとして扱うかを判断できないため、一括で変換するかしないかを選択できます。
+句点、読点、鉤括弧、中黒、長音記号は、ひらがなとカタカナのどちらに属するかを一意に判断できません。
+そのため、設定により変換するかどうかを選択できます。
 
 ## カタカナ文字以外の取り扱い
 
-Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されているカタカナ文字以外も対応する半角、もしくは全角文字へ変換します。
-但し、ASCII に定義されていない記号と "Halfwidth Hangul variants" として定義されているハングルは除きます。
+ここでは、カタカナ文字以外の半角文字と全角文字の対応を説明します。
 
-異体字が定義されている文字は、対応する半角、もしくは全角文字にも同形の異体字が定義されている場合は、同形の異体字に変換します。
-同形の異体字が定義されていない場合は、異体字セレクターを除去し、正体の文字へ変換します。
+Unicode 標準の「Halfwidth and Fullwidth Forms」チャートで定義されている文字については、カタカナ以外も対応する半角文字または全角文字へ変換します。
+ただし、ASCII に定義されていない記号と「Halfwidth Hangul variants」として定義されているハングルは除きます。
 
-尚、異体字とは、["Variation Selectors"](https://www.unicode.org/charts/PDF/UFE00.pdf) チャートで定義されている SVS の異体字セレクターが続く文字です。
+異体字が定義されている文字は、対応する半角文字または全角文字にも同形の異体字が定義されている場合、その同形の異体字へ変換します。
+同形の異体字が定義されていない場合は、異体字セレクターを除去し、元の文字へ変換します。
+
+なお、ここでいう異体字とは、「[Variation Selectors](https://www.unicode.org/charts/PDF/UFE00.pdf)」チャートで定義されている SVS の異体字セレクターが続く文字を指します。
 
 ### スペースの取り扱い
 
 半角スペースは、次の文字です。
 
-- ["C0 Controls and Basic Latin"](https://www.unicode.org/charts/PDF/U0000.pdf) チャート
-  - "ASCII punctuation and symbols" (0x0020)
-- ["C1 Controls and Latin-1 Supplement "](https://www.unicode.org/charts/PDF/U0080.pdf) チャート
-  - "Latin-1 punctuation and symbols" (0x00A0)
+- 「[C0 Controls and Basic Latin](https://www.unicode.org/charts/PDF/U0000.pdf)」チャート
+  - 「ASCII punctuation and symbols」(0x0020)
+- 「[C1 Controls and Latin-1 Supplement](https://www.unicode.org/charts/PDF/U0080.pdf)」チャート
+  - 「Latin-1 punctuation and symbols」(0x00A0)
 
 全角スペースは、次の文字です。
 
-- "CJK Symbols and Punctuation"
-  - CJK symbols and punctuation (0x3000)
+- 「[CJK Symbols and Punctuation](https://www.unicode.org/charts/PDF/U3000.pdf)」チャート
+  - 「CJK symbols and punctuation」(0x3000)
 
-["General Punctuation"](https://www.unicode.org/charts/PDF/U2000.pdf) チャートのスペースやフォーマット文字は、変換しません。
+「[General Punctuation](https://www.unicode.org/charts/PDF/U2000.pdf)」チャートのスペースやフォーマット文字は、変換しません。
 
 ### 記号の取り扱い
 
 半角記号は、次の文字です。
 
-- "C0 Controls and Basic Latin" チャート
-  - "ASCII punctuation and symbols" (0x0021-0x002A)
-  - "ASCII math operator" (0x002B)
-  - "ASCII punctuation" (0x002C-0x002F)
-  - "ASCII punctuation" (0x003A-0x003B)
-  - "ASCII mathematical operators" (0x003C-0x003E)
-  - "ASCII punctuation" (0x003F-0x0040)
-  - "ASCII punctuation and symbols" (0x005B-0x0060)
-  - "ASCII punctuation and symbols" (0x007B-0x007E)
+- 「C0 Controls and Basic Latin」チャート
+  - 「ASCII punctuation and symbols」(0x0021-0x002A)
+  - 「ASCII math operator」(0x002B)
+  - 「ASCII punctuation」(0x002C-0x002F)
+  - 「ASCII punctuation」(0x003A-0x003B)
+  - 「ASCII mathematical operators」(0x003C-0x003E)
+  - 「ASCII punctuation」(0x003F-0x0040)
+  - 「ASCII punctuation and symbols」(0x005B-0x0060)
+  - 「ASCII punctuation and symbols」(0x007B-0x007E)
 
 全角記号は、次の文字です。
 
-- "Halfwidth and Fullwidth Forms" チャート
-  - "Fullwidth ASCII variants" (0xFF01-FF0F, 0xFF1A-0xFF20, 0xFF3B-0xFF40, 0xFF5B-0xFF5E)
+- 「Halfwidth and Fullwidth Forms」チャート
+  - 「Fullwidth ASCII variants」(0xFF01-0xFF0F, 0xFF1A-0xFF20, 0xFF3B-0xFF40, 0xFF5B-0xFF5E)
 
-揃え位置の異体字が定義されている全角の記号は、半角文字に同様の異体字が定義されていないため、正体の半角文字へ変換します。
-対象の記号は、直後に異体字セレクター "0xFE00" もしくは "0xFE01" が続く次の文字です。
+揃え位置の異体字が定義されている全角の記号は、半角文字に同様の異体字が定義されていないため、対応する半角文字へ変換します。
+対象の記号は、直後に異体字セレクター「0xFE00」もしくは「0xFE01」が続く次の文字です。
 
-- 感嘆符 "！" (0xFF01)
-- カンマ "，" (0xFF0C)
-- ピリオド "．" (0xFF0E)
-- コロン "：" (0xFF1A)
-- セミコロン "；" (0xFF1B)
-- 疑問符 "？" (0xFF1F)
+- 感嘆符「！」(0xFF01)
+- カンマ「，」(0xFF0C)
+- ピリオド「．」(0xFF0E)
+- コロン「：」(0xFF1A)
+- セミコロン「；」(0xFF1B)
+- 疑問符「？」(0xFF1F)
 
-全角のチルダ "～" は、全角のウェーブダッシュ (波線, 0x301C) "〜" で表されることもあるため、全角のウェーブダッシュも半角のチルダへ変換するかどうか選択できます。
+全角のチルダ「～」は、全角のウェーブダッシュ (波線, 0x301C) 「〜」で表されることもあるため、全角のウェーブダッシュも半角のチルダへ変換するかどうかを選択できます。
 半角のチルダは、常に全角のチルダへ変換します。
 
 ### 数字の取り扱い
 
 半角数字は、次の文字です。
 
-- "C0 Controls and Basic Latin" チャート
-  - "ASCII digits" (0x0030-0x0039)
+- 「C0 Controls and Basic Latin」チャート
+  - 「ASCII digits」(0x0030-0x0039)
 
 全角数字は、次の文字です。
 
-- "Halfwidth and Fullwidth Forms" チャート
-  - "Fullwidth ASCII variants" (0xFF10-0xFF19)
+- 「Halfwidth and Fullwidth Forms」チャート
+  - 「Fullwidth ASCII variants」(0xFF10-0xFF19)
 
-数字の "0" は、半角と全角共に斜線の入った形の異体字が定義されているため、異体字を相互に変換します。
+数字の「0」は、半角と全角の両方に斜線の入った形の異体字が定義されているため、異体字を相互に変換します。
 
 ### アルファベットの取り扱い
 
 半角アルファベットは、次の文字です。
 
-- "C0 Controls and Basic Latin" チャート
-  - "Uppercase Latin alphabet" (0x0041-0x005A)
-  - "Lowercase Latin alphabet" (0x0061-0x007A)
+- 「C0 Controls and Basic Latin」チャート
+  - 「Uppercase Latin alphabet」(0x0041-0x005A)
+  - 「Lowercase Latin alphabet」(0x0061-0x007A)
 
 全角アルファベットは、次の文字です。
 
-- "Halfwidth and Fullwidth Forms" チャート
-  - "Fullwidth ASCII variants" (0xFF21-0xFF3A, 0xFF41-0xFF5A)
+- 「Halfwidth and Fullwidth Forms」チャート
+  - 「Fullwidth ASCII variants」(0xFF21-0xFF3A, 0xFF41-0xFF5A)
 
 アルファベットには、異体字はないため、標準ルールで変換します。
 
 ## 制御文字の取り扱い
 
-半角から全角、全角から半角のいずれも変換では、不可視の制御文字も 1 文字として処理します。
+半角から全角への変換でも、全角から半角への変換でも、不可視の制御文字は 1 文字として処理します。
 
-濁音、半濁音とカタカナの間に制御文字がある場合、カタカナに続くとみなしません。
+濁音または半濁音とカタカナの間に制御文字がある場合は、カタカナに続くとはみなしません。
 
-半角から全角への変換は、次の通りになります。
+半角から全角への変換は、次の通りです。
 
 | 半角                       | 全角                          |
 | -------------------------- | ----------------------------- |
 | ﾀﾞ (0xFF80, 0x0000, 0xFF9E) | タ゛ (0x30BF, 0x0000, 0x309B) |
 
-全角から半角への変換は、次の通りになります。
+全角から半角への変換は、次の通りです。
 
 | 全角                          | 半角                         |
 | ----------------------------- | ---------------------------- |
@@ -172,9 +179,11 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 
 ## 半角と全角のマップ
 
-半角と全角のマッピングを示します。
+ここでは、Utsuho が半角文字と全角文字の対応関係として扱う文字マップを示します。
 
 ### カタカナ文字 (清音)
+
+対応例は次の通りです。
 
 | 半角       | 全角        |
 | ---------- | ----------- |
@@ -227,6 +236,8 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 
 ### カタカナ文字 (小文字)
 
+対応例は次の通りです。
+
 | 半角       | 全角        |
 | ---------- | ----------- |
 | ｬ (0xFF6C) | ャ (0x30E3) |
@@ -243,6 +254,8 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 
 半角から全角へは、合成済み文字のみへの変換になります。
 全角から半角は、合成済み文字か結合文字の両方を変換します。
+
+対応例は次の通りです。
 
 | 半角               | 全角                          |
 | ------------------ | ----------------------------- |
@@ -275,6 +288,8 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 半角から全角へは、合成済み文字のみへの変換になります。
 全角から半角は、合成済み文字か結合文字の両方を変換します。
 
+対応例は次の通りです。
+
 | 半角               | 全角                          |
 | ------------------ | ----------------------------- |
 | ﾊﾟ (0xFF8A, 0xFF9F) | パ (0x30D1), (0x30CF, 0x309A) |
@@ -283,7 +298,9 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 | ﾍﾟ (0xFF8D, 0xFF9F) | ペ (0x30DA), (0x30D8, 0x309A) |
 | ﾎﾟ (0xFF8E, 0xFF9F) | ポ (0x30DD), (0x30DB, 0x309A) |
 
-### カタカナ記号 (濁点、半濁点)
+### カタカナ記号 (濁点・半濁点)
+
+対応例は次の通りです。
 
 | 半角       | 全角        |
 | ---------- | ----------- |
@@ -292,12 +309,16 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 
 ### カタカナ記号 (句読点)
 
+対応例は次の通りです。
+
 | 半角       | 全角        |
 | ---------- | ----------- |
 | ､ (0xFF64) | 、 (0x3001) |
 | ｡ (0xFF61) | 。 (0x3002) |
 
 ### カタカナ記号 (鉤括弧)
+
+対応例は次の通りです。
 
 | 半角       | 全角        |
 | ---------- | ----------- |
@@ -306,11 +327,15 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 
 ### カタカナ記号 (中黒)
 
+対応例は次の通りです。
+
 | 半角       | 全角        |
 | ---------- | ----------- |
 | ･ (0xFF65) | ・ (0x30FB) |
 
 ### カタカナ記号 (長音記号)
+
+対応例は次の通りです。
 
 | 半角       | 全角        |
 | ---------- | ----------- |
@@ -318,19 +343,23 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 
 ### スペース
 
-| 半角              | 全角                |
-| ----------------- | ------------------- |
-| "&#x20;" (0x0020) | "&#x3000;" (0x3000) |
-| "&nbsp;" (0x00A0) | "&#x3000;" (0x3000) |
+対応例は次の通りです。
+
+| 半角                | 全角                  |
+| ------------------- | --------------------- |
+| 「&#x20;」 (0x0020) | 「&#x3000;」 (0x3000) |
+| 「&nbsp;」 (0x00A0) | 「&#x3000;」 (0x3000) |
 
 :::{note}
-例示しているスペースは、ダブルクォーテーションで括っています。 
+例示しているスペースは、鉤括弧で括っています。
 :::
 
 ### 記号
 
 半角から全角へは、異体字セレクターなしのみへの変換になります。
 全角から半角は、異体字セレクターの有無を問わず両方を変換します。
+
+対応例は次の通りです。
 
 | 半角        | 全角                                            |
 | ----------- | ----------------------------------------------- |
@@ -368,10 +397,12 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 | ~ (0x007E)  | ～ (0xFF5E), (0x301C)                           |
 
 :::{note}
-半角に例示しているバックスラッシュ (0x005C) は、日本語環境では円マークで表示されます。 
+半角に例示しているバックスラッシュ (0x005C) は、日本語環境では円マークで表示されます。
 :::
 
 ### 数字
+
+対応例は次の通りです。
 
 | 半角               | 全角                |
 | ------------------ | ------------------- |
@@ -388,6 +419,8 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 | 9 (0x0039)         | ９ (0xFF19)         |
 
 ### アルファベット (大文字)
+
+対応例は次の通りです。
 
 | 半角       | 全角        |
 | ---------- | ----------- |
@@ -420,6 +453,8 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 
 ### アルファベット (小文字)
 
+対応例は次の通りです。
+
 | 半角       | 全角        |
 | ---------- | ----------- |
 | a (0x0061) | ａ (0xFF41) |
@@ -447,4 +482,4 @@ Unicode 標準の "Halfwidth and Fullwidth Forms" チャートで定義されて
 | w (0x0077) | ｗ (0xFF57) |
 | x (0x0078) | ｘ (0xFF58) |
 | y (0x0079) | ｙ (0xFF59) |
-| z (0x007A) | ｚ (0xFF6A) |
+| z (0x007A) | ｚ (0xFF5A) |
