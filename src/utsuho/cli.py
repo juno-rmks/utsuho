@@ -1,5 +1,5 @@
 """
-Module providing Utsuho's Command Line Interface (CLI).
+Command-line interface for Utsuho.
 """
 
 import os.path
@@ -27,10 +27,8 @@ def cli(
     version: bool,
 ):
     """
-    Utsuho is a Python module that facilitates bidirectional conversion
-    between half-width katakana and full-width katakana in Japanese.
-    Furthermore, it offers bidirectional conversion between hiragana and
-    katakana.\f
+    Utsuho provides deterministic normalization utilities for Japanese text,
+    including width normalization and hiragana/katakana conversion.\f
 
     Parameters
     ----------

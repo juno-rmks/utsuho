@@ -8,14 +8,14 @@ def test_cli_help():
     runner = CliRunner()
     result = runner.invoke(cli, [])
     assert (
-        "Utsuho is a Python module that facilitates bidirectional conversion between"
+        "Utsuho provides deterministic normalization utilities for Japanese text,"
         in result.output
     )
     assert result.exit_code == 0
 
     result = runner.invoke(cli, ["--help"])
     assert (
-        "Utsuho is a Python module that facilitates bidirectional conversion between"
+        "Utsuho provides deterministic normalization utilities for Japanese text,"
         in result.output
     )
     assert result.exit_code == 0
@@ -41,7 +41,7 @@ def test_cli_full_to_half_with_filepath():
     runner = CliRunner()
 
     with runner.isolated_filesystem():
-        with open("test_full.txt", "w") as fp:
+        with open("test_full.txt", "w", encoding="utf-8") as fp:
             fp.write("キョウトシ　サキョウク　ギンカクジチョウ　２")
 
         result = runner.invoke(cli, ["full-to-half", "--file", "test_full.txt"])
@@ -67,7 +67,7 @@ def test_cli_half_to_full_with_filepath():
     runner = CliRunner()
 
     with runner.isolated_filesystem():
-        with open("test_half.txt", "w") as fp:
+        with open("test_half.txt", "w", encoding="utf-8") as fp:
             fp.write("ｷｮｳﾄｼ ｻｷｮｳｸ ｷﾞﾝｶｸｼﾞﾁｮｳ 2")
 
         result = runner.invoke(cli, ["half-to-full", "--file", "test_half.txt"])
@@ -95,7 +95,7 @@ def test_cli_hiragana_to_katakana_with_filepath():
     runner = CliRunner()
 
     with runner.isolated_filesystem():
-        with open("test_hiragana.txt", "w") as fp:
+        with open("test_hiragana.txt", "w", encoding="utf-8") as fp:
             fp.write("きょうとし　さきょうく　ぎんかくじちょう　２")
 
         result = runner.invoke(
@@ -125,7 +125,7 @@ def test_cli_katakana_to_hiragana_with_filepath():
     runner = CliRunner()
 
     with runner.isolated_filesystem():
-        with open("test_katakana.txt", "w") as fp:
+        with open("test_katakana.txt", "w", encoding="utf-8") as fp:
             fp.write("キョウトシ　サキョウク　ギンカクジチョウ　２")
 
         result = runner.invoke(

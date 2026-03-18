@@ -1,52 +1,86 @@
-# Utsuho Changes
+# Changelog
 
-## Version 2.1.1
+All notable changes to this project will be documented in this file.
 
-Released on 2025-10-30.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-* Dropped support for EOL Python versions (3.8, 3.9).
-* Modernized `pyproject.toml`.
-* Switched code formatter from autopep8 to Black.
-* Updated string literals to use double quotes instead of single quotes.
+## [2.1.2] - 2026-03-18
 
-## Version 2.1.0
+### Added
 
-Released on 2023-11-12.
+- Continuous Integration (CI) workflow using GitHub Actions.
+- Release workflow using GitHub Actions to publish packages to TestPyPI and PyPI.
 
-* Dropped support for Python 3.7 (EOL).
-* Added import for the hiragana–katakana bidirectional converter.
+### Changed
 
-## Version 2.0.0
+- Simplified the `build-system` configuration in `pyproject.toml`.
+- Updated the packaging configuration to follow current setuptools practices.
+- Reorganized development dependencies into `test`, `docs`, and `dev` extras.
+- Adjusted the pylint configuration to allow the intentional design patterns used in the converter classes.
+- Excluded `docs/source/conf.py` from Black and isort checks.
 
-Released on 2023-08-25.
+### Fixed
 
-* Added functionality to convert between hiragana and katakana.
-* Renamed the class `ConverterConfig` to `WidthConverterConfig`.
+- Fixed Windows test failures caused by relying on the platform default encoding in CLI file-based tests.
 
-## Version 1.1.2
+## [2.1.1] - 2025-10-30
 
-Released on 2023-04-23.
+### Changed
 
-* Added CLI support.
+- Modernized `pyproject.toml`.
+- Replaced autopep8 with Black as the code formatter.
+- Standardized string literals to use double quotes.
 
-## Version 1.1.1
+### Removed
 
-Released on 2023-04-06.
+- Support for EOL Python versions (3.8 and 3.9).
 
-* Fixed an issue where jQuery did not work on Read the Docs.  
+## [2.1.0] - 2023-11-12
+
+### Added
+
+- Import support for the hiragana-katakana bidirectional converter.
+
+### Removed
+
+- Support for Python 3.7 (EOL).
+
+## [2.0.0] - 2023-08-25
+
+### Changed
+
+- Renamed `ConverterConfig` to `WidthConverterConfig`.
+
+### Added
+
+- Bidirectional conversion between hiragana and katakana.
+
+## [1.1.2] - 2023-04-23
+
+### Added
+
+- CLI support.
+
+## [1.1.1] - 2023-04-06
+
+### Fixed
+
+- An issue that prevented jQuery from working on Read the Docs.
+
   See: ["Sphinx 6 is out and has important breaking changes"](https://blog.readthedocs.com/sphinx6-upgrade/).
 
-## Version 1.1.0
+## [1.1.0] - 2023-04-05
 
-Released on 2023-04-05.
+### Added
 
-* Added conversion between half-width and full-width spaces.
-* Added conversion between half-width and full-width symbols.
-* Added conversion between half-width and full-width digits.
-* Added conversion between half-width and full-width alphabets.
+- Conversion between half-width and full-width spaces.
+- Conversion between half-width and full-width symbols.
+- Conversion between half-width and full-width digits.
+- Conversion between half-width and full-width alphabets.
 
-## Version 1.0.0
+## [1.0.0] - 2023-04-02
 
-Released on 2023-04-02.
+### Added
 
-* Initial public preview release.
+- Initial public preview release.
