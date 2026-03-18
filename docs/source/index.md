@@ -12,6 +12,8 @@ Utsuho (うつほ) は、日本語テキストの表記揺れを決定的な変�
 ```{figure} _static/logo_wide.png
 :align: center
 :width: 450px
+
+Utsuho project logo (wide version)
 ```
 
 ## 背景
@@ -29,9 +31,13 @@ Utsuho の名称は「うつほ物語」に由来します。平安時代に成�
 ## ユーザーガイド
 
 - <project:usage.md>
+- <project:cli.md>
 - <project:conversion_rules_for_half_and_full_width.md>
 - <project:conversion_rules_for_hiragana_and_katakana.md>
-- <project:cli.md>
+
+## プロジェクト
+
+- <project:roadmap.md>
 
 ## API リファレンス
 
@@ -52,6 +58,14 @@ usage
 cli
 conversion_rules_for_half_and_full_width
 conversion_rules_for_hiragana_and_katakana
+```
+
+```{toctree}
+:maxdepth: 4
+:caption: プロジェクト
+:hidden:
+
+roadmap
 ```
 
 ```{toctree}
