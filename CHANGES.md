@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0rc1] - 2026-03-18
+
+### Added
+
+- MCP (Model Context Protocol) server support powered by FastMCP.
+- Optional `mcp` dependency group and the `utsuho-mcp` console script.
+- MCP documentation in the README and Sphinx documentation.
+- MCP client-based unit tests for the MCP server tools.
+
+### Changed
+
+- Updated the documentation index to include the MCP guide.
+- Refined the README and documentation wording for CLI, MCP, and conversion-rule guides.
+- Added `pytest-asyncio` to the test dependencies for async MCP tests.
+- Improved NumPy-style docstrings for the MCP server module and its tests.
+
 ## [2.1.2] - 2026-03-18
 
 ### Added

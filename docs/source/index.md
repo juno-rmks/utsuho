@@ -8,6 +8,7 @@ Utsuho (うつほ) は、日本語テキストの表記揺れを決定的な変�
 - ひらがなとカタカナの双方向変換
 - スペース、句読点、ASCII 記号、数字、アルファベットの変換可否を設定可能
 - シェルから使いやすい CLI を提供
+- MCP (Model Context Protocol) サーバとしても利用可能
 
 ```{figure} _static/logo_wide.png
 :align: center
@@ -32,6 +33,7 @@ Utsuho の名称は「うつほ物語」に由来します。平安時代に成�
 
 - <project:usage.md>
 - <project:cli.md>
+- <project:mcp.md>
 - <project:conversion_rules_for_half_and_full_width.md>
 - <project:conversion_rules_for_hiragana_and_katakana.md>
 
@@ -56,6 +58,7 @@ Utsuho の名称は「うつほ物語」に由来します。平安時代に成�
 
 usage
 cli
+mcp
 conversion_rules_for_half_and_full_width
 conversion_rules_for_hiragana_and_katakana
 ```
