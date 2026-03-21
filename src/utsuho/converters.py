@@ -99,42 +99,40 @@ class FullToHalfConverter:
             "\uff1f",
         ]
     )
+    _base_map = {
+        **full_to_half_letter_map,
+        **full_to_half_voicing_mark_map,
+    }
+    _optional_maps = (
+        ("punctuation", full_to_half_punctuation_map),
+        ("corner_brucket", full_to_half_corner_bracket_map),
+        ("conjunction_mark", full_to_half_conjunction_mark_map),
+        ("length_mark", full_to_half_length_mark_map),
+        ("space", full_to_half_space_map),
+        ("ascii_symbol", full_to_half_ascii_symbol_map),
+        ("ascii_digit", full_to_half_ascii_digit_map),
+        ("ascii_alphabet", full_to_half_ascii_alphabet_map),
+        ("wave_dash", full_to_half_wave_dash),
+    )
 
     def __init__(
         self,
         config: WidthConverterConfig = WidthConverterConfig(),
     ) -> None:
-        self._full_to_half_map = {
-            **full_to_half_letter_map,
-            **full_to_half_voicing_mark_map,
-        }
+        self._full_to_half_map = self._build_map(config)
 
-        if config.punctuation:
-            self._full_to_half_map.update(**full_to_half_punctuation_map)
+    @classmethod
+    def _build_map(
+        cls,
+        config: WidthConverterConfig,
+    ) -> dict[str, str]:
+        converter_map = dict(cls._base_map)
 
-        if config.corner_brucket:
-            self._full_to_half_map.update(**full_to_half_corner_bracket_map)
+        for attr_name, mapping in cls._optional_maps:
+            if getattr(config, attr_name):
+                converter_map.update(mapping)
 
-        if config.conjunction_mark:
-            self._full_to_half_map.update(**full_to_half_conjunction_mark_map)
-
-        if config.length_mark:
-            self._full_to_half_map.update(**full_to_half_length_mark_map)
-
-        if config.space:
-            self._full_to_half_map.update(**full_to_half_space_map)
-
-        if config.ascii_symbol:
-            self._full_to_half_map.update(**full_to_half_ascii_symbol_map)
-
-        if config.ascii_digit:
-            self._full_to_half_map.update(**full_to_half_ascii_digit_map)
-
-        if config.ascii_alphabet:
-            self._full_to_half_map.update(**full_to_half_ascii_alphabet_map)
-
-        if config.wave_dash:
-            self._full_to_half_map.update(**full_to_half_wave_dash)
+        return converter_map
 
     def convert(
         self,
@@ -205,39 +203,39 @@ class HalfToFullConverter:
     """
 
     _variation_selectors = frozenset(chr(c) for c in range(0xFE00, 0xFE0F + 1))
+    _base_map = {
+        **half_to_full_letter_map,
+        **half_to_full_voicing_mark_map,
+    }
+    _optional_maps = (
+        ("punctuation", half_to_full_punctuation_map),
+        ("corner_brucket", half_to_full_corner_bracket_map),
+        ("conjunction_mark", half_to_full_conjunction_mark_map),
+        ("length_mark", half_to_full_length_mark_map),
+        ("space", half_to_full_space_map),
+        ("ascii_symbol", half_to_full_ascii_symbol_map),
+        ("ascii_digit", half_to_full_ascii_digit_map),
+        ("ascii_alphabet", half_to_full_ascii_alphabet_map),
+    )
 
     def __init__(
         self,
         config: WidthConverterConfig = WidthConverterConfig(),
     ) -> None:
-        self._half_to_full_map = {
-            **half_to_full_letter_map,
-            **half_to_full_voicing_mark_map,
-        }
+        self._half_to_full_map = self._build_map(config)
 
-        if config.punctuation:
-            self._half_to_full_map.update(**half_to_full_punctuation_map)
+    @classmethod
+    def _build_map(
+        cls,
+        config: WidthConverterConfig,
+    ) -> dict[str, str | tuple[str, str | None, str | None]]:
+        converter_map = dict(cls._base_map)
 
-        if config.corner_brucket:
-            self._half_to_full_map.update(**half_to_full_corner_bracket_map)
+        for attr_name, mapping in cls._optional_maps:
+            if getattr(config, attr_name):
+                converter_map.update(mapping)
 
-        if config.conjunction_mark:
-            self._half_to_full_map.update(**half_to_full_conjunction_mark_map)
-
-        if config.length_mark:
-            self._half_to_full_map.update(**half_to_full_length_mark_map)
-
-        if config.space:
-            self._half_to_full_map.update(**half_to_full_space_map)
-
-        if config.ascii_symbol:
-            self._half_to_full_map.update(**half_to_full_ascii_symbol_map)
-
-        if config.ascii_digit:
-            self._half_to_full_map.update(**half_to_full_ascii_digit_map)
-
-        if config.ascii_alphabet:
-            self._half_to_full_map.update(**half_to_full_ascii_alphabet_map)
+        return converter_map
 
     def convert(
         self,
