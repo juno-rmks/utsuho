@@ -4,11 +4,9 @@ Converters for deterministic Japanese text normalization.
 
 from dataclasses import dataclass
 
-WidthMap = dict[str, str]
-KanaLetterMapping = tuple[str, str | None, str | None]
-HalfToFullMap = dict[str, str | KanaLetterMapping]
-
 from .maps import (
+    KanaLetterMapping,
+    SimpleCharacterMap,
     full_to_half_ascii_alphabet_map,
     full_to_half_ascii_digit_map,
     full_to_half_ascii_symbol_map,
@@ -33,6 +31,8 @@ from .maps import (
     hira_to_kana_map,
     kana_to_hira_map,
 )
+
+HalfToFullMap = dict[str, str | KanaLetterMapping]
 
 
 @dataclass(slots=True)
@@ -132,7 +132,7 @@ class FullToHalfConverter:
     def _build_map(
         cls,
         config: WidthConverterConfig,
-    ) -> WidthMap:
+    ) -> SimpleCharacterMap:
         converter_map = dict(cls._BASE_MAP)
 
         for attr_name, mapping in cls._OPTIONAL_MAPS:
