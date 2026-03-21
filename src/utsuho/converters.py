@@ -1,8 +1,12 @@
 """
-Converters.
+Converters for deterministic Japanese text normalization.
 """
 
 from dataclasses import dataclass
+
+WidthMap = dict[str, str]
+KanaLetterMapping = tuple[str, str | None, str | None]
+HalfToFullMap = dict[str, str | KanaLetterMapping]
 
 from .maps import (
     full_to_half_ascii_alphabet_map,
@@ -31,51 +35,51 @@ from .maps import (
 )
 
 
-@dataclass
+@dataclass(slots=True)
 class WidthConverterConfig:
     """
-    Configuration of whether to convert non-katakana characters.
+    Configuration for converting non-katakana characters.
 
     Parameters
     ----------
-    punctuation: bool, default=True
-        Whether to convert punctuations.
-    corner_brucket: bool, default=True
-        Whether to convert corner bruckets.
-    conjunction_mark: bool, default=True
-        Whether to convert conjunction mark.
-    length_mark: bool, default=True
-        Whether to convert length mark.
-    space: bool, default=True
+    punctuation : bool, default=True
+        Whether to convert punctuation marks.
+    corner_brucket : bool, default=True
+        Whether to convert corner brackets.
+    conjunction_mark : bool, default=True
+        Whether to convert conjunction marks.
+    length_mark : bool, default=True
+        Whether to convert length marks.
+    space : bool, default=True
         Whether to convert spaces.
-    ascii_symbol: bool, default=True
+    ascii_symbol : bool, default=True
         Whether to convert ASCII symbols.
-    ascii_alphabet: bool, default=True
+    ascii_alphabet : bool, default=True
         Whether to convert ASCII alphabets.
-    ascii_digit: bool, default=True
+    ascii_digit : bool, default=True
         Whether to convert ASCII digits.
-    wave_dash: bool, default=True
+    wave_dash : bool, default=False
         Whether to convert full-width wave dash to half-width tilde.
     """
 
     punctuation: bool = True
-    """ Whether to convert punctuations."""
+    """Whether to convert punctuation marks."""
     corner_brucket: bool = True
-    """ Whether to convert corner bruckets."""
+    """Whether to convert corner brackets."""
     conjunction_mark: bool = True
-    """ Whether to convert conjunction mark."""
+    """Whether to convert conjunction marks."""
     length_mark: bool = True
-    """ Whether to convert length mark."""
+    """Whether to convert length marks."""
     space: bool = True
-    """ Whether to convert spaces. """
+    """Whether to convert spaces."""
     ascii_symbol: bool = True
-    """ Whether to convert ASCII symbols. """
+    """Whether to convert ASCII symbols."""
     ascii_alphabet: bool = True
-    """ Whether to convert ASCII alphabets. """
+    """Whether to convert ASCII alphabets."""
     ascii_digit: bool = True
-    """ Whether to convert ASCII digits."""
+    """Whether to convert ASCII digits."""
     wave_dash: bool = False
-    """ Whether to convert full-width wave dash to half-width tilde. """
+    """Whether to convert full-width wave dashes to half-width tildes."""
 
 
 class FullToHalfConverter:
@@ -84,12 +88,12 @@ class FullToHalfConverter:
 
     Parameters
     ----------
-    config: WidthConverterConfig, default=WidthConverterConfig()
+    config : WidthConverterConfig, optional
         Additional configuration of whether to convert non-katakana letters.
     """
 
-    _variation_selectors = frozenset(chr(c) for c in range(0xFE00, 0xFE0F + 1))
-    _punctuation_variants = frozenset(
+    _VARIATION_SELECTORS = frozenset(chr(c) for c in range(0xFE00, 0xFE0F + 1))
+    _PUNCTUATION_VARIANTS = frozenset(
         [
             "\uff01",
             "\uff0c",
@@ -99,11 +103,11 @@ class FullToHalfConverter:
             "\uff1f",
         ]
     )
-    _base_map = {
+    _BASE_MAP = {
         **full_to_half_letter_map,
         **full_to_half_voicing_mark_map,
     }
-    _optional_maps = (
+    _OPTIONAL_MAPS = (
         ("punctuation", full_to_half_punctuation_map),
         ("corner_brucket", full_to_half_corner_bracket_map),
         ("conjunction_mark", full_to_half_conjunction_mark_map),
@@ -117,18 +121,21 @@ class FullToHalfConverter:
 
     def __init__(
         self,
-        config: WidthConverterConfig = WidthConverterConfig(),
+        config: WidthConverterConfig | None = None,
     ) -> None:
+        if config is None:
+            config = WidthConverterConfig()
+
         self._full_to_half_map = self._build_map(config)
 
     @classmethod
     def _build_map(
         cls,
         config: WidthConverterConfig,
-    ) -> dict[str, str]:
-        converter_map = dict(cls._base_map)
+    ) -> WidthMap:
+        converter_map = dict(cls._BASE_MAP)
 
-        for attr_name, mapping in cls._optional_maps:
+        for attr_name, mapping in cls._OPTIONAL_MAPS:
             if getattr(config, attr_name):
                 converter_map.update(mapping)
 
@@ -143,7 +150,7 @@ class FullToHalfConverter:
 
         Parameters
         ----------
-        s: str
+        s : str
             String containing characters to convert to half-width katakana.
 
         Returns
@@ -184,9 +191,9 @@ class FullToHalfConverter:
             if nc == "\ufe00" and cc == "\uff10":
                 converted.append("\ufe00")
                 i += 1
-            elif nc in {"\ufe00", "\ufe01"} and cc in self._punctuation_variants:
+            elif nc in {"\ufe00", "\ufe01"} and cc in self._PUNCTUATION_VARIANTS:
                 i += 1
-            elif nc in self._variation_selectors:
+            elif nc in self._VARIATION_SELECTORS:
                 i += 1
 
         return "".join(converted)
@@ -198,16 +205,16 @@ class HalfToFullConverter:
 
     Parameters
     ----------
-    config: WidthConverterConfig, default=WidthConverterConfig()
+    config : WidthConverterConfig, optional
         Additional configuration of whether to convert non-katakana letters.
     """
 
-    _variation_selectors = frozenset(chr(c) for c in range(0xFE00, 0xFE0F + 1))
-    _base_map = {
+    _VARIATION_SELECTORS = frozenset(chr(c) for c in range(0xFE00, 0xFE0F + 1))
+    _BASE_MAP = {
         **half_to_full_letter_map,
         **half_to_full_voicing_mark_map,
     }
-    _optional_maps = (
+    _OPTIONAL_MAPS = (
         ("punctuation", half_to_full_punctuation_map),
         ("corner_brucket", half_to_full_corner_bracket_map),
         ("conjunction_mark", half_to_full_conjunction_mark_map),
@@ -220,18 +227,21 @@ class HalfToFullConverter:
 
     def __init__(
         self,
-        config: WidthConverterConfig = WidthConverterConfig(),
+        config: WidthConverterConfig | None = None,
     ) -> None:
+        if config is None:
+            config = WidthConverterConfig()
+
         self._half_to_full_map = self._build_map(config)
 
     @classmethod
     def _build_map(
         cls,
         config: WidthConverterConfig,
-    ) -> dict[str, str | tuple[str, str | None, str | None]]:
-        converter_map = dict(cls._base_map)
+    ) -> HalfToFullMap:
+        converter_map = dict(cls._BASE_MAP)
 
-        for attr_name, mapping in cls._optional_maps:
+        for attr_name, mapping in cls._OPTIONAL_MAPS:
             if getattr(config, attr_name):
                 converter_map.update(mapping)
 
@@ -246,7 +256,7 @@ class HalfToFullConverter:
 
         Parameters
         ----------
-        s: str
+        s : str
             String containing characters to convert to full-width katakana.
 
         Returns
@@ -289,7 +299,7 @@ class HalfToFullConverter:
             if nc == "\ufe00" and cc == "\u0030":
                 converted.append("\ufe00")
                 i += 1
-            elif nc in self._variation_selectors:
+            elif nc in self._VARIATION_SELECTORS:
                 i += 1
 
         return "".join(converted)
@@ -309,8 +319,8 @@ class HiraganaToKatakanaConverter:
 
         Parameters
         ----------
-        s: str
-            String containing characters to convert katakana.
+        s : str
+            String containing characters to convert to katakana.
 
         Returns
         -------
@@ -320,7 +330,7 @@ class HiraganaToKatakanaConverter:
         if not isinstance(s, str):
             raise TypeError("s must be a string.")
 
-        return "".join([hira_to_kana_map.get(cc, cc) for cc in s])
+        return "".join(hira_to_kana_map.get(cc, cc) for cc in s)
 
 
 class KatakanaToHiraganaConverter:
@@ -337,8 +347,8 @@ class KatakanaToHiraganaConverter:
 
         Parameters
         ----------
-        s: str
-            String containing characters to convert hiragana.
+        s : str
+            String containing characters to convert to hiragana.
 
         Returns
         -------
@@ -348,4 +358,4 @@ class KatakanaToHiraganaConverter:
         if not isinstance(s, str):
             raise TypeError("s must be a string.")
 
-        return "".join([kana_to_hira_map.get(cc, cc) for cc in s])
+        return "".join(kana_to_hira_map.get(cc, cc) for cc in s)
