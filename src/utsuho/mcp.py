@@ -11,18 +11,54 @@ from .converters import (
     HalfToFullConverter,
     HiraganaToKatakanaConverter,
     KatakanaToHiraganaConverter,
+    WidthConverterConfig,
 )
 
 mcp = FastMCP("Utsuho")
 
-_half_to_full = HalfToFullConverter()
-_full_to_half = FullToHalfConverter()
 _hira_to_kata = HiraganaToKatakanaConverter()
 _kata_to_hira = KatakanaToHiraganaConverter()
 
 
+def _create_width_converter_config(
+    punctuation: bool = True,
+    corner_brucket: bool = True,
+    conjunction_mark: bool = True,
+    length_mark: bool = True,
+    space: bool = True,
+    ascii_symbol: bool = True,
+    ascii_digit: bool = True,
+    ascii_alphabet: bool = True,
+    wave_dash: bool = False,
+) -> WidthConverterConfig:
+    """
+    Create a width conversion configuration for MCP tools.
+    """
+    return WidthConverterConfig(
+        punctuation=punctuation,
+        corner_brucket=corner_brucket,
+        conjunction_mark=conjunction_mark,
+        length_mark=length_mark,
+        space=space,
+        ascii_symbol=ascii_symbol,
+        ascii_digit=ascii_digit,
+        ascii_alphabet=ascii_alphabet,
+        wave_dash=wave_dash,
+    )
+
+
 @mcp.tool
-def half_to_full(text: str) -> str:
+def half_to_full(
+    text: str,
+    punctuation: bool = True,
+    corner_brucket: bool = True,
+    conjunction_mark: bool = True,
+    length_mark: bool = True,
+    space: bool = True,
+    ascii_symbol: bool = True,
+    ascii_digit: bool = True,
+    ascii_alphabet: bool = True,
+) -> str:
     """
     Convert half-width characters to full-width characters.
 
@@ -30,17 +66,54 @@ def half_to_full(text: str) -> str:
     ----------
     text : str
         Text to convert to full-width characters.
+    punctuation : bool, default=True
+        Whether to convert punctuation marks.
+    corner_brucket : bool, default=True
+        Whether to convert corner brackets.
+    conjunction_mark : bool, default=True
+        Whether to convert conjunction marks.
+    length_mark : bool, default=True
+        Whether to convert length marks.
+    space : bool, default=True
+        Whether to convert spaces.
+    ascii_symbol : bool, default=True
+        Whether to convert ASCII symbols.
+    ascii_digit : bool, default=True
+        Whether to convert ASCII digits.
+    ascii_alphabet : bool, default=True
+        Whether to convert ASCII alphabets.
 
     Returns
     -------
     str
         Converted text.
     """
-    return _half_to_full.convert(text)
+    config = _create_width_converter_config(
+        punctuation=punctuation,
+        corner_brucket=corner_brucket,
+        conjunction_mark=conjunction_mark,
+        length_mark=length_mark,
+        space=space,
+        ascii_symbol=ascii_symbol,
+        ascii_digit=ascii_digit,
+        ascii_alphabet=ascii_alphabet,
+    )
+    return HalfToFullConverter(config).convert(text)
 
 
 @mcp.tool
-def full_to_half(text: str) -> str:
+def full_to_half(
+    text: str,
+    punctuation: bool = True,
+    corner_brucket: bool = True,
+    conjunction_mark: bool = True,
+    length_mark: bool = True,
+    space: bool = True,
+    ascii_symbol: bool = True,
+    ascii_digit: bool = True,
+    ascii_alphabet: bool = True,
+    wave_dash: bool = False,
+) -> str:
     """
     Convert full-width characters to half-width characters.
 
@@ -48,13 +121,42 @@ def full_to_half(text: str) -> str:
     ----------
     text : str
         Text to convert to half-width characters.
+    punctuation : bool, default=True
+        Whether to convert punctuation marks.
+    corner_brucket : bool, default=True
+        Whether to convert corner brackets.
+    conjunction_mark : bool, default=True
+        Whether to convert conjunction marks.
+    length_mark : bool, default=True
+        Whether to convert length marks.
+    space : bool, default=True
+        Whether to convert spaces.
+    ascii_symbol : bool, default=True
+        Whether to convert ASCII symbols.
+    ascii_digit : bool, default=True
+        Whether to convert ASCII digits.
+    ascii_alphabet : bool, default=True
+        Whether to convert ASCII alphabets.
+    wave_dash : bool, default=False
+        Whether to convert full-width wave dashes to half-width tildes.
 
     Returns
     -------
     str
         Converted text.
     """
-    return _full_to_half.convert(text)
+    config = _create_width_converter_config(
+        punctuation=punctuation,
+        corner_brucket=corner_brucket,
+        conjunction_mark=conjunction_mark,
+        length_mark=length_mark,
+        space=space,
+        ascii_symbol=ascii_symbol,
+        ascii_digit=ascii_digit,
+        ascii_alphabet=ascii_alphabet,
+        wave_dash=wave_dash,
+    )
+    return FullToHalfConverter(config).convert(text)
 
 
 @mcp.tool
@@ -97,4 +199,8 @@ def main() -> None:
     """
     Run the Utsuho MCP server.
     """
-    mcp.run()
+    mcp.run(
+        transport="stdio",
+        log_level="WARNING",
+        show_banner=False,
+    )
