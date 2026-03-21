@@ -140,3 +140,24 @@ def test_cli_katakana_to_hiragana_without_filepath():
     result = runner.invoke(cli, ["katakana-to-hiragana", "test_katakana.txt"])
     assert result.output == "test_katakana.txt\n"
     assert result.exit_code == 0
+
+
+def test_cli_full_to_half_with_stdin():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["full-to-half"], input="キョウトシ　２")
+    assert result.output == "ｷｮｳﾄｼ 2\n"
+    assert result.exit_code == 0
+
+
+def test_cli_hiragana_to_katakana_with_stdin():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["hiragana-to-katakana"], input="きょうとし　２")
+    assert result.output == "キョウトシ　２\n"
+    assert result.exit_code == 0
+
+
+def test_cli_without_text_and_stdin():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["half-to-full"])
+    assert "No input was provided via stdin." in result.output
+    assert result.exit_code != 0
