@@ -18,8 +18,7 @@ It focuses on character-level conversions such as width normalization and kana c
 
 Japanese text often mixes multiple representations of the same content, such as half-width and full-width katakana, or hiragana and katakana. Python's Unicode normalization can help in some cases, but it may also perform conversions you do not want, such as changing ASCII symbols or decomposing composite characters.
 
-Utsuho provides explicit, deterministic character-level conversions for these
-Japanese text variants, making it easier to normalize Japanese text without introducing unrelated transformations.
+Utsuho provides explicit, deterministic character-level conversions for these Japanese text variants, making it easier to normalize Japanese text without introducing unrelated transformations.
 
 ## Installation
 
@@ -151,6 +150,69 @@ Examples:
 ```
 
 Each command also accepts `--file` (or `-f`) to treat the argument as a UTF-8 text file path.
+
+## MCP (Model Context Protocol)
+
+Utsuho also provides a Model Context Protocol (MCP) server that exposes its text conversion utilities as tools.
+
+This allows Utsuho to be used from MCP-compatible clients such as AI agents and development tools.
+
+### Installation
+
+Install with the mcp extra:
+
+```sh
+pip install "Utsuho[mcp]"
+```
+
+### Running the MCP server
+
+Start the server using:
+
+```sh
+utsuho-mcp
+```
+
+The server runs over stdio and provides the following tools.
+
+### Available tools
+
+- half_to_full
+
+  Convert half-width text to full-width text.
+
+- full_to_half
+
+  Convert full-width text to half-width text.
+
+- hiragana_to_katakana
+
+  Convert hiragana to katakana.
+
+- katakana_to_hiragana
+
+  Convert katakana to hiragana.
+
+All tools accept `text: str` and return the converted string.
+
+The width-conversion tools also accept optional boolean parameters matching `WidthConverterConfig`:
+
+```text
+punctuation
+corner_brucket
+conjunction_mark
+length_mark
+space
+ascii_symbol
+ascii_digit
+ascii_alphabet
+```
+
+In addition, `full_to_half` accepts:
+
+```text
+wave_dash
+```
 
 ## Documentation
 
