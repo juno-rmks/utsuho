@@ -1,8 +1,13 @@
 """
-Characters mappings.
+Character mappings for deterministic Japanese text conversion.
 """
 
-half_to_full_letter_map = {
+KanaLetterMapping = tuple[str, str | None, str | None]
+SimpleCharacterMap = dict[str, str]
+
+# Base mappings for half-width to full-width conversion.
+# Each value is (base, voiced, semi-voiced).
+half_to_full_letter_map: dict[str, KanaLetterMapping] = {
     "\uff71": ("\u30a2", None, None),
     "\uff72": ("\u30a4", None, None),
     "\uff73": ("\u30a6", "\u30f4", None),
@@ -60,35 +65,35 @@ half_to_full_letter_map = {
     "\uff6b": ("\u30a9", None, None),
 }
 
-half_to_full_voicing_mark_map = {
+half_to_full_voicing_mark_map: SimpleCharacterMap = {
     "\uff9e": "\u309b",
     "\uff9f": "\u309c",
 }
 
-half_to_full_punctuation_map = {
+half_to_full_punctuation_map: SimpleCharacterMap = {
     "\uff64": "\u3001",
     "\uff61": "\u3002",
 }
 
-half_to_full_corner_bracket_map = {
+half_to_full_corner_bracket_map: SimpleCharacterMap = {
     "\uff62": "\u300c",
     "\uff63": "\u300d",
 }
 
-half_to_full_conjunction_mark_map = {
+half_to_full_conjunction_mark_map: SimpleCharacterMap = {
     "\uff65": "\u30fb",
 }
 
-half_to_full_length_mark_map = {
+half_to_full_length_mark_map: SimpleCharacterMap = {
     "\uff70": "\u30fc",
 }
 
-half_to_full_space_map = {
+half_to_full_space_map: SimpleCharacterMap = {
     "\u0020": "\u3000",
     "\u00a0": "\u3000",
 }
 
-half_to_full_ascii_symbol_map = {
+half_to_full_ascii_symbol_map: SimpleCharacterMap = {
     "\u0021": "\uff01",
     "\u0022": "\uff02",
     "\u0023": "\uff03",
@@ -123,7 +128,7 @@ half_to_full_ascii_symbol_map = {
     "\u007e": "\uff5e",
 }
 
-half_to_full_ascii_digit_map = {
+half_to_full_ascii_digit_map: SimpleCharacterMap = {
     "\u0030": "\uff10",
     "\u0031": "\uff11",
     "\u0032": "\uff12",
@@ -136,7 +141,7 @@ half_to_full_ascii_digit_map = {
     "\u0039": "\uff19",
 }
 
-half_to_full_ascii_alphabet_map = {
+half_to_full_ascii_alphabet_map: SimpleCharacterMap = {
     "\u0041": "\uff21",
     "\u0042": "\uff22",
     "\u0043": "\uff23",
@@ -191,7 +196,8 @@ half_to_full_ascii_alphabet_map = {
     "\u007a": "\uff5a",
 }
 
-full_to_half_letter_map = {
+# Derived reverse mappings for full-width to half-width conversion.
+full_to_half_letter_map: SimpleCharacterMap = {
     **{v[0]: k for k, v in half_to_full_letter_map.items() if v[0] is not None},
     **{
         v[1]: f"{k}\uff9e"
@@ -205,7 +211,7 @@ full_to_half_letter_map = {
     },
 }
 
-full_to_half_voicing_mark_map = {
+full_to_half_voicing_mark_map: SimpleCharacterMap = {
     **{v: k for k, v in half_to_full_voicing_mark_map.items()},
     **{
         "\u3099": "\uff9e",
@@ -213,35 +219,44 @@ full_to_half_voicing_mark_map = {
     },
 }
 
-full_to_half_punctuation_map = {v: k for k, v in half_to_full_punctuation_map.items()}
+full_to_half_punctuation_map: SimpleCharacterMap = {
+    v: k for k, v in half_to_full_punctuation_map.items()
+}
 
-full_to_half_corner_bracket_map = {
+full_to_half_corner_bracket_map: SimpleCharacterMap = {
     v: k for k, v in half_to_full_corner_bracket_map.items()
 }
 
-full_to_half_conjunction_mark_map = {
+full_to_half_conjunction_mark_map: SimpleCharacterMap = {
     v: k for k, v in half_to_full_conjunction_mark_map.items()
 }
 
-full_to_half_length_mark_map = {v: k for k, v in half_to_full_length_mark_map.items()}
+full_to_half_length_mark_map: SimpleCharacterMap = {
+    v: k for k, v in half_to_full_length_mark_map.items()
+}
 
-full_to_half_space_map = {
+full_to_half_space_map: SimpleCharacterMap = {
     "\u3000": "\u0020",
 }
 
-full_to_half_ascii_symbol_map = {v: k for k, v in half_to_full_ascii_symbol_map.items()}
+full_to_half_ascii_symbol_map: SimpleCharacterMap = {
+    v: k for k, v in half_to_full_ascii_symbol_map.items()
+}
 
-full_to_half_ascii_digit_map = {v: k for k, v in half_to_full_ascii_digit_map.items()}
+full_to_half_ascii_digit_map: SimpleCharacterMap = {
+    v: k for k, v in half_to_full_ascii_digit_map.items()
+}
 
-full_to_half_ascii_alphabet_map = {
+full_to_half_ascii_alphabet_map: SimpleCharacterMap = {
     v: k for k, v in half_to_full_ascii_alphabet_map.items()
 }
 
-full_to_half_wave_dash = {
+full_to_half_wave_dash: SimpleCharacterMap = {
     "\u301c": "\u007e",
 }
 
-hira_to_kana_map = {
+# Kana mappings.
+hira_to_kana_map: SimpleCharacterMap = {
     "\u3042": "\u30a2",
     "\u3044": "\u30a4",
     "\u3046": "\u30a6",
@@ -332,6 +347,6 @@ hira_to_kana_map = {
     "\u309e": "\u30fe",
 }
 
-kana_to_hira_map = {
+kana_to_hira_map: SimpleCharacterMap = {
     **{v: k for k, v in hira_to_kana_map.items()},
 }
