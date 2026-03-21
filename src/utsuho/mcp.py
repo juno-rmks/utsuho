@@ -20,7 +20,8 @@ _hira_to_kata = HiraganaToKatakanaConverter()
 _kata_to_hira = KatakanaToHiraganaConverter()
 
 
-def _create_width_converter_config(
+# pylint: disable=R0913,R0917
+def _build_width_converter_config(
     punctuation: bool = True,
     corner_brucket: bool = True,
     conjunction_mark: bool = True,
@@ -32,7 +33,7 @@ def _create_width_converter_config(
     wave_dash: bool = False,
 ) -> WidthConverterConfig:
     """
-    Create a width conversion configuration for MCP tools.
+    Build a width conversion configuration for MCP tools.
     """
     return WidthConverterConfig(
         punctuation=punctuation,
@@ -48,6 +49,7 @@ def _create_width_converter_config(
 
 
 @mcp.tool
+# pylint: disable=R0913,R0917
 def half_to_full(
     text: str,
     punctuation: bool = True,
@@ -88,7 +90,7 @@ def half_to_full(
     str
         Converted text.
     """
-    config = _create_width_converter_config(
+    config = _build_width_converter_config(
         punctuation=punctuation,
         corner_brucket=corner_brucket,
         conjunction_mark=conjunction_mark,
@@ -102,6 +104,7 @@ def half_to_full(
 
 
 @mcp.tool
+# pylint: disable=R0913,R0917
 def full_to_half(
     text: str,
     punctuation: bool = True,
@@ -145,7 +148,7 @@ def full_to_half(
     str
         Converted text.
     """
-    config = _create_width_converter_config(
+    config = _build_width_converter_config(
         punctuation=punctuation,
         corner_brucket=corner_brucket,
         conjunction_mark=conjunction_mark,

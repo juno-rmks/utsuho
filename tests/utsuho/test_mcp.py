@@ -98,7 +98,7 @@ class TestFullToHalf:
             assert result.data == "ｷﾞﾝｶｸｼﾞ ２Ｆ~"
 
 
-class TestHiragaToKatakana:
+class TestHiraganaToKatakana:
     """
     Tests for the hiragana_to_katakana MCP tool.
     """

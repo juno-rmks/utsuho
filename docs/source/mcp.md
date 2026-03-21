@@ -46,6 +46,14 @@ Convert half-width text to full-width text.
 
 ```text
 text: str
+punctuation: bool = True
+corner_brucket: bool = True
+conjunction_mark: bool = True
+length_mark: bool = True
+space: bool = True
+ascii_symbol: bool = True
+ascii_digit: bool = True
+ascii_alphabet: bool = True
 ```
 
 **Output**
@@ -62,6 +70,15 @@ Convert full-width text to half-width text.
 
 ```text
 text: str
+punctuation: bool = True
+corner_brucket: bool = True
+conjunction_mark: bool = True
+length_mark: bool = True
+space: bool = True
+ascii_symbol: bool = True
+ascii_digit: bool = True
+ascii_alphabet: bool = True
+wave_dash: bool = False
 ```
 
 **Output**
@@ -105,9 +122,9 @@ str
 ## Design Notes
 
 - Each tool corresponds directly to a converter class in Utsuho.
-- Tools are intentionally minimal and accept only a single `text` parameter.
+- The kana-conversion tools accept only `text`.
+- The width-conversion tools expose the same boolean options as `WidthConverterConfig`.
 - No context or state is maintained between calls.
-- Configuration options are not exposed in the initial version to keep the interface simple.
 
 ## Use Cases
 
@@ -122,6 +139,5 @@ Typical use cases include:
 
 Planned improvements may include:
 
-- Optional configuration parameters for width conversion
 - Additional normalization features (e.g., romanization)
 - Extended MCP capabilities such as resources or prompts

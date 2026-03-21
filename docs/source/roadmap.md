@@ -19,22 +19,29 @@ linguistic frameworks.
 
 ### MCP Interface
 
-Provide a Model Context Protocol (MCP) interface so that Utsuho can be
-used as a tool from AI systems.
+Build on the newly added Model Context Protocol (MCP) interface so that Utsuho can be used more effectively from AI systems and developer tools.
 
-Planned features:
+Delivered in 2.2.0:
 
 - MCP server implementation
-- four conversion tools
+- four conversion tools:
   - `half_to_full`
   - `full_to_half`
   - `hiragana_to_katakana`
   - `katakana_to_hiragana`
 - optional dependency (`utsuho[mcp]`)
 - stdio transport support
+- width-conversion options exposed for MCP clients
 
-This enables AI systems and agents to normalize Japanese text using
-Utsuho.
+Near-term improvements:
+
+- richer MCP usage examples and client integration guides
+- clearer compatibility guidance for MCP hosts and agent environments
+- possible support for additional MCP capabilities such as resources or
+  prompts, where they fit the project's deterministic scope
+
+This allows AI systems and agents to normalize Japanese text using
+Utsuho while keeping the interface explicit and predictable.
 
 ### Kana → Romaji Conversion
 

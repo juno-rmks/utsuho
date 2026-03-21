@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.0rc2] - 2026-03-21
+## [2.2.0rc3] - 2026-03-21
 
 ### Added
 
@@ -17,8 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The documentation index now includes the MCP guide.
-- Refined the README and documentation wording for the CLI, MCP, and conversion-rule guides.
+- Refined the README and documentation wording for the CLI, MCP, roadmap, and conversion-rule guides.
 - The MCP server now starts with a quieter default configuration (`WARNING` log level and no startup banner).
+- Relaxed the minimum supported Click version to 8.1 and capped the dependency below Click 9.
 
 ### Fixed
 

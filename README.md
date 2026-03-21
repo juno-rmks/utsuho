@@ -193,13 +193,26 @@ The server runs over stdio and provides the following tools.
 
   Convert katakana to hiragana.
 
-All tools accept a single parameter:
+All tools accept `text: str` and return the converted string.
+
+The width-conversion tools also accept optional boolean parameters matching `WidthConverterConfig`:
 
 ```text
-text: str
+punctuation
+corner_brucket
+conjunction_mark
+length_mark
+space
+ascii_symbol
+ascii_digit
+ascii_alphabet
 ```
 
-and return the converted string.
+In addition, `full_to_half` accepts:
+
+```text
+wave_dash
+```
 
 ## Documentation
 
