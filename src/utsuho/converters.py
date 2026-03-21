@@ -293,14 +293,16 @@ class HalfToFullConverter:
                 continue
 
             if cc in half_to_full_letter_map:
-                if nc == self._VOICED_MARK and v[1] is not None:
-                    converted.append(v[1])
+                base, voiced, semi_voiced = v
+
+                if nc == self._VOICED_MARK and voiced is not None:
+                    converted.append(voiced)
                     i += 2
-                elif nc == self._SEMI_VOICED_MARK and v[2] is not None:
-                    converted.append(v[2])
+                elif nc == self._SEMI_VOICED_MARK and semi_voiced is not None:
+                    converted.append(semi_voiced)
                     i += 2
                 else:
-                    converted.append(v[0])
+                    converted.append(base)
                     i += 1
 
                 continue
