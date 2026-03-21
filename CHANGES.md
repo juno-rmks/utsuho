@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refined internal converter and mapping code for readability and more Pythonic structure.
 - Aligned package-level and internal module documentation with the current README messaging.
 - Updated benchmark coverage to use longer inputs for more stable performance comparisons.
+- Added performance notes to the README and documentation index based on the refreshed benchmark suite.
 
 ## [2.2.0] - 2026-03-21
 

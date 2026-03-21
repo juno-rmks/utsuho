@@ -195,10 +195,14 @@ class FullToHalfConverter:
             if nc == self._VARIATION_SELECTOR_0 and cc == self._FULLWIDTH_ZERO:
                 converted.append(self._VARIATION_SELECTOR_0)
                 i += 1
-            elif nc in {
-                self._VARIATION_SELECTOR_0,
-                self._VARIATION_SELECTOR_1,
-            } and cc in self._PUNCTUATION_VARIANTS:
+            elif (
+                nc
+                in {
+                    self._VARIATION_SELECTOR_0,
+                    self._VARIATION_SELECTOR_1,
+                }
+                and cc in self._PUNCTUATION_VARIANTS
+            ):
                 i += 1
             elif nc in self._VARIATION_SELECTORS:
                 i += 1

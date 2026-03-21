@@ -20,6 +20,14 @@ Japanese text often mixes multiple representations of the same content, such as 
 
 Utsuho provides explicit, deterministic character-level conversions for these Japanese text variants, making it easier to normalize Japanese text without introducing unrelated transformations.
 
+## Performance
+
+Utsuho is implemented in pure Python, but still provides practical throughput for character-level normalization workloads.
+
+In the project's long-input benchmarks on CPython 3.10, kana conversion is roughly in the 7 to 8 million input characters per second range, while width conversion is roughly in the 1 to 3 million input characters per second range.
+
+These numbers are intended as indicative throughput rather than fixed guarantees, and will vary by platform, Python version, input mix, and power or thermal conditions.
+
 ## Installation
 
 Install Utsuho with `pip`:
