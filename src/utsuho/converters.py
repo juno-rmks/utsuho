@@ -93,6 +93,9 @@ class FullToHalfConverter:
     """
 
     _VARIATION_SELECTORS = frozenset(chr(c) for c in range(0xFE00, 0xFE0F + 1))
+    _VARIATION_SELECTOR_0 = "\ufe00"
+    _VARIATION_SELECTOR_1 = "\ufe01"
+    _FULLWIDTH_ZERO = "\uff10"
     _PUNCTUATION_VARIANTS = frozenset(
         [
             "\uff01",
@@ -188,10 +191,13 @@ class FullToHalfConverter:
             converted.append(v)
             i += 1
 
-            if nc == "\ufe00" and cc == "\uff10":
-                converted.append("\ufe00")
+            if nc == self._VARIATION_SELECTOR_0 and cc == self._FULLWIDTH_ZERO:
+                converted.append(self._VARIATION_SELECTOR_0)
                 i += 1
-            elif nc in {"\ufe00", "\ufe01"} and cc in self._PUNCTUATION_VARIANTS:
+            elif nc in {
+                self._VARIATION_SELECTOR_0,
+                self._VARIATION_SELECTOR_1,
+            } and cc in self._PUNCTUATION_VARIANTS:
                 i += 1
             elif nc in self._VARIATION_SELECTORS:
                 i += 1
@@ -210,6 +216,10 @@ class HalfToFullConverter:
     """
 
     _VARIATION_SELECTORS = frozenset(chr(c) for c in range(0xFE00, 0xFE0F + 1))
+    _VARIATION_SELECTOR_0 = "\ufe00"
+    _HALFWIDTH_ZERO = "\u0030"
+    _VOICED_MARK = "\uff9e"
+    _SEMI_VOICED_MARK = "\uff9f"
     _BASE_MAP = {
         **half_to_full_letter_map,
         **half_to_full_voicing_mark_map,
@@ -281,10 +291,10 @@ class HalfToFullConverter:
                 continue
 
             if cc in half_to_full_letter_map:
-                if nc == "\uff9e" and v[1] is not None:
+                if nc == self._VOICED_MARK and v[1] is not None:
                     converted.append(v[1])
                     i += 2
-                elif nc == "\uff9f" and v[2] is not None:
+                elif nc == self._SEMI_VOICED_MARK and v[2] is not None:
                     converted.append(v[2])
                     i += 2
                 else:
@@ -296,8 +306,8 @@ class HalfToFullConverter:
             converted.append(v)
             i += 1
 
-            if nc == "\ufe00" and cc == "\u0030":
-                converted.append("\ufe00")
+            if nc == self._VARIATION_SELECTOR_0 and cc == self._HALFWIDTH_ZERO:
+                converted.append(self._VARIATION_SELECTOR_0)
                 i += 1
             elif nc in self._VARIATION_SELECTORS:
                 i += 1

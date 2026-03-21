@@ -1,6 +1,6 @@
 """
-Utsuho is an interconverter between Japanese half-width katakana and full-width
-katakana.
+Utsuho provides deterministic normalization utilities for Japanese text
+variants.
 """
 
 from .converters import (
