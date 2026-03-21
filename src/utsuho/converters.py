@@ -166,11 +166,12 @@ class FullToHalfConverter:
 
         converted = []
         i = 0
+        n = len(s)
         in_katakana = False
 
-        while i < len(s):
+        while i < n:
             cc = s[i]
-            nc = s[i + 1] if i < len(s) - 1 else None
+            nc = s[i + 1] if i < n - 1 else None
             v = self._full_to_half_map.get(cc, None)
 
             if v is None:
@@ -279,10 +280,11 @@ class HalfToFullConverter:
 
         converted = []
         i = 0
+        n = len(s)
 
-        while i < len(s):
+        while i < n:
             cc = s[i]
-            nc = s[i + 1] if i < len(s) - 1 else None
+            nc = s[i + 1] if i < n - 1 else None
             v = self._half_to_full_map.get(cc, None)
 
             if v is None:
