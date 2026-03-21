@@ -11,4 +11,4 @@ from .converters import (
     WidthConverterConfig,
 )
 
-__version__ = "2.2.1rc1"
+__version__ = "2.2.1"
