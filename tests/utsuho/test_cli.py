@@ -1,3 +1,7 @@
+"""
+Tests for the Utsuho command-line interface.
+"""
+
 from click.testing import CliRunner
 
 from utsuho import __version__
@@ -5,6 +9,9 @@ from utsuho.cli import cli
 
 
 def test_cli_help():
+    """
+    Verify that the CLI shows help text.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, [])
     assert (
@@ -22,6 +29,9 @@ def test_cli_help():
 
 
 def test_cli_version():
+    """
+    Verify that the CLI shows the package version.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["--version"])
     assert result.output == f"Utsuho {__version__}\n"
@@ -29,6 +39,9 @@ def test_cli_version():
 
 
 def test_cli_full_to_half():
+    """
+    Verify full-width to half-width conversion from a direct argument.
+    """
     runner = CliRunner()
     result = runner.invoke(
         cli, ["full-to-half", "キョウトシ　サキョウク　ギンカクジチョウ　２"]
@@ -38,6 +51,9 @@ def test_cli_full_to_half():
 
 
 def test_cli_full_to_half_with_filepath():
+    """
+    Verify full-width to half-width conversion from a file path.
+    """
     runner = CliRunner()
 
     with runner.isolated_filesystem():
@@ -50,6 +66,9 @@ def test_cli_full_to_half_with_filepath():
 
 
 def test_cli_full_to_half_without_filepath():
+    """
+    Verify that text is treated as a plain argument without `--file`.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["full-to-half", "test_full.txt"])
     assert result.output == "test_full.txt\n"
@@ -57,6 +76,9 @@ def test_cli_full_to_half_without_filepath():
 
 
 def test_cli_half_to_full():
+    """
+    Verify half-width to full-width conversion from a direct argument.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["half-to-full", "ｷｮｳﾄｼ ｻｷｮｳｸ ｷﾞﾝｶｸｼﾞﾁｮｳ 2"])
     assert result.output == "キョウトシ　サキョウク　ギンカクジチョウ　２\n"
@@ -64,6 +86,9 @@ def test_cli_half_to_full():
 
 
 def test_cli_half_to_full_with_filepath():
+    """
+    Verify half-width to full-width conversion from a file path.
+    """
     runner = CliRunner()
 
     with runner.isolated_filesystem():
@@ -76,6 +101,9 @@ def test_cli_half_to_full_with_filepath():
 
 
 def test_cli_half_to_full_without_filepath():
+    """
+    Verify that text is treated as a plain argument without `--file`.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["half-to-full", "test_half.txt"])
     assert result.output == "ｔｅｓｔ＿ｈａｌｆ．ｔｘｔ\n"
@@ -83,6 +111,9 @@ def test_cli_half_to_full_without_filepath():
 
 
 def test_cli_hiragana_to_katakana():
+    """
+    Verify hiragana to katakana conversion from a direct argument.
+    """
     runner = CliRunner()
     result = runner.invoke(
         cli, ["hiragana-to-katakana", "きょうとし　さきょうく　ぎんかくじちょう　２"]
@@ -92,6 +123,9 @@ def test_cli_hiragana_to_katakana():
 
 
 def test_cli_hiragana_to_katakana_with_filepath():
+    """
+    Verify hiragana to katakana conversion from a file path.
+    """
     runner = CliRunner()
 
     with runner.isolated_filesystem():
@@ -106,6 +140,9 @@ def test_cli_hiragana_to_katakana_with_filepath():
 
 
 def test_cli_hiragana_to_katakana_without_filepath():
+    """
+    Verify that text is treated as a plain argument without `--file`.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["hiragana-to-katakana", "test_hiragana.txt"])
     assert result.output == "test_hiragana.txt\n"
@@ -113,6 +150,9 @@ def test_cli_hiragana_to_katakana_without_filepath():
 
 
 def test_cli_katakana_to_hiragana():
+    """
+    Verify katakana to hiragana conversion from a direct argument.
+    """
     runner = CliRunner()
     result = runner.invoke(
         cli, ["katakana-to-hiragana", "キョウトシ　サキョウク　ギンカクジチョウ　２"]
@@ -122,6 +162,9 @@ def test_cli_katakana_to_hiragana():
 
 
 def test_cli_katakana_to_hiragana_with_filepath():
+    """
+    Verify katakana to hiragana conversion from a file path.
+    """
     runner = CliRunner()
 
     with runner.isolated_filesystem():
@@ -136,6 +179,9 @@ def test_cli_katakana_to_hiragana_with_filepath():
 
 
 def test_cli_katakana_to_hiragana_without_filepath():
+    """
+    Verify that text is treated as a plain argument without `--file`.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["katakana-to-hiragana", "test_katakana.txt"])
     assert result.output == "test_katakana.txt\n"
@@ -143,6 +189,9 @@ def test_cli_katakana_to_hiragana_without_filepath():
 
 
 def test_cli_full_to_half_with_stdin():
+    """
+    Verify full-width to half-width conversion from stdin.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["full-to-half"], input="キョウトシ　２")
     assert result.output == "ｷｮｳﾄｼ 2\n"
@@ -150,6 +199,9 @@ def test_cli_full_to_half_with_stdin():
 
 
 def test_cli_hiragana_to_katakana_with_stdin():
+    """
+    Verify hiragana to katakana conversion from stdin.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["hiragana-to-katakana"], input="きょうとし　２")
     assert result.output == "キョウトシ　２\n"
@@ -157,6 +209,9 @@ def test_cli_hiragana_to_katakana_with_stdin():
 
 
 def test_cli_without_text_and_stdin():
+    """
+    Verify that the CLI errors when neither text nor stdin input is provided.
+    """
     runner = CliRunner()
     result = runner.invoke(cli, ["half-to-full"])
     assert "No input was provided via stdin." in result.output

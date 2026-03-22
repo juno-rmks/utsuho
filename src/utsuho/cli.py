@@ -3,6 +3,7 @@ Command-line interface for Utsuho.
 """
 
 import os.path
+
 import click
 
 from . import __version__
@@ -13,8 +14,24 @@ from .converters import (
     KatakanaToHiraganaConverter,
 )
 
+
 def _read_input_text(file_: bool, text: str | None) -> str:
-    """Resolve input text from argument, file, or stdin."""
+    """
+    Resolve input text from argument, file, or stdin.
+
+    Parameters
+    ----------
+    file_ : bool
+        Whether to treat TEXT as a file path or not.
+    text : str | None
+        String containing characters to be converted or the path of a file
+        containing them.
+
+    Returns
+    -------
+    str
+        The resolved input text.
+    """
     if text is None:
         if click.get_text_stream("stdin").isatty():
             raise click.UsageError("TEXT argument is required when stdin is not piped.")
@@ -48,9 +65,9 @@ def cli(
 
     Parameters
     ----------
-    ctx: click.Context
+    ctx : click.Context
         Context for the click command.
-    version: bool
+    version : bool
         Whether to show the Utsuho version.
     """
     if version:
@@ -80,9 +97,9 @@ def full_to_half(
 
     Parameters
     ----------
-    file_: bool
+    file_ : bool
         Whether to treat TEXT as a file path or not.
-    text: str
+    text : str | None
         String containing characters to be converted to half-width characters
         or the path of a file containing them.
     """
@@ -111,9 +128,9 @@ def half_to_full(
 
     Parameters
     ----------
-    file_: bool
+    file_ : bool
         Whether to treat TEXT as a file path or not.
-    text: str
+    text : str | None
         String containing characters to be converted to full-width characters
         or the path of a file containing them.
     """
@@ -142,9 +159,9 @@ def hiragana_to_katakana(
 
     Parameters
     ----------
-    file_: bool
+    file_ : bool
         Whether to treat TEXT as a file path or not.
-    text: str
+    text : str | None
         String containing characters to be converted to katakana or the path of
         a file containing them.
     """
@@ -173,9 +190,9 @@ def katakana_to_hiragana(
 
     Parameters
     ----------
-    file_: bool
+    file_ : bool
         Whether to treat TEXT as a file path or not.
-    text: str
+    text : str | None
         String containing characters to be converted to hiragana or the path of
         a file containing them.
     """

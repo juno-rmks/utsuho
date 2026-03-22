@@ -12,7 +12,8 @@ It focuses on character-level conversions such as width normalization and kana c
 - Bidirectional conversion between half-width and full-width katakana
 - Bidirectional conversion between hiragana and katakana
 - Configurable handling of spaces, punctuation, ASCII symbols, digits, and alphabets
-- Command-line interface for interactive use and scripting
+- Command-line interface for interactive use, scripting, and piped stdin processing
+- Model Context Protocol (MCP) server support for tool-based integrations
 
 ## Why Utsuho?
 
@@ -121,7 +122,7 @@ Available options:
 
 ## CLI
 
-Utsuho also provides a command-line interface for interactive use and scripting.
+Utsuho also provides a command-line interface for interactive use, scripting, and shell pipelines.
 
 ```console
 % utsuho --help
@@ -155,15 +156,21 @@ Examples:
 
 % utsuho katakana-to-hiragana "キョウトシ　サキョウク　ギンカクジチョウ　２"
 きょうとし　さきょうく　ぎんかくじちょう　２
+
+% echo "キョウトシ　２" | utsuho full-to-half
+ｷｮｳﾄｼ 2
 ```
 
-Each command also accepts `--file` (or `-f`) to treat the argument as a UTF-8 text file path.
+Each command accepts either a `TEXT` argument or piped stdin input.
+If `TEXT` is omitted, input is read from stdin.
+
+Each command also accepts `--file` (or `-f`) to treat `TEXT` as a UTF-8 text file path.
 
 ## MCP (Model Context Protocol)
 
 Utsuho also provides a Model Context Protocol (MCP) server that exposes its text conversion utilities as tools.
 
-This allows Utsuho to be used from MCP-compatible clients such as AI agents and development tools.
+This allows Utsuho to be used from MCP-compatible clients such as AI agents, enabling deterministic text normalization as an external tool.
 
 ### Installation
 
