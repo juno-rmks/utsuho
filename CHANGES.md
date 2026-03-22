@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refactored CLI input handling into a shared helper function.
 - Improved error handling for missing or empty stdin input.
+- Made the MCP server dependency optional and improved startup behavior when `fastmcp` is not installed.
 
 ## [2.2.1] - 2026-03-21
 

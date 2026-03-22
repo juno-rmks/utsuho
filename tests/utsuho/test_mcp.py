@@ -5,7 +5,15 @@ Tests for the Utsuho MCP server tools.
 import pytest
 from fastmcp import Client
 
-from utsuho.mcp import main, mcp
+from utsuho.mcp import _create_mcp, main
+
+
+@pytest.fixture
+def mcp():
+    """
+    Create an MCP server instance for testing.
+    """
+    return _create_mcp()
 
 
 class TestMCP:
@@ -14,7 +22,7 @@ class TestMCP:
     """
 
     @pytest.mark.asyncio
-    async def test_mcp_lists_tools(self):
+    async def test_mcp_lists_tools(self, mcp):
         """
         Verify that the MCP server exposes the expected tool set.
         """
@@ -35,7 +43,7 @@ class TestHalfToFull:
     """
 
     @pytest.mark.asyncio
-    async def test_mcp_half_to_full(self):
+    async def test_mcp_half_to_full(self, mcp):
         """
         Verify half-width to full-width conversion via the MCP client.
         """
@@ -47,7 +55,7 @@ class TestHalfToFull:
             assert result.data == "キョウトシ　サキョウク　ギンカクジチョウ　２"
 
     @pytest.mark.asyncio
-    async def test_mcp_half_to_full_with_config(self):
+    async def test_mcp_half_to_full_with_config(self, mcp):
         """
         Verify half-width to full-width conversion with MCP width options.
         """
@@ -69,7 +77,7 @@ class TestFullToHalf:
     """
 
     @pytest.mark.asyncio
-    async def test_mcp_full_to_half(self):
+    async def test_mcp_full_to_half(self, mcp):
         """
         Verify full-width to half-width conversion via the MCP client.
         """
@@ -81,7 +89,7 @@ class TestFullToHalf:
             assert result.data == "ｷｮｳﾄｼ ｻｷｮｳｸ ｷﾞﾝｶｸｼﾞﾁｮｳ 2"
 
     @pytest.mark.asyncio
-    async def test_mcp_full_to_half_with_config(self):
+    async def test_mcp_full_to_half_with_config(self, mcp):
         """
         Verify full-width to half-width conversion with MCP width options.
         """
@@ -104,7 +112,7 @@ class TestHiraganaToKatakana:
     """
 
     @pytest.mark.asyncio
-    async def test_mcp_hiragana_to_katakana(self):
+    async def test_mcp_hiragana_to_katakana(self, mcp):
         """
         Verify hiragana to katakana conversion via the MCP client.
         """
@@ -122,7 +130,7 @@ class TestKatakanaToHiragana:
     """
 
     @pytest.mark.asyncio
-    async def test_mcp_katakana_to_hiragana(self):
+    async def test_mcp_katakana_to_hiragana(self, mcp):
         """
         Verify katakana to hiragana conversion via the MCP client.
         """
@@ -143,11 +151,13 @@ class TestMCPMain:
         """
         Verify that the MCP server starts with the expected stdio options.
         """
-        run_mock = mocker.patch.object(mcp, "run")
+        mcp_mock = mocker.Mock()
+        create_mcp_mock = mocker.patch("utsuho.mcp._create_mcp", return_value=mcp_mock)
 
         main()
 
-        run_mock.assert_called_once_with(
+        create_mcp_mock.assert_called_once_with()
+        mcp_mock.run.assert_called_once_with(
             transport="stdio",
             log_level="WARNING",
             show_banner=False,
