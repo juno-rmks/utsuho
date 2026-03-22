@@ -1,6 +1,6 @@
 # CLI
 
-Utsuho には、対話的な利用やスクリプトからの呼び出しに適したコマンドラインインターフェースが用意されています。
+Utsuho には、対話的な利用やスクリプトからの呼び出しに加え、標準入力（stdin）を利用したパイプ処理にも適したコマンドラインインターフェースが用意されています。
 変換結果は標準出力に出力されるため、シェルスクリプトからも扱いやすくなっています。
 
 ## 基本構文
@@ -34,6 +34,8 @@ Utsuho x.x.x
 
 ## 使用例
 
+基本的な使用例を示します。
+
 ```console
 % utsuho full-to-half "キョウトシ　サキョウク　ギンカクジチョウ　２"
 ｷｮｳﾄｼ ｻｷｮｳｸ ｷﾞﾝｶｸｼﾞﾁｮｳ 2
@@ -46,6 +48,9 @@ Utsuho x.x.x
 
 % utsuho katakana-to-hiragana "キョウトシ　サキョウク　ギンカクジチョウ　２"
 きょうとし　さきょうく　ぎんかくじちょう　２
+
+% echo "キョウトシ　２" | utsuho full-to-half
+ｷｮｳﾄｼ 2
 ```
 
 ## 各コマンド
@@ -56,7 +61,7 @@ Utsuho x.x.x
 
 ```console
 % utsuho full-to-half --help
-Usage: utsuho full-to-half [OPTIONS] TEXT
+Usage: utsuho full-to-half [OPTIONS] [TEXT]
 
   Convert from full-width to half-width characters.
 
@@ -71,7 +76,7 @@ Options:
 
 ```console
 % utsuho half-to-full --help
-Usage: utsuho half-to-full [OPTIONS] TEXT
+Usage: utsuho half-to-full [OPTIONS] [TEXT]
 
   Convert from half-width to full-width characters.
 
@@ -86,7 +91,7 @@ Options:
 
 ```console
 % utsuho hiragana-to-katakana --help
-Usage: utsuho hiragana-to-katakana [OPTIONS] TEXT
+Usage: utsuho hiragana-to-katakana [OPTIONS] [TEXT]
 
   Convert from hiragana to katakana.
 
@@ -101,7 +106,7 @@ Options:
 
 ```console
 % utsuho katakana-to-hiragana --help
-Usage: utsuho katakana-to-hiragana [OPTIONS] TEXT
+Usage: utsuho katakana-to-hiragana [OPTIONS] [TEXT]
 
   Convert from katakana to hiragana.
 
@@ -110,9 +115,25 @@ Options:
   --help      Show this message and exit.
 ```
 
-## `--file` オプション
+## 入力方法
 
-各コマンドは `--file` オプションと `-f` 短縮形をサポートしています。指定すると、`TEXT` は UTF-8 テキストファイルのパスとして扱われます。
+各コマンドは、次のいずれかの方法で入力を受け取ります。
+
+- `TEXT` 引数
+- 標準入力（stdin）
+
+`TEXT` を省略した場合、stdin から入力を読み取ります。
+
+```console
+% echo "きょうとし　２" | utsuho hiragana-to-katakana
+キョウトシ　２
+```
+
+### `--file` オプション
+
+`--file`（または `-f`）を指定した場合、`TEXT` は必須となり、UTF-8 テキストファイルのパスとして扱われます。
+
+このモードでは標準入力は使用されません。
 
 ```console
 % utsuho full-to-half --file full.txt
