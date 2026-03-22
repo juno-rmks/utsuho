@@ -164,7 +164,8 @@ Examples:
 Each command accepts either a `TEXT` argument or piped stdin input.
 If `TEXT` is omitted, input is read from stdin.
 
-Each command also accepts `--file` (or `-f`) to treat `TEXT` as a UTF-8 text file path.
+When `--file` (or `-f`) is specified, `TEXT` is required and is treated as a UTF-8 text file path.
+In this mode, stdin input is not used.
 
 ## MCP (Model Context Protocol)
 

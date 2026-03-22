@@ -131,7 +131,9 @@ Options:
 
 ### `--file` オプション
 
-`--file`（または `-f`）を指定すると、`TEXT` は UTF-8 テキストファイルのパスとして扱われます。
+`--file`（または `-f`）を指定した場合、`TEXT` は必須となり、UTF-8 テキストファイルのパスとして扱われます。
+
+このモードでは標準入力は使用されません。
 
 ```console
 % utsuho full-to-half --file full.txt

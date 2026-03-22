@@ -32,6 +32,9 @@ def _read_input_text(file_: bool, text: str | None) -> str:
     str
         The resolved input text.
     """
+    if file_ and text is None:
+        raise click.UsageError("TEXT argument is required when using --file.")
+
     if text is None:
         if click.get_text_stream("stdin").isatty():
             raise click.UsageError("TEXT argument is required when stdin is not piped.")
