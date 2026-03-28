@@ -1,5 +1,5 @@
 """
-Tests for the Utsuho MCP server tools.
+Tests for the Utsuho MCP server.
 """
 
 import pytest
@@ -11,7 +11,7 @@ from utsuho.mcp import _create_mcp, main
 @pytest.fixture
 def mcp():
     """
-    Create an MCP server instance for testing.
+    Create an MCP server instance.
     """
     return _create_mcp()
 
@@ -45,7 +45,7 @@ class TestHalfToFull:
     @pytest.mark.asyncio
     async def test_mcp_half_to_full(self, mcp):
         """
-        Verify half-width to full-width conversion via the MCP client.
+        Verify half-width to full-width conversion.
         """
         async with Client(mcp) as client:
             result = await client.call_tool(
@@ -57,7 +57,7 @@ class TestHalfToFull:
     @pytest.mark.asyncio
     async def test_mcp_half_to_full_with_config(self, mcp):
         """
-        Verify half-width to full-width conversion with MCP width options.
+        Verify half-width to full-width conversion with width options.
         """
         async with Client(mcp) as client:
             result = await client.call_tool(
@@ -79,7 +79,7 @@ class TestFullToHalf:
     @pytest.mark.asyncio
     async def test_mcp_full_to_half(self, mcp):
         """
-        Verify full-width to half-width conversion via the MCP client.
+        Verify full-width to half-width conversion.
         """
         async with Client(mcp) as client:
             result = await client.call_tool(
@@ -91,7 +91,7 @@ class TestFullToHalf:
     @pytest.mark.asyncio
     async def test_mcp_full_to_half_with_config(self, mcp):
         """
-        Verify full-width to half-width conversion with MCP width options.
+        Verify full-width to half-width conversion with width options.
         """
         async with Client(mcp) as client:
             result = await client.call_tool(
@@ -114,7 +114,7 @@ class TestHiraganaToKatakana:
     @pytest.mark.asyncio
     async def test_mcp_hiragana_to_katakana(self, mcp):
         """
-        Verify hiragana to katakana conversion via the MCP client.
+        Verify hiragana to katakana conversion.
         """
         async with Client(mcp) as client:
             result = await client.call_tool(
@@ -132,7 +132,7 @@ class TestKatakanaToHiragana:
     @pytest.mark.asyncio
     async def test_mcp_katakana_to_hiragana(self, mcp):
         """
-        Verify katakana to hiragana conversion via the MCP client.
+        Verify katakana to hiragana conversion.
         """
         async with Client(mcp) as client:
             result = await client.call_tool(

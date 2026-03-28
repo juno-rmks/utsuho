@@ -1,9 +1,13 @@
+"""
+Tests for the HalfToFullConverter class.
+"""
+
 import pytest
 
 from utsuho.converters import HalfToFullConverter, WidthConverterConfig
 
-test_data = [
-    # カタカナ (清音)
+HALF_TO_FULL_BASE_CASES = [
+    # Katakana (unvoiced)
     ("ｱ", "ア"),
     ("ｲ", "イ"),
     ("ｳ", "ウ"),
@@ -50,7 +54,7 @@ test_data = [
     ("ﾜ", "ワ"),
     ("ｦ", "ヲ"),
     ("ﾝ", "ン"),
-    # カタカナ (清音 [小書])
+    # Katakana (unvoiced, small)
     ("ｧ", "ァ"),
     ("ｨ", "ィ"),
     ("ｩ", "ゥ"),
@@ -60,7 +64,7 @@ test_data = [
     ("ｬ", "ャ"),
     ("ｭ", "ュ"),
     ("ｮ", "ョ"),
-    # カタカナ (濁音)
+    # Katakana (voiced)
     ("ｶ\uff9e", "ガ"),
     ("ｷ\uff9e", "ギ"),
     ("ｸ\uff9e", "グ"),
@@ -84,27 +88,61 @@ test_data = [
     ("ﾜ\uff9e", "ヷ"),
     ("ｳ\uff9e", "ヴ"),
     ("ｦ\uff9e", "ヺ"),
-    # カタカナ (半濁音)
+    # Katakana (semi-voiced)
     ("ﾊ\uff9f", "パ"),
     ("ﾋ\uff9f", "ピ"),
     ("ﾌ\uff9f", "プ"),
     ("ﾍ\uff9f", "ペ"),
     ("ﾎ\uff9f", "ポ"),
-    # カタカナ (その他)
-    ("･", "・"),
-    ("ｰ", "ー"),
-    # ひらがな (濁音・半濁音記号)
+    # Hiragana (voiced and semi-voiced sound marks)
     ("\uff9e", "\u309b"),
     ("\uff9f", "\u309c"),
-    # CJK 記号
+    # Voiced and semi-voiced sound marks without a predefined full-width composite character
+    ("ｱ\uff9e", "ア\u309b"),
+    ("ｶ\uff9e\uff9e", "ガ\u309b"),
+    ("ｱ\uff9f", "ア\u309c"),
+    ("ﾊ\uff9f\uff9f", "パ\u309c"),
+    # Variation selectors
+    ("\ufe00", "\ufe00"),
+    ("\ufe01", "\ufe01"),
+    ("\ufe02", "\ufe02"),
+    ("\ufe03", "\ufe03"),
+    ("\ufe04", "\ufe04"),
+    ("\ufe05", "\ufe05"),
+    ("\ufe06", "\ufe06"),
+    ("\ufe07", "\ufe07"),
+    ("\ufe08", "\ufe08"),
+    ("\ufe09", "\ufe09"),
+    ("\ufe0a", "\ufe0a"),
+    ("\ufe0b", "\ufe0b"),
+    ("\ufe0c", "\ufe0c"),
+    ("\ufe0d", "\ufe0d"),
+    ("\ufe0e", "\ufe0e"),
+    ("\ufe0f", "\ufe0f"),
+    # Invalid variation selector following a convertible character
+    ("ｱ\ufe00", "ア\ufe00"),
+    # Invalid variation selector not following a convertible character
+    ("亜\ufe00", "亜\ufe00"),
+]
+HALF_TO_FULL_PUNCTUATION_CASES = [
     ("､", "、"),
     ("｡", "。"),
+]
+HALF_TO_FULL_CORNER_BRACKET_CASES = [
     ("｢", "「"),
     ("｣", "」"),
-    # スペース
+]
+HALF_TO_FULL_CONJUNCTION_MARK_CASES = [
+    ("･", "・"),
+]
+HALF_TO_FULL_LENGTH_MARK_CASES = [
+    ("ｰ", "ー"),
+]
+HALF_TO_FULL_SPACE_CASES = [
     ("\u0020", "\u3000"),
     ("\u00a0", "\u3000"),
-    # ASCII 記号
+]
+HALF_TO_FULL_ASCII_SYMBOL_CASES = [
     ("!", "！"),
     ("\"", "＂"),
     ("#", "＃"),
@@ -137,7 +175,8 @@ test_data = [
     ("|", "｜"),
     ("}", "｝"),
     ("~", "\uff5e"),
-    # ASCII 算用数字
+]
+HALF_TO_FULL_ASCII_DIGIT_CASES = [
     ("0", "０"),
     ("1", "１"),
     ("2", "２"),
@@ -148,9 +187,9 @@ test_data = [
     ("7", "７"),
     ("8", "８"),
     ("9", "９"),
-    # ASCII 算用数字 + 異体字セレクター
     ("0\ufe00", "０\ufe00"),
-    # ASCII アルファベット [大文字]
+]
+HALF_TO_FULL_ASCII_ALPHABET_CASES = [
     ("A", "Ａ"),
     ("B", "Ｂ"),
     ("C", "Ｃ"),
@@ -177,7 +216,6 @@ test_data = [
     ("X", "Ｘ"),
     ("Y", "Ｙ"),
     ("Z", "Ｚ"),
-    # ASCII アルファベット [小文字]
     ("a", "ａ"),
     ("b", "ｂ"),
     ("c", "ｃ"),
@@ -204,313 +242,123 @@ test_data = [
     ("x", "ｘ"),
     ("y", "ｙ"),
     ("z", "ｚ"),
-    # 濁音・半濁音記号 [全角で合成済み文字が定義されていない]
-    ("ｱ\uff9e", "ア\u309b"),
-    ("ｶ\uff9e\uff9e", "ガ\u309b"),
-    ("ｱ\uff9f", "ア\u309c"),
-    ("ﾊ\uff9f\uff9f", "パ\u309c"),
-    # 異体字セレクター
-    ("\ufe00", "\ufe00"),
-    ("\ufe01", "\ufe01"),
-    ("\ufe02", "\ufe02"),
-    ("\ufe03", "\ufe03"),
-    ("\ufe04", "\ufe04"),
-    ("\ufe05", "\ufe05"),
-    ("\ufe06", "\ufe06"),
-    ("\ufe07", "\ufe07"),
-    ("\ufe08", "\ufe08"),
-    ("\ufe09", "\ufe09"),
-    ("\ufe0a", "\ufe0a"),
-    ("\ufe0b", "\ufe0b"),
-    ("\ufe0c", "\ufe0c"),
-    ("\ufe0d", "\ufe0d"),
-    ("\ufe0e", "\ufe0e"),
-    ("\ufe0f", "\ufe0f"),
-    # 無効な異体字セレクター [変換対象に続く]
-    # ("ｱ\uFE00", "ア"),
-    # 無効な異体字セレクター [変換対象に続かない]
-    ("亜\ufe00", "亜\ufe00"),
 ]
+HALF_TO_FULL_DEFAULT_CASES = (
+    HALF_TO_FULL_BASE_CASES
+    + HALF_TO_FULL_PUNCTUATION_CASES
+    + HALF_TO_FULL_CORNER_BRACKET_CASES
+    + HALF_TO_FULL_CONJUNCTION_MARK_CASES
+    + HALF_TO_FULL_LENGTH_MARK_CASES
+    + HALF_TO_FULL_SPACE_CASES
+    + HALF_TO_FULL_ASCII_SYMBOL_CASES
+    + HALF_TO_FULL_ASCII_DIGIT_CASES
+    + HALF_TO_FULL_ASCII_ALPHABET_CASES
+)
 
 
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full(
-    s,
-    expect,
-):
-    cnv = HalfToFullConverter()
-    actual = cnv.convert(s)
+class TestHalfToFullConverter:
+    """
+    Tests for the HalfToFullConverter class.
+    """
 
-    assert actual == expect
+    @pytest.mark.parametrize("s,expect", HALF_TO_FULL_DEFAULT_CASES)
+    def test_convert(self, s, expect):
+        """
+        Verify default half-width to full-width conversion behavior.
+        """
+        cnv = HalfToFullConverter()
+        actual = cnv.convert(s)
+        assert actual == expect
 
-
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_punctuations(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(punctuation=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == (expect if not (s in ["､", "｡"]) else s)
-
-
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_corner_bruckets(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(corner_brucket=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == (
-        expect
-        if not (
-            s
-            in [
-                "｢",
-                "｣",
-            ]
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_PUNCTUATION_CASES])
+    def test_convert_without_punctuation(self, s):
+        """
+        Verify that punctuation conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(
+            WidthConverterConfig(punctuation=False),
         )
-        else s
-    )
+        actual = cnv.convert(s)
+        assert actual == s
 
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_CORNER_BRACKET_CASES])
+    def test_convert_without_corner_brucket(self, s):
+        """
+        Verify that corner bracket conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(WidthConverterConfig(corner_brucket=False))
+        actual = cnv.convert(s)
+        assert actual == s
 
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_conjunction_marks(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(conjunction_mark=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_CONJUNCTION_MARK_CASES])
+    def test_convert_without_conjunction_mark(self, s):
+        """
+        Verify that conjunction mark conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(WidthConverterConfig(conjunction_mark=False))
+        actual = cnv.convert(s)
+        assert actual == s
 
-    assert actual == (
-        expect
-        if not (
-            s
-            in [
-                "･",
-            ]
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_LENGTH_MARK_CASES])
+    def test_convert_without_length_mark(self, s):
+        """
+        Verify that length mark conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(
+            WidthConverterConfig(length_mark=False),
         )
-        else s
-    )
+        actual = cnv.convert(s)
+        assert actual == s
 
-
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_length_marks(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(length_mark=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == (
-        expect
-        if not (
-            s
-            in [
-                "ｰ",
-            ]
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_SPACE_CASES])
+    def test_convert_without_space(self, s):
+        """
+        Verify that space conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(
+            WidthConverterConfig(space=False),
         )
-        else s
-    )
+        actual = cnv.convert(s)
+        assert actual == s
 
-
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_spaces(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(space=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == (
-        expect
-        if not (
-            s
-            in [
-                "\u0020",
-                "\u00a0",
-            ]
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_ASCII_SYMBOL_CASES])
+    def test_convert_without_ascii_symbol(self, s):
+        """
+        Verify that ASCII symbol conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(
+            WidthConverterConfig(ascii_symbol=False),
         )
-        else s
-    )
+        actual = cnv.convert(s)
+        assert actual == s
 
-
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_ascii_symbols(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(ascii_symbol=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == (
-        expect
-        if not (
-            s
-            in [
-                "!",
-                "\"",
-                "#",
-                "$",
-                "%",
-                "&",
-                "'",
-                "(",
-                ")",
-                "*",
-                "+",
-                ",",
-                "-",
-                ".",
-                "/",
-                ":",
-                ";",
-                "<",
-                "=",
-                ">",
-                "?",
-                "@",
-                "[",
-                "\\",
-                "]",
-                "^",
-                "_",
-                "`",
-                "{",
-                "|",
-                "}",
-                "~",
-            ]
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_ASCII_DIGIT_CASES])
+    def test_convert_without_ascii_digit(self, s):
+        """
+        Verify that ASCII digit conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(
+            WidthConverterConfig(ascii_digit=False),
         )
-        else s
-    )
+        actual = cnv.convert(s)
+        assert actual == s
 
-
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_ascii_digits(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(ascii_digit=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == (
-        expect
-        if not (
-            s
-            in [
-                "0",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "0\ufe00",
-            ]
+    @pytest.mark.parametrize("s", [s for s, _ in HALF_TO_FULL_ASCII_ALPHABET_CASES])
+    def test_convert_without_ascii_alphabet(self, s):
+        """
+        Verify that ASCII alphabet conversion can be disabled.
+        """
+        cnv = HalfToFullConverter(
+            WidthConverterConfig(ascii_alphabet=False),
         )
-        else s
-    )
+        actual = cnv.convert(s)
+        assert actual == s
 
+    def test_convert_with_invalid_parameter(self):
+        """
+        Verify that non-string input raises a TypeError.
+        """
+        cnv = HalfToFullConverter()
 
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_ascii_alphabets(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(ascii_alphabet=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == (
-        expect
-        if not (
-            s
-            in [
-                "A",
-                "B",
-                "C",
-                "D",
-                "E",
-                "F",
-                "G",
-                "H",
-                "I",
-                "J",
-                "K",
-                "L",
-                "M",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "R",
-                "S",
-                "T",
-                "U",
-                "V",
-                "W",
-                "X",
-                "Y",
-                "Z",
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "f",
-                "g",
-                "h",
-                "i",
-                "j",
-                "k",
-                "l",
-                "m",
-                "n",
-                "o",
-                "p",
-                "q",
-                "r",
-                "s",
-                "t",
-                "u",
-                "v",
-                "w",
-                "x",
-                "y",
-                "z",
-            ]
-        )
-        else s
-    )
-
-
-@pytest.mark.parametrize("s,expect", test_data)
-def test_half_to_full_without_wave_dash(
-    s,
-    expect,
-):
-    config = WidthConverterConfig(wave_dash=False)
-    cnv = HalfToFullConverter(config)
-    actual = cnv.convert(s)
-
-    assert actual == expect
-
-
-def test_half_to_full_with_invalid_parameter():
-    cnv = HalfToFullConverter()
-
-    with pytest.raises(TypeError, match="s must be a string."):
-        cnv.convert(None)  # type: ignore
+        with pytest.raises(TypeError, match="s must be a string."):
+            cnv.convert(None)  # type: ignore
