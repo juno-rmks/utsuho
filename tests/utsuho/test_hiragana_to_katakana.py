@@ -1,9 +1,13 @@
+"""
+Tests for the HiraganaToKatakanaConverter class.
+"""
+
 import pytest
 
 from utsuho.converters import HiraganaToKatakanaConverter
 
-test_data = [
-    # ひらがな (清音)
+HIRA_TO_KATA_DEFAULT_CASES = [
+    # Hiragana (unvoiced)
     ("あ", "ア"),
     ("い", "イ"),
     ("う", "ウ"),
@@ -52,7 +56,7 @@ test_data = [
     ("ゑ", "ヱ"),
     ("を", "ヲ"),
     ("ん", "ン"),
-    # ひらがな (清音 [小書])
+    # Hiragana (unvoiced, small)
     ("ぁ", "ァ"),
     ("ぃ", "ィ"),
     ("ぅ", "ゥ"),
@@ -65,7 +69,7 @@ test_data = [
     ("ゎ", "ヮ"),
     ("ゕ", "ヵ"),
     ("ゖ", "ヶ"),
-    # ひらがな (濁音)
+    # Hiragana (voiced)
     ("が", "ガ"),
     ("ぎ", "ギ"),
     ("ぐ", "グ"),
@@ -87,38 +91,44 @@ test_data = [
     ("べ", "ベ"),
     ("ぼ", "ボ"),
     ("ゔ", "ヴ"),
-    # ひらがな (半濁音)
+    # Hiragana (semi-voiced)
     ("ぱ", "パ"),
     ("ぴ", "ピ"),
     ("ぷ", "プ"),
     ("ぺ", "ペ"),
     ("ぽ", "ポ"),
-    # ひらがな (濁音・半濁音記号)
+    # Hiragana (voiced and semi-voiced sound marks)
     ("\u309b", "\u309b"),
     ("\u309c", "\u309c"),
-    # カタカナ (中黒・長音記号)
+    # Katakana (middle dot and long vowel mark)
     ("・", "・"),
     ("ー", "ー"),
-    # ひらがな (その他)
+    # Hiragana (other)
     ("ゝ", "ヽ"),
     ("ゞ", "ヾ"),
     ("ゟ", "ゟ"),
 ]
 
 
-@pytest.mark.parametrize("s,expect", test_data)
-def test_hiragana_to_katakana(
-    s,
-    expect,
-):
-    cnv = HiraganaToKatakanaConverter()
-    actual = cnv.convert(s)
+class TestHiraganaToKatakanaConverter:
+    """
+    Tests for the HiraganaToKatakanaConverter class.
+    """
 
-    assert actual == expect
+    @pytest.mark.parametrize("s,expect", HIRA_TO_KATA_DEFAULT_CASES)
+    def test_convert(self, s, expect):
+        """
+        Verify hiragana to katakana conversion behavior.
+        """
+        cnv = HiraganaToKatakanaConverter()
+        actual = cnv.convert(s)
+        assert actual == expect
 
+    def test_convert_with_invalid_parameter(self):
+        """
+        Verify that non-string input raises a TypeError.
+        """
+        cnv = HiraganaToKatakanaConverter()
 
-def test_hiragana_to_katakana_with_invalid_parameter():
-    cnv = HiraganaToKatakanaConverter()
-
-    with pytest.raises(TypeError, match="s must be a string."):
-        cnv.convert(None)  # type: ignore
+        with pytest.raises(TypeError, match="s must be a string."):
+            cnv.convert(None)  # type: ignore
