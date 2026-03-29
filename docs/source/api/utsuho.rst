@@ -6,6 +6,14 @@ utsuho package
    :undoc-members:
    :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   utsuho.mappings
+
 Submodules
 ----------
 
@@ -14,4 +22,4 @@ Submodules
 
    utsuho.cli
    utsuho.converters
-   utsuho.maps
+   utsuho.mcp
