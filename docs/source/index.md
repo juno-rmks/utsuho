@@ -55,6 +55,10 @@ Utsuho の名称は「うつほ物語」に由来します。平安時代に成�
 
 - <project:api/utsuho.rst>
 
+## 設計書
+
+- <project:spec/2.3.2.md>
+
 ## 索引と表
 
 - {ref}`genindex`
@@ -87,4 +91,12 @@ roadmap
 :hidden:
 
 api/utsuho
+```
+
+```{toctree}
+:maxdepth: 4
+:caption: 設計書
+:hidden:
+
+spec/2.3.2.md
 ```

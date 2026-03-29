@@ -4,7 +4,7 @@ Converters for deterministic Japanese text normalization.
 
 from dataclasses import dataclass
 
-from .maps import (
+from .mappings import (
     KanaLetterMapping,
     SimpleCharacterMap,
     full_to_half_ascii_alphabet_map,
