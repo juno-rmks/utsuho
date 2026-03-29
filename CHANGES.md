@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.2rc1] - 2026-03-29
+
+### Added
+
+- Added the `utsuho.mappings` package to separate common types, width mappings, and kana mappings into dedicated modules.
+- Added the 2.3.2 change specification to the documentation.
+
+### Changed
+
+- Refactored converter imports to use the new `utsuho.mappings` package.
+- Reorganized internal mapping definitions by responsibility without changing conversion behavior.
+- Updated the documentation index to include the 2.3.2 change specification.
+
+### Removed
+
+- Removed the legacy internal `utsuho.maps` module.
+
 ## [2.3.1] - 2026-03-28
 
 ### Changed
